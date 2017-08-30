@@ -276,7 +276,7 @@
 			c.`name`, 
 			c.image_url,
 			e.address_name, d.corporate_name , d.contacts_number,
-			round((UNIX_TIMESTAMP('2012-06-09 00:10:11')-UNIX_TIMESTAMP(b.createtime))/60) as time
+			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) as time
 		FROM 
 			tb_order_lunch a 
 			LEFT JOIN tb_lunch la on a.lunch_id=la.lunch_id
@@ -287,10 +287,10 @@
 		WHERE
 			order_status = #{order_status}
 			<if test="order_status == '2'.toString()">
-			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) &lt;= 10
+			and  round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) &lt;= 10
 			</if>
-		  	and #{address}= CONCAT(e.address_name,d.corporate_name,d.contacts_number)
-		order by createtime desc
+		  	and  #{address}= CONCAT(e.address_name,d.corporate_name,d.contacts_number)
+		order by b.createtime desc
 		LIMIT 12
     	</select>
    

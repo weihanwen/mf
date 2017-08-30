@@ -11,7 +11,7 @@
 			contacts_number,
 			corporate_name,
 			address_id,
-			floor_numbe,
+			floor_number,
 			wxmember_id,
 			createtime,
 			updatetime 
@@ -22,7 +22,7 @@
 			#{contacts_number},
 			#{corporate_name},
 			#{address_id},
-			#{floor_numbe},
+			#{floor_number},
 			#{wxmember_id},
 			now(),
 			now()
@@ -34,19 +34,20 @@
  	<select id="findlikeAddressList" parameterType="pd" resultType="pd">
 		select 
 			count(*) as number,
+			a.address_id,
 			a.contacts,
 			a.sex,
 			a.contacts_number,
 			a.corporate_name,
-			a.floor_numbe,
- 			concat(b.address_name,a.corporate_name,a.floor_numbe) as address
+			a.floor_number,
+ 			concat(b.address_name,a.corporate_name,a.floor_number) as address
  		from 
 			tb_wxmember_address a 
 			left join tb_address b on a.address_id=b.address_id
 		where 
-			concat(b.address_name,a.corporate_name,a.floor_numbe) like concat('%',concat(#{address},'%'))
+			concat(b.address_name,a.corporate_name,a.floor_number) like concat('%',concat(#{address},'%'))
 			
-		group by b.address_name,a.corporate_name,a.floor_numbe
+		group by b.address_name,a.corporate_name,a.floor_number
   	</select>
 
 	
@@ -59,9 +60,9 @@
 			a.sex,
 			a.contacts_number,
 			a.corporate_name,
-			a.floor_numbe,
+			a.floor_number,
 			b.address_name,
- 			concat(b.address_name,a.corporate_name,a.floor_numbe) as address
+ 			concat(b.address_name,a.corporate_name,a.floor_number) as address
  		from 
 			tb_wxmember_address a left join tb_address b on a.address_id=b.address_id
 		where 
@@ -78,9 +79,9 @@
 			a.sex,
 			a.contacts_number,
 			a.corporate_name,
-			a.floor_numbe,
+			a.floor_number,
 			b.address_name,
- 			concat(b.address_name,a.corporate_name,a.floor_numbe) as address
+ 			concat(b.address_name,a.corporate_name,a.floor_number) as address
  		from 
 			tb_wxmember_address a left join tb_address b on a.address_id=b.address_id
 		where 

@@ -166,6 +166,7 @@ public class WxMemberController extends BaseController {
  		}
   		return mv;
 	}
+
 	
 	/**
 	 * 前往个人详情页面
@@ -197,6 +198,173 @@ public class WxMemberController extends BaseController {
  		}
   		return mv;
 	}
+	
+
+	
+	/**
+	 * 去红包列表
+	 * wxmember/myuseredList.do 
+ 	 */
+	@RequestMapping(value="/myuseredList")
+	public ModelAndView myuseredList()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+  		PageData pd = new PageData();
+    	try {
+    		pd=this.getPageData();
+    		if(login != null){
+         		pd.put("wxmember_id", login.getWXMEMBER_ID());
+        		List<PageData> redList=wxmemberService.getMyRedList(pd);
+        		mv.addObject("redList", redList);
+        		pd.remove("wxmember_id");
+         		mv.addObject("pd", pd);
+    			mv.setViewName("wx/myuseredList");
+    		}else{
+    			mv.setViewName("redirect:../wxlogin/toLoginWx.do");
+    		}
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+
+	/**
+	 * 去提货卷列表
+	 * wxmember/myusetihuojuanList.do 
+  	 */
+	@RequestMapping(value="/myusetihuojuanList")
+	public ModelAndView myusetihuojuanList()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+  		PageData pd = new PageData();
+    	try { 
+    		pd=this.getPageData();
+    		if(login != null){
+         		pd.put("wxmember_id", login.getWXMEMBER_ID());
+        		List<PageData> tihuoredList=wxmemberService.getMyTiHuoList(pd);
+         		mv.addObject("tihuoredList", tihuoredList);
+         		pd.remove("wxmember_id");
+         		mv.addObject("pd", pd);
+    			mv.setViewName("wx/myusetihuojuanList");
+    		}else{
+    			mv.setViewName("redirect:../wxlogin/toLoginWx.do");
+    		}
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+	
+	/**
+	 * 去积分财富历史列表
+	 * wxmember/myintegralList.do 
+  	 */
+	@RequestMapping(value="/myintegralList")
+	public ModelAndView myintegralList()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+  		PageData pd = new PageData();
+    	try { 
+    		pd=this.getPageData();
+    		if(login != null){
+         		pd.put("wxmember_id", login.getWXMEMBER_ID());
+        		List<PageData> integralList=wxmemberService.getWealthHistoryList(pd);
+         		mv.addObject("integralList", integralList);
+         		pd.remove("wxmember_id");
+         		mv.addObject("pd", pd);
+    			mv.setViewName("wx/myintegralList");
+    		}else{
+    			mv.setViewName("redirect:../wxlogin/toLoginWx.do");
+    		}
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+	
+	/**
+	 * 去地址列表
+	 * wxmember/myaddressList.do 
+  	 */
+	@RequestMapping(value="/myaddressList")
+	public ModelAndView myaddressList()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+  		PageData pd = new PageData();
+    	try {
+    		pd=this.getPageData();
+    		if(login != null){
+         		pd.put("wxmember_id", login.getWXMEMBER_ID());
+        		List<PageData> addressList=wxmemberService.getMyAddressList(pd);
+        		mv.addObject("addressList", addressList);
+        		List<PageData>	alladdress = addressService.listAll(pd);
+        		mv.addObject("alladdress", alladdress);
+        		pd.remove("wxmember_id");
+         		mv.addObject("pd", pd);
+    			mv.setViewName("wx/myaddressList");
+    		}else{
+    			mv.setViewName("redirect:../wxlogin/toLoginWx.do");
+    		}
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+
+	/**
+	 * 去订单列表
+	 * wxmember/myorderList.do 
+  	 */
+	@RequestMapping(value="/myorderList")
+	public ModelAndView myorderList()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+  		PageData pd = new PageData();
+    	try { 
+    		pd=this.getPageData();
+    		if(login != null){
+         		pd.put("wxmember_id", login.getWXMEMBER_ID());
+        		List<PageData> orderList=WxOrderService.listOrderForMember(pd);
+         		mv.addObject("orderList", orderList);
+         		pd.remove("wxmember_id");
+         		mv.addObject("pd", pd);
+    			mv.setViewName("wx/myorderList");
+    		}else{
+    			mv.setViewName("redirect:../wxlogin/toLoginWx.do");
+    		}
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//=============================================================================================
 	
 	
 	
@@ -588,7 +756,7 @@ public class WxMemberController extends BaseController {
 	public  Object getLikeAddress(String address) throws Exception{
  		Map<String, Object> map = new HashMap<String, Object>();
 	  	String result="1";
-		String message="添加成功";
+		String message="查询成功";
 		PageData pd=new PageData();
 		try{
 			pd.put("address", address);

@@ -43,7 +43,7 @@
 </head>
 <body>
 <header class="ui-header ui-header-positive ui-border-b bg_ff0600">
-    <i class="ui-icon-return" onclick="history.back()"></i>
+    <a href="wxmember/gome.do"><i class="ui-icon-return"></i></a>
     <span style="position: absolute;right: 0;" onclick="openSearch()">搜索地址</span>
     <h1 class="col_f">选择地址</h1>
  </header>
@@ -68,13 +68,6 @@
 	</div>
 	<div style="width:100%;" id="listsearch">
 	
-		
-		<!-- <span class="address_search">
-			<span class="address_search_1" >国泰科技大厦22</span>
-			<span class="address_search_2" >已注册2人</span>
-		</span> -->
-		
-		
 	</div>
 </div>
 
@@ -97,7 +90,7 @@
 		</li>
 		<li>公司名称：<input type="text" id="corporate_name"/></li>
 		<li>楼层：<input type="text" id="floor_number1" style="display: inline-block;width:20%;"/>层<input type="text" id="floor_number2" style="display:inline-block;width:20%;"/>号</li>
-		<li><span style="display: block;width:100%;height:100%;background-color: #00B5DE;color:#fff;" onclick="sureAddAddress()">确认新增并返回</span></li>
+		<li><span style="display: block;width:100%;height:100%;background-color: #00B5DE;color:#fff;" onclick="sureAddAddress()">确认新增</span></li>
 	</ul>
  </div>
 </section>
@@ -203,8 +196,8 @@ function sureAddAddress(){
 			async: false,
 			success:function(data){
 				  if(data.result == "1"){
-					  var wxmember_address_id=data.wxmember_address_id;
-					  sureThisAddress(wxmember_address_id);
+					  alert("新增成功");
+					  window.location.reload();
  				  }else{
 					  alert(data.message);
 				  }
@@ -212,10 +205,7 @@ function sureAddAddress(){
 	}); 
  }
 
-//确认使用地址
-function sureThisAddress(wxmember_address_id){
-	window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id="+wxmember_address_id+"&wxmember_redpackage_id=${wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
-}
+ 
 
 </script>
 </body>

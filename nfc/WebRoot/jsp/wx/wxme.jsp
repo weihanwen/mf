@@ -32,11 +32,11 @@
 	</div>
 	<article class="rm-list ">
 		<ul>
-			<li><a  ><i class="my-list-one"></i>优惠券<b class="z-arrow"></b></a></li>
-			<li><a  ><i class="my-list-two"></i>提货券<b class="z-arrow"></b></a></li>
- 			<li><a  ><i class="my-list-three"></i>我的积分<b class="z-arrow"></b></a></li>
- 			<li><a  ><i class="my-list-four"></i>收货地址<b class="z-arrow"></b></a></li>
- 			<li><a  ><i class="my-list-five"></i>我的订单<b class="z-arrow"></b></a></li>
+			<li><a  href="wxmember/myuseredList.do " ><i class="my-list-one"></i>优惠券<b class="z-arrow"></b></a></li>
+			<li><a  href="wxmember/myusetihuojuanList.do" ><i class="my-list-two"></i>提货券<b class="z-arrow"></b></a></li>
+ 			<li><a  href="wxmember/myintegralList.do" ><i class="my-list-three"></i>我的积分<b class="z-arrow"></b></a></li>
+ 			<li><a  href="wxmember/myaddressList.do" ><i class="my-list-four"></i>收货地址<b class="z-arrow"></b></a></li>
+ 			<li><a  href="wxmember/myorderList.do" ><i class="my-list-five"></i>我的订单<b class="z-arrow"></b></a></li>
  		</ul>
 	</article>  
   </section>
