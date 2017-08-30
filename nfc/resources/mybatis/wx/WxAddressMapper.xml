@@ -33,12 +33,18 @@
  <!-- 地址模糊查询 -->
  	<select id="findlikeAddressList" parameterType="pd" resultType="pd">
 		select 
-			count(*)
+			count(*) as number,
+			a.contacts,
+			a.sex,
+			a.contacts_number,
+			a.corporate_name,
+			a.floor_numbe,
  			concat(b.address_name,a.corporate_name,a.floor_numbe) as address
  		from 
-			tb_wxmember_address a left join tb_address b on a.address_id=b.address_id
+			tb_wxmember_address a 
+			left join tb_address b on a.address_id=b.address_id
 		where 
-			concat(b.address_name,a.corporate_name,a.floor_numbe) like concat('%',concat(#{content},'%'))
+			concat(b.address_name,a.corporate_name,a.floor_numbe) like concat('%',concat(#{address},'%'))
 			
 		group by b.address_name,a.corporate_name,a.floor_numbe
   	</select>

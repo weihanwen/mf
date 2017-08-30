@@ -575,6 +575,74 @@ public class WxMemberController extends BaseController {
  		}
   		return mv;
 	}
+
+	
+	/**
+   	 * 搜索地址
+   	* wxmember/getLikeAddress.do
+   	* 
+   	* address 地址
+   	 */
+	@RequestMapping(value="/getLikeAddress")
+	@ResponseBody
+	public  Object getLikeAddress(String address) throws Exception{
+ 		Map<String, Object> map = new HashMap<String, Object>();
+	  	String result="1";
+		String message="添加成功";
+		PageData pd=new PageData();
+		try{
+			pd.put("address", address);
+			List<PageData> likeaddressList=wxmemberService.findlikeAddressList(pd);
+			map.put("likeaddressList", likeaddressList);
+		}catch(Exception e){
+			result="0";
+			message="系统异常";
+ 			logger.error(e.toString(), e);
+		}
+		map.put("result", result);
+		map.put("message", message);
+ 		return map;
+ 	}
+	
+
+	/**
+   	 * 新增地址
+   	* wxmember/addAddress.do
+   	* 
+   	* address 地址
+   	 */
+	@RequestMapping(value="/addAddress")
+	@ResponseBody
+	public  Object addAddress() throws Exception{
+ 		Map<String, Object> map = new HashMap<String, Object>();
+ 		//shiro管理的session
+ 		Subject currentUser = SecurityUtils.getSubject();  
+ 		Session session = currentUser.getSession();
+ 		WxLogin login=(WxLogin) session.getAttribute(Const.WXLOGIN);
+	  	String result="1";
+		String message="新增成功";
+		PageData pd=new PageData();
+		try{
+			if(login != null){
+          		 pd=this.getPageData();
+         		 String wxmember_address_id= BaseController.get12UID();
+    			 pd.put("wxmember_address_id",wxmember_address_id);
+    			 pd.put("wxmember_id", login.getWXMEMBER_ID());
+    			 wxmemberService.saveAddress(pd);
+    			 map.put("wxmember_address_id", wxmember_address_id);
+			}else{
+				result="0";
+				message="请先登录";
+			}
+ 		}catch(Exception e){
+			result="0";
+			message="系统异常";
+ 			logger.error(e.toString(), e);
+		}
+		map.put("result", result);
+		map.put("message", message);
+ 		return map;
+ 	}
 	
 
 	/**

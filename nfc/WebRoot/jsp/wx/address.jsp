@@ -64,18 +64,15 @@
 <!-- 搜索地址 -->
 <div class="rp_item search" style="display:none">
 	<div style="width: 84%;padding: 20px;">
-		<input type="text" oninput="getLikeAddress" style="height: 31px; width: 328px; " id="search"  placeholder="填写你要搜索的地址">
+		<input type="text" oninput="getLikeAddress(this.value)" style="height: 31px; width: 328px; " id="search"  placeholder="填写你要搜索的地址">
 	</div>
 	<div style="width:100%;" id="listsearch">
 	
-		<span class="address_search">
-			<span class="address_search_1" >国泰科技大厦11</span>
-			<span class="address_search_2" >已注册2人</span>
-		</span>
-		<span class="address_search">
+		
+		<!-- <span class="address_search">
 			<span class="address_search_1" >国泰科技大厦22</span>
 			<span class="address_search_2" >已注册2人</span>
-		</span>
+		</span> -->
 		
 		
 	</div>
@@ -120,6 +117,29 @@ function openSearch(){
 	$("#search").val("");
 	$("#listsearch").empty();
 }
+//填写地址搜索
+function getLikeAddress(value){
+	if(value == ""){return;}
+	$.ajax({
+		type:"post",
+			url:"wxmember/getLikeAddress.do",
+			data:{ "addres":value  },
+			dataType:"json",
+			async: false,
+			success:function(data){
+				  if(data.result == "1"){
+					  var likeaddressList=data.likeaddressList;
+					  for (var int = 0; int < likeaddressList.length; int++) {
+						var array_element = likeaddressList[int];
+						$("#listsearch").append("<span class=\"address_search\" onclick=\"openAddForSearch(\'"+array_element.contacts+"\',\'"+array_element.sex+"\',\'"+array_element.contacts_number+"\',\'"+array_element.corporate_name+"\',\'"+array_element.address_id+"\',\'"+array_element.floor_numbe+"\')\">"+
+					  			" <span class='address_search_1' >"+array_element.address+"</span> <span class='address_search_2' >已注册"+array_element.number+"人</span></span>");
+						}
+ 				  }else{
+					  alert(data.message);
+				  }
+			}
+	}); 
+}
 
 //前往新增页面
 function openAddForSearch(contacts,sex,contacts_number,corporate_name,address_id,floor_numbe){
@@ -136,8 +156,9 @@ function openAddForSearch(contacts,sex,contacts_number,corporate_name,address_id
  	$("#contacts_number").val(contacts_number);
  	$("#corporate_name").val(corporate_name);
  	$("#address_id").val(address_id);
- 	
-}
+ 	$("#floor_number1").val(floor_number.split(",")[0]);
+ 	$("#floor_number2").val(floor_number.split(",")[1]);
+ }
 
 
 //前往新增页面
@@ -160,8 +181,34 @@ function openList(){
 }
 //确认新增地址
 function sureAddAddress(){
-	
-}
+	if($("#contacts").val() == ""){ alert("联系人不能为空"); return; }
+	if($("#contacts_number").val() == ""){ alert("电话号码不能为空");return; }
+	if($("#corporate_name").val() == ""){ alert("公司名称不能为空");return; }
+ 	if($("#floor_number1").val() == ""){ alert("楼层不能为空");return; }
+ 	if($("#floor_number2").val() == ""){ alert("房间不能为空");return; }
+  	$.ajax({
+		type:"post",
+			url:"wxmember/addAddress.do",
+			data:{ 
+					"contacts":$("#contacts").val(),  
+					"sex":  $("input[name='sex']:checked").val(),  
+					"contacts_number":$("#contacts_number").val(),  
+					"corporate_name":$("#corporate_name").val(),  
+					"address_id":$("#address_id").val(),  
+					"floor_number":$("#floor_number1").val()+"层"+$("#floor_number2").val()
+			},
+			dataType:"json",
+			async: false,
+			success:function(data){
+				  if(data.result == "1"){
+					  var wxmember_address_id=data.wxmember_address_id;
+					  sureThisAddress(wxmember_address_id);
+ 				  }else{
+					  alert(data.message);
+				  }
+			}
+	}); 
+ }
 
 //确认使用地址
 function sureThisAddress(wxmember_address_id){
