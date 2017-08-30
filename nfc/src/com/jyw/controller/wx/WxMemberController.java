@@ -686,7 +686,10 @@ public class WxMemberController extends BaseController {
     			if(pd.getString("order_type").equals("1")){
     				mv.addObject("reserve_arrival_time", "14:22");
     			}else{
-    				
+     				mv.addObject("day",DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
+    				pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
+           			PageData daypd=scheduled_timeService.findByNowDay(pd); 
+           			mv.addObject("daypd",daypd);
     			}
      			mv.setViewName("wx/orderpay");
      		}else{

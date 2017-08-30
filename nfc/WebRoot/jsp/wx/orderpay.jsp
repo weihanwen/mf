@@ -50,9 +50,12 @@
         			<div class="ui-list-info ">
 		                <h4>预定送达时间 ${reserve_arrival_time}</h4>
 		            </div>
-		            <div class="ui-list-action"> </div>
         		</c:when>
-         		<c:otherwise></c:otherwise>
+         		<c:otherwise>
+         			<div class="ui-list-info ">
+		                <h4>预定日期${day}</h4>
+		            </div>
+         		</c:otherwise>
         	</c:choose>
          </li>
      </ul>

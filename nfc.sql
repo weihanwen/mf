@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50173
-Source Host           : localhost:3306
+Source Server Version : 50717
+Source Host           : localhost:3307
 Source Database       : nfc
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-08-30 00:20:11
+Date: 2017-08-30 17:29:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -266,7 +266,7 @@ CREATE TABLE `tb_category` (
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `address_id` varchar(100) DEFAULT '0',
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_category
@@ -289,8 +289,8 @@ CREATE TABLE `tb_daily_menu` (
 -- ----------------------------
 -- Records of tb_daily_menu
 -- ----------------------------
-INSERT INTO `tb_daily_menu` VALUES ('3', '2017-08-19', '001,', null, '2017-08-19 15:17:53');
-INSERT INTO `tb_daily_menu` VALUES ('4', '2017-08-20', '001,002,', null, '2017-08-29 23:54:07');
+INSERT INTO `tb_daily_menu` VALUES ('3', '2017-08-30', '001,', null, '2017-08-30 14:20:30');
+INSERT INTO `tb_daily_menu` VALUES ('4', '2017-08-31', '001,002,', null, '2017-08-30 14:20:35');
 
 -- ----------------------------
 -- Table structure for `tb_delivery_fee`
@@ -319,7 +319,7 @@ INSERT INTO `tb_delivery_fee` VALUES ('7', '7', '7', '0', '2017-07-29 14:09:52',
 INSERT INTO `tb_delivery_fee` VALUES ('8', '8', '6', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:02');
 INSERT INTO `tb_delivery_fee` VALUES ('9', '9', '5', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:03');
 INSERT INTO `tb_delivery_fee` VALUES ('10', '10', '4', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:04');
-INSERT INTO `tb_delivery_fee` VALUES ('11', null, null, '0', '2017-07-31 16:30:23', '2017-07-31 16:30:23');
+INSERT INTO `tb_delivery_fee` VALUES ('11', '0', '0', '0', '2017-07-31 16:30:23', '2017-08-30 14:27:27');
 
 -- ----------------------------
 -- Table structure for `tb_log`
@@ -347,10 +347,10 @@ CREATE TABLE `tb_lunch` (
   `lunch_name` varchar(100) DEFAULT NULL,
   `show_sale_money` varchar(11) DEFAULT NULL,
   `sale_money` varchar(11) DEFAULT NULL,
-  `index_images` varchar(100) DEFAULT NULL,
-  `dc_images_small` varchar(100) DEFAULT NULL,
-  `dc_images` varchar(100) DEFAULT NULL,
-  `yd_images` varchar(100) DEFAULT NULL,
+  `index_images` text,
+  `dc_images_small` text,
+  `dc_images` text,
+  `yd_images` text,
   `is_shelves` varchar(4) DEFAULT NULL,
   `yd_stocknumber` varchar(11) DEFAULT NULL,
   `dc_stocknumber` varchar(11) DEFAULT NULL,
@@ -371,8 +371,8 @@ CREATE TABLE `tb_lunch` (
 -- ----------------------------
 -- Records of tb_lunch
 -- ----------------------------
-INSERT INTO `tb_lunch` VALUES ('001', '333', '121', '35', 'http://localhost/FileSave//lunch/3aaf4cdbcbf84c2f8a0e33f4f2eb3e6c.jpg', 'http://localhost/FileSave//lunch/76f7dc8e0d6f492296ca1401389990e3.jpg', 'http://localhost/FileSave//lunch/8ad20ce730f94a88826b16998c145d78.jpg', 'http://localhost/FileSave//lunch/4a8844f60da7401481866cb33c31b887.jpg', '1', null, '7', '1', '0', '222', '222', '2222', '222', '2017-08-19 14:23:06', '2017-08-29 23:54:06', '1', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('002', '212', '121', '44', 'http://localhost/FileSave//lunch/d3afc28fede24de18a553d5c115cf41f.jpg', 'http://localhost/FileSave//lunch/cc14589e9c444b039c6a9a1a4c5ec0a2.jpg', 'http://localhost/FileSave//lunch/972309a66d304093803979b231504aad.jpg', 'http://localhost/FileSave//lunch/9a0787a535974e9e968e1f0e40c3b09d.jpg', '1', null, '1', '2', '0', '2112', '323', '12', '412', '2017-08-19 14:57:10', '2017-08-29 23:54:06', '1', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('001', '333', '121', '35', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', '1', null, '7', '1', '0', '222', '222', '2222', '222', '2017-08-19 14:23:06', '2017-08-30 14:22:45', '1', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('002', '212', '121', '44', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183606&di=182d63790b895b85e1aaa9bc932ef1f9&imgtype=0&src=http%3A%2F%2Fs11.sinaimg.cn%2Fmw690%2Fa569ebadgde8fa354f31a%26690', '1', null, '1', '2', '0', '2112', '323', '12', '412', '2017-08-19 14:57:10', '2017-08-30 14:22:49', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for `tb_order`
@@ -590,7 +590,7 @@ DROP TABLE IF EXISTS `tb_wxmember`;
 CREATE TABLE `tb_wxmember` (
   `wxmember_id` varchar(100) NOT NULL,
   `showlook_id` varchar(100) DEFAULT NULL,
-  `image_url` varchar(100) DEFAULT NULL,
+  `image_url` text,
   `name` varchar(100) DEFAULT NULL,
   `sex` varchar(4) DEFAULT NULL,
   `open_id` varchar(100) DEFAULT NULL,
@@ -608,34 +608,36 @@ CREATE TABLE `tb_wxmember` (
 -- ----------------------------
 -- Records of tb_wxmember
 -- ----------------------------
-INSERT INTO `tb_wxmember` VALUES ('1', '2222', null, '2222', '1', '2123131', null, null, null, null, null, null, '2017-07-31 12:01:09', '2017-07-31 12:01:09');
-INSERT INTO `tb_wxmember` VALUES ('20170820124232907421', '65862500', null, null, null, 'owD2DwsxdygwHXxNV75kjGT7Wvlw', null, null, null, null, null, null, '2017-08-20 00:42:44', '2017-08-20 00:42:44');
+INSERT INTO `tb_wxmember` VALUES ('1', '2222', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183605&di=5b485d99ee1855e1179c0c89cf8cd42b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a46a3a856306163f6246b60af35.jpg', '2222', '1', '2123131', null, null, null, null, null, null, '2017-07-31 12:01:09', '2017-08-30 14:23:23');
+INSERT INTO `tb_wxmember` VALUES ('20170820124232907421', '65862500', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183605&di=5b485d99ee1855e1179c0c89cf8cd42b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a46a3a856306163f6246b60af35.jpg', null, null, 'owD2DwsxdygwHXxNV75kjGT7Wvlw', null, null, null, null, null, null, '2017-08-20 00:42:44', '2017-08-30 14:23:23');
 
 -- ----------------------------
 -- Table structure for `tb_wxmember_address`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_wxmember_address`;
 CREATE TABLE `tb_wxmember_address` (
-  `wxmember_address_id` int(11) NOT NULL AUTO_INCREMENT,
+  `wxmember_address_id` varchar(100) NOT NULL,
   `contacts` varchar(100) DEFAULT NULL,
   `sex` varchar(4) DEFAULT NULL,
   `contacts_number` varchar(11) DEFAULT NULL,
   `corporate_name` varchar(100) DEFAULT NULL,
   `address_id` int(11) DEFAULT NULL,
-  `floor_numbe` varchar(100) DEFAULT NULL,
+  `floor_number` varchar(100) DEFAULT NULL,
   `wxmember_id` varchar(100) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`wxmember_address_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_wxmember_address
 -- ----------------------------
-INSERT INTO `tb_wxmember_address` VALUES ('1', '1', '1', '1', '1', '1', '1', '20170820124232907421', '2017-08-01 11:16:49', '2017-08-20 12:42:43');
-INSERT INTO `tb_wxmember_address` VALUES ('2', '2', '2', '2', '2', '1', '2', '20170820124232907421', '2017-08-20 12:42:16', '2017-08-20 12:42:44');
-INSERT INTO `tb_wxmember_address` VALUES ('3', '3', '3', '3', '3', '1', '3', '20170820124232907421', '2017-08-20 12:42:18', '2017-08-20 12:42:44');
-INSERT INTO `tb_wxmember_address` VALUES ('4', '4', '4', '4', '4', '1', '4', '20170820124232907421', '2017-08-20 12:42:25', '2017-08-20 12:42:45');
+INSERT INTO `tb_wxmember_address` VALUES ('064479967428', '魏汉文', '2', '15260282340', '杭州云景', '1', '1层22', '20170820124232907421', '2017-08-30 16:52:26', '2017-08-30 17:03:59');
+INSERT INTO `tb_wxmember_address` VALUES ('1', '1', '1', '1', '1', '1', '1层112', '20170820124232907421', '2017-08-01 11:16:49', '2017-08-30 16:47:41');
+INSERT INTO `tb_wxmember_address` VALUES ('2', '2', '2', '2', '2', '1', '2层221', '20170820124232907421', '2017-08-20 12:42:16', '2017-08-30 16:47:43');
+INSERT INTO `tb_wxmember_address` VALUES ('270723425241', '安安', '2', '1254172171', '撒大大', '1', '12层2', '20170820124232907421', '2017-08-30 17:04:40', '2017-08-30 17:04:40');
+INSERT INTO `tb_wxmember_address` VALUES ('3', '3', '3', '3', '3', '1', '3层333', '20170820124232907421', '2017-08-20 12:42:18', '2017-08-30 16:47:44');
+INSERT INTO `tb_wxmember_address` VALUES ('4', '4', '4', '4', '4', '1', '4层223', '20170820124232907421', '2017-08-20 12:42:25', '2017-08-30 16:47:46');
 
 -- ----------------------------
 -- Table structure for `tb_wxmember_redpackage`
