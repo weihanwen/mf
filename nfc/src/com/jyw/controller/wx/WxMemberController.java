@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jyw.controller.base.BaseController;
 import com.jyw.entity.wx.OrderShop;
 import com.jyw.entity.wx.WxLogin;
+import com.jyw.service.business.AddressService;
 import com.jyw.service.business.Carousel_figureService;
 import com.jyw.service.business.CategoryService;
 import com.jyw.service.business.Daily_menuService;
@@ -342,7 +343,7 @@ public class WxMemberController extends BaseController {
 				pd.put("lunch_id", lunch_id);
 				boolean flag=true;
 				if(number.equals("1")){
-					flag=isKunCunOK(lunch_id, number, "1");
+					flag=isKunCunOK(lunch_id, number, "1" );
 				}
  				if(flag){
 					//判断购物车是否有当前的商品
@@ -375,6 +376,8 @@ public class WxMemberController extends BaseController {
 		map.put("message", message);
  		return map;
  	}
+	
+	 
 
 	/**
 	 * 前往购物车列表
@@ -528,6 +531,8 @@ public class WxMemberController extends BaseController {
   		return mv;
 	}
 	
+	@Resource(name="addressService")
+	private AddressService addressService;
 
 	/**
 	 * 去选择地址页面
@@ -557,6 +562,8 @@ public class WxMemberController extends BaseController {
          		pd.put("wxmember_id", login.getWXMEMBER_ID());
         		List<PageData> addressList=wxmemberService.getMyAddressList(pd);
         		mv.addObject("addressList", addressList);
+        		List<PageData>	alladdress = addressService.listAll(pd);
+        		mv.addObject("alladdress", alladdress);
         		pd.remove("wxmember_id");
          		mv.addObject("pd", pd);
     			mv.setViewName("wx/address");
@@ -751,7 +758,7 @@ public class WxMemberController extends BaseController {
 			if(shop_type.equals("2")){
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
-				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type"));
+				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
 				if(!flag){
 					map.put("result", "0");
 					map.put("message", "商品正在补给，请稍等。。。");
@@ -832,6 +839,7 @@ public class WxMemberController extends BaseController {
   					}
  				}
  				lunchService.editStock(newpd);
+ 				 
  			}else{
 // 				String yd_stocknumber=kcpd.getString("yd_stocknumber");
 //				if(Integer.parseInt(yd_stocknumber) < Integer.parseInt(number)){

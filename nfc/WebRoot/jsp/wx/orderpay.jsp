@@ -32,9 +32,11 @@
         <li class="ui-border-t">
             <div class="ui-list-info">
             	<c:choose>
-            		<c:when test="${!empty pd.wxmember_address_id }"><h4>${address}</h4></c:when>
+            		<c:when test="${!empty pd.wxmember_address_id }">
+            			 <div onclick="changeAddress()" style="/* background-color: #D7DEE2; */color: #101010;padding: 8px;width: 100%;margin: auto;text-align: center;border-radius: 22px;">${address}</div>
+            		</c:when>
             		<c:otherwise>
-            			 <div style="background-color: #27A6F1; color: #fff; padding: 8px; width: 50%; margin: auto; text-align: center; border-radius: 22px; "> +添加收件地址</div>
+            			 <div onclick="changeAddress()" style="background-color: #27A6F1; color: #fff; padding: 8px; width: 50%; margin: auto; text-align: center; border-radius: 22px; "> +添加收件地址</div>
             		</c:otherwise>
             	</c:choose>              
             </div>
@@ -69,7 +71,12 @@
         		<c:otherwise>
         			<p  class="oneyouhui" style="overflow:hidden;">
         					<span style='float:left;width: 33%;text-align: center;'>${lunchpd.lunch_name}</span>
-					    	<span style='float:left;width: 33%;text-align: center;'>X${lunchpd.shop_number} </span>
+        					
+					    	<span style='float:left;width: 33%;text-align: center;'>
+					    		<a class="down sljj" onclick="isStockOk('-1','${lunchpd.lunch_id}',this)" style="display: inline-block;width: 27px;border: 1px solid #dddddd; ">-</a> 
+			 					<span class="number" >${lunchpd.shop_number}</span> 
+			 					<a class="up sljj" onclick="isStockOk('1','${lunchpd.lunch_id}',this)" style="display: inline-block;width: 27px;border: 1px solid #dddddd; ">+</a> 
+ 					    	</span>
 					    	<span style='float:right;width: 33%;text-align: center;'>￥:${lunchpd.allsale_money}</span>
         			</p>
         		</c:otherwise>
@@ -111,7 +118,7 @@
     </ul>
     <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
         <li class="ui-border-t">
-            <h4 class="ui-nowrap">本单支付成功后可获取10个积分，1积分=1元</h4>
+            <h6>本单支付成功后可获取10个积分，1积分=1元</h6>
          </li>
     </ul>
     <div class="ui-btn-wrap">
@@ -186,13 +193,13 @@
  	}
 	
 	//前往选择地址页面
-	function redMessage(){
+	function changeAddress(){
 		window.location.href="wxmember/changeAddress.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
 	}
 	
 	//前往配送费+餐盒费说明页面
 	function peisong(){
-		window.location.href="wxmember/gouserRed.do?wxmember_address_id=${pd.wxmember_address_id}";
+		window.location.href="wxmember/canheDetail.do?wxmember_address_id=${pd.wxmember_address_id}";
 	}
 
  
@@ -209,7 +216,7 @@
 	
 	
 	var flag=true;
-	//确认支付
+	//确认支付--直接购买的会判断库存
 	function surepay(){
 		if(!flag){
 			return;
@@ -250,6 +257,22 @@
  	   		} 
 	    }); 
 	}
+	
+	//加减商品重新调接口
+	function isStockOk(number,lunch_id,obj){
+		if(number == "-1" && $(obj).prev().html() == "1"){
+			return;
+		} 
+		var lunch_idstr="${pd.lunch_idstr}";
+		if(number == "-1"){
+			 lunch_idstr=lunch_id+"@"+(parseInt($(obj).next().html())+parseInt(number));
+		}else{
+			 lunch_idstr=lunch_id+"@"+(parseInt($(obj).prev().html())+parseInt(number));
+		}
+ 		window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr="+lunch_idstr+"&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+  	}
+	
+	
 
 	
 </script>

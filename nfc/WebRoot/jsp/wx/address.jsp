@@ -15,22 +15,47 @@
     <link rel="stylesheet" href="css/wx/labary/predefine.css">
     <link rel="stylesheet" href="css/wx/frozen.css">
     <link rel="stylesheet" href="css/wx/use.css">
+    <style type="text/css">
+    .address_search{
+    	display: block;margin:auto;width: 100%;
+    	height: 32px;line-height: 31px;
+    	text-align: center;background-color: #fff;margin-bottom: 2px;
+    }
+    .address_search_1{
+    	font-size: 16px
+    }
+    .address_search_2{
+    	color:red;font-size: 8px;display: block;float: right;margin-right:5px;
+    }
+    ul li{
+     	display: block;
+	    width: 95%;
+	     margin: 10px auto;
+	    background-color: #fff;
+	    height: 43px;
+	    text-align: center;
+	    line-height: 38px;
+     }
+     input{
+     	    height: 24px;
+     }
+    </style>
 </head>
 <body>
 <header class="ui-header ui-header-positive ui-border-b bg_ff0600">
-    <i class="ui-icon-return" onclick="history.back()"></i><h1 class="col_f">选择地址</h1>
-</header>
+    <i class="ui-icon-return" onclick="history.back()"></i>
+    <span style="position: absolute;right: 0;" onclick="openSearch()">搜索地址</span>
+    <h1 class="col_f">选择地址</h1>
+ </header>
 <section>
 <!-- 展示地址列表 -->
 <div class="rp_item list">
 	<c:forEach items="${addressList}" var="var">
 		<div class="rp_box clf" onclick="sureThisAddress('${var.wxmember_address_id}')">
 	        <div class="cash col_c9">
-	        	<span style="font-size: 0.25rem;;">${address_name}-${corporate_name}-${floor_numbe}</span>
+	        	<span style="font-size: 0.18rem;;">${var.address}</span>
  	        </div>
 	        <c:if test="${var.wxmember_address_id eq pd.wxmember_address_id}"><div class="hongbao"><span>✔</span>  </div></c:if>
-	        <div class="ball ball_l"></div>
-	        <div class="ball ball_r"></div>
 	    </div>
 	</c:forEach>
 </div>
@@ -38,43 +63,105 @@
 
 <!-- 搜索地址 -->
 <div class="rp_item search" style="display:none">
-
-
+	<div style="width: 84%;padding: 20px;">
+		<input type="text" oninput="getLikeAddress" style="height: 31px; width: 328px; " id="search"  placeholder="填写你要搜索的地址">
+	</div>
+	<div style="width:100%;" id="listsearch">
+	
+		<span class="address_search">
+			<span class="address_search_1" >国泰科技大厦11</span>
+			<span class="address_search_2" >已注册2人</span>
+		</span>
+		<span class="address_search">
+			<span class="address_search_1" >国泰科技大厦22</span>
+			<span class="address_search_2" >已注册2人</span>
+		</span>
+		
+		
+	</div>
 </div>
 
 
 <!-- 新增地址  -->
-<div class="rp_item add" style="display:none">
-
-
-</div>
-
-
+<div class="rp_item addaddress" style="display:none">
+	<ul style="display: block;width:100%;">
+		<li>联系人：<input type="text" id="contacts"/></li>
+		<li>性别：
+			<input type="radio" id="sex1" name="sex" value="1" checked/>男
+			<input type="radio" id="sex2" name="sex" value="2"/>女
+		</li>
+		<li>电话：<input type="text" id="contacts_number"/></li>
+		<li>
+			大厦：<select id="address_id" style="width:40%">
+					<c:forEach items="${alladdress}" var="var">
+						<option value="${var.address_id }">${var.address.name}</option>
+					</c:forEach>
+			</select>
+		</li>
+		<li>公司名称：<input type="text" id="corporate_name"/></li>
+		<li>楼层：<input type="text" id="floor_numbe1" style="display: inline-block;width:20%;"/>层<input type="text" id="floor_numbe2" style="display:inline-block;width:20%;"/>号</li>
+		<li><span style="display: block;width:100%;height:100%;background-color: #00B5DE;color:#fff;" onclick="sureAddAddress()">确认新增并返回</span></li>
+	</ul>
+ </div>
 </section>
 <div class="header footer">
-    <span class='ccyc head_tit '  onclick="openSearch()">没有地址？新增一个</span>
+    <span class='ccyc head_tit add'  onclick="openAdd()">没有地址？新增一个</span>
+     <span class='ccyc head_tit backlist'  onclick="openList()">返回列表</span>
 </div>
+<script src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
 //开启搜索页面
 function openSearch(){
 	$(".search").show();
 	$(".add").hide();
+	$(".addaddress").hide();
 	$(".list").hide();
+	$(".backlist").show();
+	$("#search").val("");
+	$("#listsearch").empty();
+}
+
+//前往新增页面
+function openAddForSearch(contacts,sex,contacts_number,corporate_name,address_id,floor_numbe){
+	$(".search").hide();
+	$(".add").show();
+ 	$("#contacts").val(contacts);
+ 	if(sex == "1"){
+ 		$("sex1").attr("checked");
+ 		$("sex2").removeAttr("checked");
+ 	}else{
+ 		$("sex2").attr("checked");
+ 		$("sex1").removeAttr("checked");
+ 	}
+ 	$("#contacts_number").val(contacts_number);
+ 	$("#corporate_name").val(corporate_name);
+ 	$("#address_id").val(address_id);
+ 	
 }
 
 
 //前往新增页面
 function openAdd(){
 	$(".search").hide();
-	$(".add").show();
+	$(".add").hide();
+	$(".addaddress").show();
 	$(".list").hide();
-	//开始ajax
-	
-	//完成后跳转
-	
-	
+	$(".backlist").show();
+ 	
 }
 
+//返回列表
+function openList(){
+	$(".search").hide();
+	$(".addaddress").hide();
+ 	$(".backlist").hide();
+ 	$(".add").show();
+	$(".list").show();
+}
+//确认新增地址
+function sureAddAddress(){
+	
+}
 
 //确认使用地址
 function sureThisAddress(wxmember_address_id){

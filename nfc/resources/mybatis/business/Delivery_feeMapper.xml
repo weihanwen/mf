@@ -88,7 +88,7 @@
 	<!-- 通过份数获取配送金额 -->
 	<select id="getMoneyByNumber" parameterType="String" resultType="String">
 		select 
- 			cast(ptmoney+chmoney as decimal(10,2) ) as money
+ 			ifnull(ptmoney+chmoney,'0') as money
  		from 
 			tb_delivery_fee
 		where 
