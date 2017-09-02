@@ -34,6 +34,7 @@ import com.jyw.service.wx.WxmemberService;
 import com.jyw.util.Const;
 import com.jyw.util.DateUtil;
 import com.jyw.util.PageData;
+import com.jyw.util.ServiceHelper;
 import com.jyw.util.wxpay.WXPayConstants;
 import com.jyw.util.wxpay.WXPayPath;
 import com.jyw.util.wxpay.WXPayUtil;
@@ -838,7 +839,7 @@ public class WxMemberController extends BaseController {
         		if(timeList.size() >0 ){
         			time=timeList.get(timeList.size()-1).get("time").toString();
         		}
-        		mv.addObject("time", time);
+        		mv.addObject("less_time", 600-Integer.parseInt(time));
         		//获取所有成功订餐得同事：按时间排序，最近得10份订单得，已完成得
         		addresspd.put("order_status", "3");
         		List<PageData> overList=WxOrderService.listByStatusOrder(addresspd);
@@ -963,7 +964,7 @@ public class WxMemberController extends BaseController {
    	 */
 	@RequestMapping(value="/payorder")
 	@ResponseBody
-	public  Object PayOrder(HttpServletRequest request) throws Exception{
+	public  synchronized Object PayOrder(HttpServletRequest request) throws Exception{
  		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, String> data = new HashMap<String, String>();
 		//shiro管理的session
@@ -994,9 +995,12 @@ public class WxMemberController extends BaseController {
 			String order_id=BaseController.get12UID();
 			//如果是直接购买需要判断库存
 			String shop_type=pd.getString("shop_type");
-			if(shop_type.equals("2")){
+			String order_type=pd.getString("order_type");
+			int shopgoodsnumber=0;
+			if(shop_type.equals("2") && order_type.equals("1")){
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
+				shopgoodsnumber=Integer.parseInt(number);
 				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
 				if(!flag){
 					map.put("result", "0");
@@ -1004,32 +1008,66 @@ public class WxMemberController extends BaseController {
 					map.put("data", "");
 					return map;
 				}
+				//存入tb_order_lunch
+				 PageData olpd=new PageData();
+				 olpd.put("order_id", order_id);
+				 olpd.put("lunch_id", lunch_id);
+				 olpd.put("shop_number", number);
+				 WxOrderService.saveOrderLunch(olpd);
 				//添加库存嘚定时器-5分钟订单未支付退还到账户
  			 	 OrderShop op=new OrderShop(order_id);
 				 Timer tt=new Timer();
 				 tt.schedule(op, 1000*60*5);
- 			}
+  			}else{
+  				String[] allshopcart_id=pd.getString("allshopcart_id").split(",");
+  				PageData shoppd=null;
+  				for (int i = 0; i < allshopcart_id.length; i++) {
+					String string = allshopcart_id[i];
+					shoppd=new PageData();
+					shoppd.put("shopcart_id", string);
+					shoppd=wxmemberService.findShopCartById(shoppd);
+					if(shoppd != null){
+						shoppd.put("order_id", order_id);
+						 WxOrderService.saveOrderLunch(shoppd);
+						 shopgoodsnumber+=Integer.parseInt(shoppd.getString("shop_number"));
+					}
+					shoppd=null;
+ 				}
+  			}
  			//获取微信支付嘚信息
+			//减少会员使用积分
+			if(Integer.parseInt(use_integral) > 0){
+				//判断余额是否充足
+				String nowinteger=wxmemberService.getNowIntegral(pd);
+				if(Integer.parseInt(use_integral) > Integer.parseInt(nowinteger)){
+					map.put("result", "0");
+					map.put("message", "当前积分不足");
+					map.put("data", "");
+					return map;
+				}
+ 			}	
+			
 			String use_wx=pd.getString("use_wx");
-			if(Integer.parseInt(use_wx) > 0){
+ 			if(Integer.parseInt(use_wx) > 0){
 				//新增微支付完成订单
 				
 				
 				data=WxPayOrder(use_wx, "1", order_id, wxmemberService.findById(pd).getString("open_id"));
 				map.put("data", data);
+				//添加倒计时十分钟的时间存入session
+				
+				
 			}else{
 				//新增已支付完成订单
 				
 				data.put("out_trade_no", order_id);
 				map.put("data", data);
-				//添加倒计时十分钟的时间存入session
-				
-			}
-			//减少会员使用积分
-			if(Integer.parseInt(use_integral) > 0){
-				
-			}			
-		}catch(Exception e){
+				//处理跑腿费分配问题
+				DeliveryTime(order_id, shopgoodsnumber);
+				//新增记录
+				addPurchaseRecord(order_id);
+ 			}
+ 		}catch(Exception e){
 			result="0";
 			message="系统异常";
  			logger.error(e.toString(), e);
@@ -1038,6 +1076,47 @@ public class WxMemberController extends BaseController {
 		map.put("message", message);
  		return map;
 
+	}
+	
+	/**
+	 * 处理跑腿费得分配问题
+	 * @param order_id
+	 * @param shopgoodsnumber
+	 */
+	public static void DeliveryTime(String order_id,int shopgoodsnumber){
+ 		try {
+ 			//判断当前是不是第一笔订单---需要数量以及订单ID
+ 			PageData timepd=ServiceHelper.getWxOrderService().isHavingOrderByNow(null);
+ 			String order_idnumber="";
+ 			for (int i = 0; i < shopgoodsnumber; i++) {
+ 				order_idnumber+=order_id+",";
+ 			}
+ 			if(timepd == null){
+ 					timepd=new PageData();
+ 				timepd.put("order_idstr", order_idnumber);
+ 				timepd.put("createtime", DateUtil.getTime());
+ 				timepd.put("endtime", DateUtil.getAfterMinTime(DateUtil.getTime(), "10"));
+ 				ServiceHelper.getWxOrderService().saveOrderTime(timepd);
+ 			}else{
+ 				String order_idstr=timepd.getString("order_idstr")+order_idnumber;
+ 				if(order_idstr.split(",").length >= 5){
+ 					timepd.put("ok", "1");
+ 					ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 					//处理跑腿费用分配问题
+ 					
+ 				}else{
+ 					timepd.put("order_idstr", order_idstr+","+order_idnumber);
+ 						ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 				}
+ 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+ 	}
+	
+ 	//新增支付记录根据订单tb_wxmember_wealthhistory
+	public static void addPurchaseRecord(String order_id){
+		
 	}
 
 	
@@ -1165,7 +1244,10 @@ public class WxMemberController extends BaseController {
 	
 	
  
-	
+	public static void main(String[] args) {
+		String a="a,";
+		System.out.println(a.split(",").length);
+	}
 	
 	
 }

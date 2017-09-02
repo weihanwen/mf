@@ -97,31 +97,32 @@
  	 <!-- 新增订单定时纪录(用来处理跑腿费用)  -->
 	<insert id="saveOrderTime" parameterType="pd">
 		insert into tb_ordertime(
- 			order_id,
- 			createtime 
+ 			order_idstr,
+ 			createtime,
+ 			endtime
    		) values (	
-			#{order_id},	
-			now() 
+			#{order_idstr},	
+			#{createtime},	
+			#{endtime}	
 		)
 	</insert>
 	<!-- 清空订单定时记录 -->
 	<delete id="deleteOrderTime">
 	delete from tb_ordertime
  	</delete>
-	<!-- 判断在十分钟之内相同的地址是所有订单 -->
- 	<select id="isHavingOrderByNow" parameterType="pd" resultType="pd">
-		SELECT 
-			b.order_id
-			b.
-		FROM 
-			tb_order b  
-			left join tb_wxmember_address d on b.wxmember_address_id=d.wxmember_address_id
-			left join tb_address e on d.address_id=e.address_id
-		WHERE
- 			order_status = '2'
- 			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) &lt;= 10
-		  	and #{content} = CONCAT(e.address_name,d.corporate_name,d.contacts_number)
-    	</select>
+	<update id="updateOrderTime" parameterType="pd">
+	update tb_ordertime
+	set
+		<if test="order_idstr != null and order_idstr != ''">
+		order_idstr=#{order_idstr},
+		</if>
+		<if test="ok != null and ok =='1'.toString()">
+		endtime=now(),
+		</if>
+		ordertime_id=ordertime_id
+	where
+		ordertime_id=#{ordertime_id}
+	</update>
     	
  	
  	
@@ -265,10 +266,47 @@
  			where 
 					order_id = #{order_id}
 	</update>
+	
+	<!-- 判断在十分钟之内相同的地址是所有订单 -->
+ 	<select id="isHavingOrderByNow" parameterType="pd" resultType="pd">
+		SELECT 
+			ordertime_id
+ 		FROM 
+			tb_ordertime  
+ 		WHERE
+ 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(createtime))/60) &lt;= 0
+			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP( endtime))/60) &gt;= 0
+  		  	and  #{address}=  address
+  		limit 1
+   </select>
+	
+		<!-- 在送餐费说明界面的展示订单 -->
+	<select id="listByStatusOrderOne" parameterType="pd" resultType="pd">
+		SELECT 
+			a.lunch_id,
+			la.lunch_name,
+ 			c.`name`, 
+			c.image_url,
+ 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) as time
+ 		FROM 
+ 			tb_ordertime f 
+ 			LEFT JOIN tb_order b on f.order_idstr like  CONCAT(CONCAT("%",b.order_id),"%")
+ 			left join tb_order_lunch a  on  b.order_id=a.order_id
+			LEFT JOIN tb_lunch la on a.lunch_id=la.lunch_id
+ 			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
+  		WHERE
+			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.createtime))/60) &lt;= 0
+			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.endtime))/60) &gt;= 0
+			and b.order_status in ('1','2')
+ 		  	and  #{address}= f.address
+		order by b.createtime desc
+		LIMIT 6
+    	</select>
+	
   	
    
-   	<!-- 在送餐费说明界面的展示订单 -->
-	<select id="listByStatusOrder" parameterType="pd" resultType="pd">
+   	<!-- 在送餐费说明界面的展示已完成得订单-->
+	<select id="listByStatusOrderTwo" parameterType="pd" resultType="pd">
 		SELECT 
 			a.lunch_id,
 			la.lunch_name,
@@ -277,20 +315,16 @@
 			c.image_url,
 			e.address_name, d.corporate_name , d.contacts_number,
 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) as time
-		FROM 
-			tb_order_lunch a 
+ 		FROM 
+ 			tb_ordertime f 
+ 			LEFT JOIN tb_order b on f.order_idstr like  CONCAT(CONCAT("%",b.order_id),"%")
+			LEFT JOIN  tb_order_lunch a  on a.order_id=b.order_id
 			LEFT JOIN tb_lunch la on a.lunch_id=la.lunch_id
-		 	LEFT JOIN tb_order b on b.order_id=b.order_id
-			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
-			left join tb_wxmember_address d on b.wxmember_address_id=d.wxmember_address_id
-			left join tb_address e on d.address_id=e.address_id
-		WHERE
-			order_status = #{order_status}
-			<if test="order_status == '2'.toString()">
-			and  round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) &lt;= 10
-			</if>
-		  	and  #{address}= CONCAT(e.address_name,d.corporate_name,d.contacts_number)
-		order by b.createtime desc
+ 			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
+ 		WHERE
+			b.order_status = '3'
+		  	and  #{address}= f.address
+		order by b.createtime desc 
 		LIMIT 12
     	</select>
    

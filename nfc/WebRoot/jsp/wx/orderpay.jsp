@@ -14,6 +14,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <title>订单详情</title>
+     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/wx/frozen.css">
     <link rel="stylesheet" href="css/wx/newpay.css">
 </head>
@@ -48,12 +49,16 @@
         	<c:choose>
         		<c:when test="${pd.order_type eq '1' }">
         			<div class="ui-list-info ">
-		                <h4>预定送达时间 ${reserve_arrival_time}</h4>
+		                <h4>预定送达时间 ：${reserve_arrival_time}</h4>
 		            </div>
         		</c:when>
          		<c:otherwise>
          			<div class="ui-list-info ">
 		                <h4>预定日期${day}</h4>
+		                <span>选择配送时间：
+		                <input type="time" class="delivery_time" value="00:00"  style=" width: 20%; " >
+ 		                </span>
+		                <div>可配送时间段：<span class="sale_starttime">${daypd.sale_starttime}</span>-<span class="sale_endtime">${daypd.sale_endtime}</span></div>
 		            </div>
          		</c:otherwise>
         	</c:choose>
@@ -96,7 +101,7 @@
         <li class="ui-border-t" onclick="redMessage()">
             <h4 class="ui-nowrap">红包</h4>
             <div class="ui-txt-info redMessage" >
-            	${empty pd.wxmember_redpackage_id or pd.wxmember_redpackage_id eq ''?'无可用红包':redmoney}
+            	${empty pd.wxmember_redpackage_id or pd.wxmember_redpackage_id eq ''?'选择红包':redmoney}
              </div>
         </li>
     </ul>
@@ -139,6 +144,9 @@
 				<input type="hidden" id="discount_money" value="${discount_money}" name="discount_money"/> 
 				<input type="hidden" id="wxmember_redpackage_id" value="${pd.wxmember_redpackage_id}" name="wxmember_redpackage_id"/> 
 				<input type="hidden" id="wxmember_tihuojuan_idstr" value="${pd.wxmember_tihuojuan_idstr}" name="wxmember_tihuojuan_idstr"/> 
+				<input type="hidden" id="shop_type" value="${pd.shop_type}" name="shop_type"/> 
+				<input type="hidden" id="allshopcart_id" value="${pd.allshopcart_id}" name="allshopcart_id"/> 
+				<input type="hidden" id="lunch_idstr" value="${pd.lunch_idstr}" name="lunch_idstr"/> 
 				<input type="hidden" id="actual_money" value="${actual_money}" name="actual_money"/> 
 				<input type="hidden" id="use_integral" value="0" name="use_integral"/> 
 				<input type="hidden" id="use_wx" value="0" name="use_wx"/> 
@@ -228,15 +236,21 @@
 		$(".surepay").removeAttr("onclick");
 		$(".surepay").css("background","rgb(192, 192, 192)");
  		var use_wx= parseInt($("#use_wx").val());
+ 		if("${pd.order_type}" == "2"){
+ 			var delivery_time=$(".delivery_time").val();
+ 			if(delivery_time ==""){
+ 				alert("配送时间不能为空");
+ 				return;
+ 			}else{
+ 				$("#delivery_time").val(delivery_time);
+ 			}
+ 		}
 	    $("#Form").ajaxSubmit({  
 	    	url : 'wx/payorder.do',
 	        type: "post",//提交类型  
 	      	data:{ 
-	      		"pay_way":"wx_pub",
-	      		"shop_type":"${pd.shop_type}",
-	      		"allshopcart_id":"${pd.allshopcart_id}",
-	      		"lunch_idstr":"${pd.lunch_idstr}" 
-   	      	},  
+	      		"pay_way":"wx_pub" 
+    	      	},  
 	      	dataType:"json",
 	   		success:function(data){ 
 	   			if(data.result == "0"){

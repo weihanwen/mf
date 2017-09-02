@@ -85,7 +85,7 @@ public class Const {
 	//开始设置参数
 	public static  String sendtime=Tools.readTxtFile(Const.SYSNAME);//下单之后多久可以送货,单位分钟
 	public static  String arrivetime=Tools.readTxtFile(Const.SYSNAME);//送货多久可以到达，单位分钟
-	
+ 	
 	
 	//微信登录人的key
 	public static final String WXLOGIN = "wxlogin";
@@ -93,7 +93,8 @@ public class Const {
 	//存储暂时的一些参数
 	public static String access_token="";
 	public static String jsapi_ticket="";
-	public static int canhefee=0;//餐盒费用
+	
+ 
  
 	
 }

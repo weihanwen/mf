@@ -95,14 +95,20 @@ public class   WxOrderService {
 	/*
 	 *订单时间跑腿费处理
 	 */
-	public void tb_ordertime(PageData pd)throws Exception{
-		dao.save("WxOrderMapper.tb_ordertime", pd);
+	public void saveOrderTime(PageData pd)throws Exception{
+		dao.save("WxOrderMapper.saveOrderTime", pd);
+	}
+	/*
+	 *订单时间跑腿费处理
+	 */
+	public void updateOrderTime(PageData pd)throws Exception{
+		dao.update("WxOrderMapper.updateOrderTime", pd);
 	}
   	/*
 	*判断在十分钟之内相同的地址是所有订单
 	*/
-	public  List<PageData>  isHavingOrderByNow(PageData pd)throws Exception{
-		return ( List<PageData> )dao.findForList("WxOrderMapper.isHavingOrderByNow", pd);
+	public  PageData isHavingOrderByNow(PageData pd)throws Exception{
+		return ( PageData )dao.findForObject("WxOrderMapper.isHavingOrderByNow", pd);
 	}
 	 
 	

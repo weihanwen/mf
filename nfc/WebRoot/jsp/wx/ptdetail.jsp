@@ -98,8 +98,8 @@
             </div>
             <div class="two">
                  <div class="titlediv">
-                    <span class="span1"> 标题1</span>
-                     <span class="span2"> ${time}</span>
+                    <span class="span1"> 正在订餐得同事</span>
+                     <span class="span2" id="less_time"> ${less_time}</span>
                  </div>
                  <ul>
                    <c:forEach items="${timeList}" var="var" varStatus="vs">
@@ -114,7 +114,7 @@
             </div>
             <div class="three">
                 <div class="titlediv">
-                    <span class="span1"> 标题2</span>
+                    <span class="span1"> 已经订餐完成得同事</span>
                     <span class="span2"> 已完成${overnumber}</span>
                 </div>
                 <ul>
@@ -130,6 +130,30 @@
             </div>
 		</section>
 </body>
+<script type="text/javascript">
+//倒计时函数
+function newTime (){
+    //算出中间差并且已毫秒数返回; 除以1000将毫秒数转化成秒数方便运算；
+    var countDown =  "${less_time}";
+    
+    //获取分钟数
+    //同理剔除掉分钟数
+    var oMinutes = parseInt(countDown/60%60);
+    
+    //获取秒数
+    //因为就是秒数  所以取得余数即可
+    var oSeconds = parseInt(countDown%60);
+    
+    //下面就是插入到页面事先准备容器即可;
+    var html =  "<span>" + p(oMinutes) + "分</span>" +"<span>" + p(oSeconds) + "秒</span>";
+    document.getElementById('less_time').innerHTML = html;
+    
+    //别忘记当时间为0的，要让其知道结束了;
+    if(countDown < 0){
+        document.getElementById('less_time').innerHTML = '--';
+    }
+}
+</script>
  
 </html>
 

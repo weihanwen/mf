@@ -109,20 +109,20 @@ function changeShoyLb(category_id,obj){
 				 var lunchList=data.data;
 				 $(".allgoods").empty();
 				 for (var i = 0; i < lunchList.length; i++) {
-					 var s="<div class='ydgoods' onclick='goDetail(this,2)' lunch_id='"+lunchList[i].lunch_id+"' category_id='"+lunchList[i].category_id+"' >"+
+					 var s="<div class='ydgoods' onclick='goPay(this)' lunch_id='"+lunchList[i].lunch_id+"' category_id='"+lunchList[i].category_id+"' >"+
 								 		"<img alt='' src='"+lunchList[i].yd_images+"'   />"+
 							 		"<span>"+lunchList[i].lunch_name+"</span>"+
-					 		 		"<span>"+lunchList[i].yd_stocknumber+"份可预订</span><span >"+lunchList[i].sale_money+"元/份</span>"+
+					 		 		"<span >"+lunchList[i].sale_money+"元/份</span>"+//<span>"+lunchList[i].yd_stocknumber+"份可预订</span>
 							 "</div>";
 					$(".allgoods").append(s);
 				 }  
 			}
 	});  
 }
-
-//前往详情
-function goDetail(obj,order_type){
-	
+//前往支付界面
+function goPay(obj){
+	var lunch_id=$(obj).attr("lunch_id");
+	 window.location.href="wxmember/goPayJSP.do?shop_type=2&lunch_idstr="+lunch_id+"@1&order_type=2";
 }
 
 

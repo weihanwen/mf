@@ -217,6 +217,22 @@ public class DateUtil {
     }
     
     /**
+     * 得到n分之后的时间
+     * @param days
+     * @return
+     */
+    public static String getAfterMinTime(String beginDate,String time) {
+    	int daysInt = Integer.parseInt(time);
+    	
+    	Calendar calendar = new GregorianCalendar(); 
+        calendar.setTime(fomatDate1(beginDate)); 
+    	
+        calendar.add(Calendar.MINUTE, daysInt); // 日期减 如果不够减会将月变动
+        Date date = calendar.getTime();
+        return sdfTime.format(date);
+    }
+    
+    /**
      * 得到n天之后是周几
      * @param days
      * @return

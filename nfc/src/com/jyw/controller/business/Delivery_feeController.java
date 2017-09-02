@@ -105,8 +105,7 @@ public class Delivery_feeController extends BaseController {
 			mv.setViewName("business/delivery_fee/delivery_fee_list");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
-			mv.addObject("canhefee", Const.canhefee);
- 		} catch(Exception e){
+  		} catch(Exception e){
 			logger.error(e.toString(), e);
 		}
 		return mv;

@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本地
-Source Server Version : 50717
-Source Host           : localhost:3307
+Source Server Version : 50173
+Source Host           : localhost:3306
 Source Database       : nfc
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2017-08-30 17:29:34
+Date: 2017-09-02 17:15:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -289,8 +289,8 @@ CREATE TABLE `tb_daily_menu` (
 -- ----------------------------
 -- Records of tb_daily_menu
 -- ----------------------------
-INSERT INTO `tb_daily_menu` VALUES ('3', '2017-08-30', '001,', null, '2017-08-30 14:20:30');
-INSERT INTO `tb_daily_menu` VALUES ('4', '2017-08-31', '001,002,', null, '2017-08-30 14:20:35');
+INSERT INTO `tb_daily_menu` VALUES ('3', '2017-09-03', '001,', null, '2017-09-02 13:18:56');
+INSERT INTO `tb_daily_menu` VALUES ('4', '2017-09-02', '001,002,', null, '2017-09-02 13:19:01');
 
 -- ----------------------------
 -- Table structure for `tb_delivery_fee`
@@ -420,8 +420,10 @@ INSERT INTO `tb_order` VALUES ('22', '2', '2', '2', '2', '2', '2', '2', '2', nul
 DROP TABLE IF EXISTS `tb_ordertime`;
 CREATE TABLE `tb_ordertime` (
   `ordertime_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` varchar(100) DEFAULT NULL,
+  `order_idstr` varchar(200) DEFAULT NULL COMMENT '订单得集合',
+  `address` varchar(100) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
+  `endtime` datetime DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`ordertime_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -504,7 +506,7 @@ CREATE TABLE `tb_scheduled_time` (
 -- ----------------------------
 -- Records of tb_scheduled_time
 -- ----------------------------
-INSERT INTO `tb_scheduled_time` VALUES ('3', '2017-08-21', '午餐', '00:00:00', '00:00:00', '2017-08-20 00:00:00', '2017-08-20 16:34:38', '1,', '2017-08-20 00:26:27');
+INSERT INTO `tb_scheduled_time` VALUES ('3', '2017-09-03', '午餐', '00:00:00', '00:00:00', '2017-09-02 00:00:00', '2017-09-02 16:34:38', '1,', '2017-09-02 13:53:42');
 
 -- ----------------------------
 -- Table structure for `tb_shopcart`
