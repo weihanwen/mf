@@ -55,7 +55,7 @@ public class   WxmemberService {
 	}
 	
 	/*
-	 * 修改
+	 * 修改会员余额
 	 */
 	public void changeMoneyByMember(PageData pd)throws Exception{
 		dao.update("WxmemberMapper.changeMoneyByMember", pd);

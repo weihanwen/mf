@@ -1013,7 +1013,7 @@ public class WxMemberController extends BaseController {
  			pd.put("wxmember_id", login.getWXMEMBER_ID());
  			String now_integral=wxmemberService.getNowIntegral(pd);
  			String use_integral=pd.getString("use_integral");
- 			if(Integer.parseInt(now_integral) < Integer.parseInt(use_integral)){
+ 			if(Double.parseDouble(now_integral) < Double.parseDouble(use_integral)){
  				map.put("result", "0");
 				map.put("message", "积分不足!");
 				map.put("data", "");
@@ -1021,7 +1021,8 @@ public class WxMemberController extends BaseController {
  			}
  			//设置订单号
 			String order_id=BaseController.get12UID();
-			pd.put("lookorder_id", BaseController.get8UID());
+			pd.put("order_id", order_id);
+			pd.put("looknumber", BaseController.get8UID());
 			//如果是直接购买需要判断库存
 			String shop_type=pd.getString("shop_type");
 			String order_type=pd.getString("order_type");
@@ -1066,8 +1067,7 @@ public class WxMemberController extends BaseController {
 				//新增微支付完成订单
  				wxOrderService.saveOrder(pd);
  				data=WxPayOrder(use_wx, "1", order_id, wxmemberService.findById(pd).getString("open_id"));
-				map.put("data", data);
- 			}else{
+  			}else{
 				//新增已支付完成订单
 				if(order_type.equals("2")){
 					pd.put("order_status", "1");
@@ -1075,10 +1075,10 @@ public class WxMemberController extends BaseController {
 					pd.put("order_status", "2");
 				}
 				wxOrderService.saveOrder(pd);
+				
 				addPurchaseRecord(pd);
-				data.put("out_trade_no", order_id);
-				map.put("data", data);
- 			}
+ 				data.put("out_trade_no", order_id);
+  			}
  		}catch(Exception e){
 			result="0";
 			message="系统异常";
@@ -1086,8 +1086,29 @@ public class WxMemberController extends BaseController {
 		}
 		map.put("result", result);
 		map.put("message", message);
+		map.put("data", data);
  		return map;
 
+	}
+	
+	
+	
+	/**
+	 * 支付成功前往得页面
+	 * wxmember/payok.do 
+  	 */
+	@RequestMapping(value="/payok")
+	public ModelAndView payok()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+   		PageData pd = new PageData();
+    	try { 
+    		pd=this.getPageData();
+    		mv.addObject("pd", pd);
+     		mv.setViewName("wx/payok");
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
 	}
 	
 	/**
@@ -1171,7 +1192,14 @@ public class WxMemberController extends BaseController {
 	
  	//支付成功之后得一些记录处理
 	public static void addPurchaseRecord(PageData pd) throws Exception{
+		DecimalFormat    df   = new DecimalFormat("######0.00"); 
 		try {
+			if(pd.getString("use_integral") == null || pd.getString("use_integral").equals("")){
+				pd.put("use_integral", "0");
+			}
+			if(pd.getString("send_integral") == null || pd.getString("send_integral").equals("")){
+				pd.put("send_integral", "1");
+			}
 			//新增积分使用历史记录
 			PageData wealpd=new PageData();
 			wealpd.put("wxmember_id", pd.getString("wxmember_id"));
@@ -1188,6 +1216,13 @@ public class WxMemberController extends BaseController {
 			wealpd.put("income", "1");
 			wealpd.put("wealth_type", "3");
 			ServiceHelper.getWxmemberService().saveWealthHistory(wealpd);	
+			//更新会员积分
+			double _integral=Integer.parseInt(pd.getString("use_integral"))-Integer.parseInt(pd.getString("send_integral"));
+			double now_integral=Double.parseDouble(ServiceHelper.getWxmemberService().getNowIntegral(pd));
+ 			wealpd.put("now_integral", df.format(now_integral-_integral));
+			wealpd.put("before_integral", now_integral);
+			ServiceHelper.getWxmemberService().changeMoneyByMember(wealpd);
+			
 			if(pd.getString("order_type").equals("1")){
 				//处理跑腿费分配问题
 				DeliveryTime(pd);

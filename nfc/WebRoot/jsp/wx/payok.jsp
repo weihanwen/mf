@@ -122,8 +122,6 @@
 <body>
 <div class="tit">支付成功</div>
 <img src="img/qqimg.png" alt="" class="img">
-<p> <span class="col">积分支付:￥${pd.use_integral}</span></p>
-<p> <span class="col">微信支付:￥${pd.use_wx}</span></p>
  <div class="link">
 	<a onclick="goBaoPing()"><img src="img/jxqg.png" alt=""></a>
 	<a href="wxmember/myorderDetail.do?order_id=${pd.order_id}"><img src="img/ddxq.png" alt=""></a>

@@ -154,7 +154,7 @@
 				<input type="hidden" id="reserve_arrival_time" value="${reserve_arrival_time}" name="reserve_arrival_time"/> 
  				<input type="hidden" id="delivery_time" value="${delivery_time}" name="delivery_time"/> 
 				<input type="hidden" id="delivery_fee" value="${delivery_fee}" name="delivery_fee"/> 
-				<input type="hidden" id="wxmember_address_id" value="${wxmember_address_id}" name="wxmember_address_id"/> 
+				<input type="hidden" id="wxmember_address_id" value="${pd.wxmember_address_id}" name="wxmember_address_id"/> 
 				<input type="hidden" id="order_status" value="0" name="order_status"/> 
 				
 				<input type="hidden" id="shop_type" value="${pd.shop_type}" name="shop_type"/> 
@@ -261,17 +261,18 @@
 	   			var map=data.data;
 	   			if(use_wx > 0){
  					 if(map.return_msg == "OK"){
- 						callWxJsPay(map.payment_type,map.appId,map.timeStamp,map.nonceStr,map.package,map.signType,map.sign,map.out_trade_no);
+ 						callWxJsPay(map.appId,map.timeStamp,map.nonceStr,map.package,map.signType,map.sign,map.out_trade_no);
 		        	 }else{
 		        		 alert(map.return_msg);
 		        	 }
 	   			}else{
 	   				//在支付成功的状态下跳转订单到订单详情界面
-	   				window.location.href=''; 
+	   				window.location.href="wxmember/payok.do?order_id="+map.out_trade_no; 
 	   			}
  	   		} 
 	    }); 
 	}
+	
 	
 	//加减商品重新调接口
 	function isStockOk(number,lunch_id,obj){
