@@ -49,7 +49,7 @@
         	<c:choose>
         		<c:when test="${pd.order_type eq '1' }">
         			<div class="ui-list-info ">
-		                <h4>预定送达时间 ：${reserve_arrival_time}</h4>
+		                <h4>预定送达时间 ：${showtime}</h4>
 		            </div>
         		</c:when>
          		<c:otherwise>
@@ -115,12 +115,12 @@
     </ul>
     <ul class="ui-list ui-list-text ui-border-tb mg_b_10">
         <li class="ui-border-t">
-            <div class="ui-list-info">
+            <div class="ui-list-info" style=" width: 184px; display: inline-block; ">
                 <span>积分余额：</span>
                 <span>${nowintegral}</span>
             </div>
             <label class="ui-switch">
-                <input type="checkbox"  onclick="isOK(this)" class="user_integral">
+                <input type="checkbox"  onclick="isOK(this)" class="user_integral" >
             </label>
         </li>
     </ul>
@@ -152,8 +152,7 @@
 				<input type="hidden" id="pay_type" value="${empty pd.wxmember_tihuojuan_idstr or pd.wxmember_tihuojuan_idstr eq ''?'1':'2'}" name="pay_type"/> 
 				<input type="hidden" id="order_type" value="${pd.order_type}" name="order_type"/> 
 				<input type="hidden" id="reserve_arrival_time" value="${reserve_arrival_time}" name="reserve_arrival_time"/> 
-				<input type="hidden" id="reserve_day" value="${reserve_day}" name="reserve_day"/> 
-				<input type="hidden" id="delivery_time" value="${delivery_time}" name="delivery_time"/> 
+ 				<input type="hidden" id="delivery_time" value="${delivery_time}" name="delivery_time"/> 
 				<input type="hidden" id="delivery_fee" value="${delivery_fee}" name="delivery_fee"/> 
 				<input type="hidden" id="wxmember_address_id" value="${wxmember_address_id}" name="wxmember_address_id"/> 
 				<input type="hidden" id="order_status" value="0" name="order_status"/> 
@@ -172,32 +171,29 @@
 	//判断是从那个界面进来得
 	if("${pd.order_type}" == "1"){ 
 		 document.title='订单详情';
-		  
-	 } else{
+ 	 } else{
  		 document.title='预定详情';
 	}
 
 	//判断近期是否充足
 	function isOK(obj){//1-使用余额，2-使用积分
-		if($(obj).is(":checked")){
+		if(!$(obj).is(":checked")){
 			$(".actual_money").html("${actual_money}");
-			$(obj).removeAttr("checked");
+			 $(obj).removeAttr("checked");
 		}else{
-			if( parseInt("${actual_money}") >0 ){
-				 if(parseInt("${nowintegral}") >0){
-					  if(parseInt("${actual_money}")  > parseInt("${nowintegral}")){
-						   var n=parseInt("${actual_money}")-parseInt("${nowintegral}");
-						   $(".actual_money").html(n);
- 						   $("#use_integral").val("${nowintegral}");
-						   $("#use_wx").val(n);
+ 			if( parseFloat("${actual_money}") >0 ){
+				 if(parseFloat("${nowintegral}") >0){
+					  if(parseFloat("${actual_money}")  > parseFloat("${nowintegral}")){
+						   var n=parseFloat("${actual_money}")-parseFloat("${nowintegral}");
+  						   $("#use_integral").val("${nowintegral}");
+						   $("#use_wx").val(n.toFixed(2));
+						   $(".actual_money").html(n.toFixed(2));
 					  }else{
-						  var n=parseInt("${actual_money}");
-						  $(".actual_money").html(n);
-						  $("#use_integral").val("${actual_money}");
+  						  $("#use_integral").val("${actual_money}");
 						  $("#use_wx").val("0");
+						  $(".actual_money").html("0");
 					  }
-					 
-					 $(obj).attr("checked","checked");
+ 					 $(obj).attr("checked");
 				 } 
 			}
 			
@@ -236,22 +232,23 @@
 		flag=false;
 		$(".surepay").removeAttr("onclick");
 		$(".surepay").css("background","rgb(192, 192, 192)");
- 		var use_wx= parseInt($("#use_wx").val());
+ 		var use_wx= parseFloat($("#use_wx").val());
  		if("${pd.order_type}" == "2"){
  			var delivery_time=$(".delivery_time").val();
  			if(delivery_time ==""){
  				alert("配送时间不能为空");
  				return;
  			}else{
- 				$("#delivery_time").val(delivery_time);
+ 				$("#delivery_time").val("${day}"+delivery_time);
+ 				$("#reserve_arrival_time").val("${day}"+delivery_time);
  			}
  		}
 	    $("#Form").ajaxSubmit({  
-	    	url : 'wx/payorder.do',
+	    	url : 'wxmember/payorder.do',
 	        type: "post",//提交类型  
 	      	data:{ 
 	      		"pay_way":"wx_pub" 
-    	      	},  
+    	    },  
 	      	dataType:"json",
 	   		success:function(data){ 
 	   			if(data.result == "0"){

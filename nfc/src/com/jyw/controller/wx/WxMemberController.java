@@ -357,6 +357,29 @@ public class WxMemberController extends BaseController {
 	}
 	
 	
+	/**
+	 * 去订单详情页
+	 * wxmember/myorderDetail.do 
+  	 */
+	@RequestMapping(value="/myorderDetail")
+	public ModelAndView myorderDetail()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+   		PageData pd = new PageData();
+    	try { 
+    		pd=this.getPageData();
+    		pd=wxOrderService.findById(pd);
+    		//获取相关购买商品列表
+    		List<PageData> lunchList=wxOrderService.listLunchByOrder(pd);
+    		mv.addObject("pd", pd);
+    		mv.addObject("lunchList", lunchList);
+    		mv.setViewName("wx/myorderDetail");
+        } catch (Exception e) {
+   			e.printStackTrace();
+ 		}
+  		return mv;
+	}
+	
+	
 	
 	
 	
@@ -622,6 +645,7 @@ public class WxMemberController extends BaseController {
 	@RequestMapping(value="/goPayJSP")
 	public ModelAndView goPayJSP()throws Exception{
 		ModelAndView mv = this.getModelAndView();
+		DecimalFormat    df   = new DecimalFormat("######0.00"); 
 		//shiro管理的session
  		Subject currentUser = SecurityUtils.getSubject();  
  		Session session = currentUser.getSession();
@@ -633,7 +657,7 @@ public class WxMemberController extends BaseController {
     			pd.put("wxmember_id", login.getWXMEMBER_ID());
     			mv.addObject("nowintegral", wxmemberService.getNowIntegral(pd));
     			String shop_type=pd.getString("shop_type");
-    			int allmoney=0;
+    			double allmoney=0;
     			int delivery_fee=0;
     			if(shop_type.equals("1")){
     				//获取购买商品列表
@@ -641,7 +665,7 @@ public class WxMemberController extends BaseController {
         			mv.addObject("shopList", shopList);
         			//获取总金额
         			String allpaymoney=wxmemberService.sumShopcartById(pd);
-        			allmoney=Integer.parseInt(allpaymoney);
+        			allmoney=Double.parseDouble(allpaymoney);
         			//配送费
         			delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(wxmemberService.countShopcartNumber(pd)) );
     				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
@@ -652,15 +676,15 @@ public class WxMemberController extends BaseController {
     				//获取商品详情
     				PageData lunchpd=lunchService.findByIdForWx(pd);
     				lunchpd.put("shop_number", shop_number);
-    				allmoney=Integer.parseInt(lunchpd.get("sale_money").toString())*Integer.parseInt(shop_number);
+    				allmoney=Double.parseDouble(lunchpd.get("sale_money").toString())*Integer.parseInt(shop_number);
     				lunchpd.put("allsale_money", String.valueOf(allmoney));
     				mv.addObject("lunchpd", lunchpd);
      				//配送费
     				delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(shop_number));
     				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
     			}
-    			mv.addObject("allmoney", allmoney);
-    			int lesspaymoney=allmoney+delivery_fee;
+    			mv.addObject("allmoney", df.format(allmoney));
+    			double lesspaymoney=allmoney+delivery_fee;
     			int  discount_money=0;
      			//判断是否使用提货卷
      			if(pd.getString("wxmember_tihuojuan_idstr") != null &&  !pd.getString("wxmember_tihuojuan_idstr").equals("")){
@@ -680,14 +704,16 @@ public class WxMemberController extends BaseController {
      			}
      			lesspaymoney=lesspaymoney-discount_money;
     			mv.addObject("discount_money", discount_money);
-    			mv.addObject("actual_money", lesspaymoney);
+    			mv.addObject("actual_money", df.format(lesspaymoney));
     			//判断是否有选择地址
     			if(pd.getString("wxmember_address_id") != null && !pd.getString("wxmember_address_id").equals("") ){
     				mv.addObject("address", wxmemberService.findAddressDetail(pd).getString("address"));
     			}
     			//设置时间
     			if(pd.getString("order_type").equals("1")){
-    				mv.addObject("reserve_arrival_time", DateUtil.getAfterMinTime(DateUtil.getDay(), Const.arrivetime));
+     				mv.addObject("delivery_time", DateUtil.getAfterMinTime(DateUtil.getTime(), Const.arrivetime));
+    				mv.addObject("reserve_arrival_time", DateUtil.getAfterMinTime(DateUtil.getTime(), Const.arrivetime));
+    				mv.addObject("showtime", DateUtil.getAfterMinTime(DateUtil.getTime(), Const.arrivetime));
     			}else{
      				mv.addObject("day",DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
     				pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
@@ -956,7 +982,7 @@ public class WxMemberController extends BaseController {
    	 * 微信支付的订单交易支付接口
    	* 方法名称:：payorder 
    	* 方法描述：订单支付接口
-   	* html_member/payorder.do
+   	* wxmember/payorder.do
    	* 
 	 * shop_type 		1-购物车购买，2-直接购买
  	 * allshopcart_id  	购物车结算嘚所有购物车ID
@@ -999,12 +1025,10 @@ public class WxMemberController extends BaseController {
 			//如果是直接购买需要判断库存
 			String shop_type=pd.getString("shop_type");
 			String order_type=pd.getString("order_type");
-			int shopgoodsnumber=0;
-			if(shop_type.equals("2") && order_type.equals("1")){
+ 			if(shop_type.equals("2") && order_type.equals("1")){
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
-				shopgoodsnumber=Integer.parseInt(number);
-				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+ 				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
 				if(!flag){
 					map.put("result", "0");
 					map.put("message", "商品正在补给，请稍等。。。");
@@ -1032,24 +1056,12 @@ public class WxMemberController extends BaseController {
 					if(shoppd != null){
 						shoppd.put("order_id", order_id);
 						wxOrderService.saveOrderLunch(shoppd);
-						 shopgoodsnumber+=Integer.parseInt(shoppd.getString("shop_number"));
-					}
+ 					}
 					shoppd=null;
  				}
   			}
  			//获取微信支付嘚信息
-			//减少会员使用积分
-			if(Integer.parseInt(use_integral) > 0){
-				//判断余额是否充足
-				String nowinteger=wxmemberService.getNowIntegral(pd);
-				if(Integer.parseInt(use_integral) > Integer.parseInt(nowinteger)){
-					map.put("result", "0");
-					map.put("message", "当前积分不足");
-					map.put("data", "");
-					return map;
-				}
- 			}	
- 			String use_wx=pd.getString("use_wx");
+  			String use_wx=pd.getString("use_wx");
  			if(Integer.parseInt(use_wx) > 0){
 				//新增微支付完成订单
  				wxOrderService.saveOrder(pd);

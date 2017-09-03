@@ -17,6 +17,8 @@ public class DateUtil {
 	private final static SimpleDateFormat sdfDayshms = new SimpleDateFormat("yyyyMMddhhmmss");
 
 	private final static SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	private final static SimpleDateFormat sdfTimeMin = new SimpleDateFormat("HH:mm");
 
 	/**
 	 * 获取YYYY格式
@@ -217,7 +219,7 @@ public class DateUtil {
     }
     
     /**
-     * 得到n分之后的时间
+     * 得到n分之后的时间 年月日 时分秒格式
      * @param days
      * @return
      */
@@ -231,6 +233,24 @@ public class DateUtil {
         Date date = calendar.getTime();
         return sdfTime.format(date);
     }
+    
+    /**
+     * 得到n分之后的时间 时分秒格式
+     * @param days
+     * @return
+     */
+    public static String getAfterMinTime2(String beginDate,String time) {
+    	int daysInt = Integer.parseInt(time);
+    	
+    	Calendar calendar = new GregorianCalendar(); 
+        calendar.setTime(fomatDate1(beginDate)); 
+    	
+        calendar.add(Calendar.MINUTE, daysInt); // 日期减 如果不够减会将月变动
+        Date date = calendar.getTime();
+        return sdfTimeMin.format(date);
+    }
+    
+    
     
     /**
      * 得到n天之后是周几
@@ -267,8 +287,10 @@ public class DateUtil {
         return dateStr;
     }
     
+    
+    
     public static void main(String[] args) {
-    	System.out.println(getAfterDayWeek("1"));
+    	System.out.println(DateUtil.getAfterMinTime2(DateUtil.getTime(), "30"));
      }
 
 }
