@@ -50,8 +50,8 @@ public class LunchService {
 	/*
 	 * 修改库存
 	 */
-	public void editStock(PageData pd)throws Exception{
-		dao.update("LunchMapper.editStock", pd);
+	public Integer editStock(PageData pd)throws Exception{
+		return (Integer) dao.update("LunchMapper.editStock", pd);
 	}
 	
 	

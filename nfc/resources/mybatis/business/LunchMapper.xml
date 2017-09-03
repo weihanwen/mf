@@ -97,13 +97,13 @@
   			set     
   					<if test="yd_stocknumber != null">yd_stocknumber= #{yd_stocknumber},</if>
   					<if test="dc_stocknumber != null">dc_stocknumber= #{dc_stocknumber},</if>
-  					<if test="dc_version != null">dc_version= #{dc_version},</if>
-  					<if test="yd_version != null">yd_version= #{yd_version},</if>
+  					<if test="dc_version != null">dc_version= #{dc_version}+1,</if>
+  					<if test="yd_version != null">yd_version= #{yd_version}+1,</if>
  					lunch_id=lunch_id
 			where 
 				lunch_id = #{lunch_id}
-				<if test="dc_version != null"> and dc_version= #{dc_version}-1,</if>
-  				<if test="yd_version != null">and yd_version= #{yd_version}-1,</if>
+				<if test="dc_version != null"> and dc_version= #{dc_version},</if>
+  				<if test="yd_version != null">and yd_version= #{yd_version},</if>
   	</update>
 	
 	

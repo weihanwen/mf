@@ -50,8 +50,8 @@ public class   WxOrderService {
 	/*
 	* 修改订单状态
 	*/
-	public void changeStatus(PageData pd)throws Exception{
-		dao.update("WxOrderMapper.changeStatus", pd);
+	public void changeOrderStatus(PageData pd)throws Exception{
+		dao.update("WxOrderMapper.changeOrderStatus", pd);
 	}
 	
 	/*
@@ -64,7 +64,7 @@ public class   WxOrderService {
 	 * 新增订单下得关联商品
 	 */
 	public void saveOrderLunch(PageData pd)throws Exception{
-		dao.save("WxOrderMapper.savesaveOrderLunchOrder", pd);
+		dao.save("WxOrderMapper.saveOrderLunch", pd);
 	}
 	/*
 	 *获取所有订单状态为0的订单
@@ -104,11 +104,31 @@ public class   WxOrderService {
 	public void updateOrderTime(PageData pd)throws Exception{
 		dao.update("WxOrderMapper.updateOrderTime", pd);
 	}
+	/*
+	 *获取tb_ordertime详情
+	 */
+	public  PageData getOrderTimeForId(PageData pd)throws Exception{
+		return ( PageData )dao.findForObject("WxOrderMapper.getOrderTimeForId", pd);
+	}
   	/*
 	*判断在十分钟之内相同的地址是所有订单
 	*/
 	public  PageData isHavingOrderByNow(PageData pd)throws Exception{
 		return ( PageData )dao.findForObject("WxOrderMapper.isHavingOrderByNow", pd);
+	}
+	//统计跑腿费用+餐盒费得总费用
+	public Integer sumDeliveryFeeByOrder(String order_idstr) throws Exception{
+		return (Integer)dao.findForObject("WxOrderMapper.sumDeliveryFeeByOrder",order_idstr);
+	}
+	//获取订单得部分信息
+	public List<PageData> getOrderInfor(String order_idstr) throws Exception{
+		return (List<PageData>)dao.findForList("WxOrderMapper.getOrderInfor",order_idstr);
+	}
+	/*
+	 *获取订单下得商品集合
+	 */
+	public List<PageData> listLunchByOrder(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("WxOrderMapper.listLunchByOrder", pd);
 	}
 	 
 	

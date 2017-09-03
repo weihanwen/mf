@@ -91,7 +91,7 @@
 				</tbody>
 			</table>
 			
-		<%-- <div class="page-header position-relative">
+		<div class="page-header position-relative">
 		<table style="width:100%;">
 			<tr>
 				<td style="vertical-align:top;">
@@ -102,7 +102,7 @@
 				<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 			</tr>
 		</table>
-		</div> --%>
+		</div>  
 		</form>
 	</div>
 
@@ -152,7 +152,7 @@
 						 window.parent.jzts();
 						 setTimeout("self.location.reload()",100);
 					 }else{
-						 nextPage(${page.currentPage});
+ 						 nextPage(${page.currentPage});
 					 }
 				}
 				diag.close();
@@ -167,7 +167,7 @@
 					var url = "<%=basePath%>/delivery_fee/delete.do?delivery_fee_id="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						if(data=="success"){
-							nextPage(${page.currentPage});
+ 							nextPage(${page.currentPage});
 						}
 					});
 				}

@@ -67,7 +67,6 @@
               }
                 .titlediv .span1 {
                     display: block;
-                    width: 40%;
                     height: 100%;
                     float: left;
                     text-align:left;

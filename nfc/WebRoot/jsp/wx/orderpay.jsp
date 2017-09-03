@@ -144,22 +144,23 @@
 				<input type="hidden" id="discount_money" value="${discount_money}" name="discount_money"/> 
 				<input type="hidden" id="wxmember_redpackage_id" value="${pd.wxmember_redpackage_id}" name="wxmember_redpackage_id"/> 
 				<input type="hidden" id="wxmember_tihuojuan_idstr" value="${pd.wxmember_tihuojuan_idstr}" name="wxmember_tihuojuan_idstr"/> 
-				<input type="hidden" id="shop_type" value="${pd.shop_type}" name="shop_type"/> 
-				<input type="hidden" id="allshopcart_id" value="${pd.allshopcart_id}" name="allshopcart_id"/> 
-				<input type="hidden" id="lunch_idstr" value="${pd.lunch_idstr}" name="lunch_idstr"/> 
 				<input type="hidden" id="actual_money" value="${actual_money}" name="actual_money"/> 
 				<input type="hidden" id="use_integral" value="0" name="use_integral"/> 
 				<input type="hidden" id="use_wx" value="0" name="use_wx"/> 
-				<input type="hidden" id="pay_type" value="${empty pd.wxmember_tihuojuan_idstr or pd.wxmember_tihuojuan_idstr eq ''?'1':'2'}" name="pay_type"/> 
-				<input type="hidden" id="pay_status" value="0" name="pay_status"/> 
 				<input type="hidden" id="send_integral" value="10" name="send_integral"/> 
 				<input type="hidden" id="serial_number" value="" name="serial_number"/> 
+				<input type="hidden" id="pay_type" value="${empty pd.wxmember_tihuojuan_idstr or pd.wxmember_tihuojuan_idstr eq ''?'1':'2'}" name="pay_type"/> 
 				<input type="hidden" id="order_type" value="${pd.order_type}" name="order_type"/> 
 				<input type="hidden" id="reserve_arrival_time" value="${reserve_arrival_time}" name="reserve_arrival_time"/> 
 				<input type="hidden" id="reserve_day" value="${reserve_day}" name="reserve_day"/> 
 				<input type="hidden" id="delivery_time" value="${delivery_time}" name="delivery_time"/> 
 				<input type="hidden" id="delivery_fee" value="${delivery_fee}" name="delivery_fee"/> 
 				<input type="hidden" id="wxmember_address_id" value="${wxmember_address_id}" name="wxmember_address_id"/> 
+				<input type="hidden" id="order_status" value="0" name="order_status"/> 
+				
+				<input type="hidden" id="shop_type" value="${pd.shop_type}" name="shop_type"/> 
+				<input type="hidden" id="allshopcart_id" value="${pd.allshopcart_id}" name="allshopcart_id"/> 
+				<input type="hidden" id="lunch_idstr" value="${pd.lunch_idstr}" name="lunch_idstr"/> 
   			</form>
  </body>
 <script src="js/jquery-1.8.3.min.js"></script>

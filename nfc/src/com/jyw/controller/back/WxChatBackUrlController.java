@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.wxpay.sdk.WXPayUtil;
 import com.jyw.controller.base.BaseController;
+import com.jyw.controller.wx.WxMemberController;
 import com.jyw.util.Const;
 import com.jyw.util.DateUtil;
 import com.jyw.util.PageData;
@@ -59,7 +60,7 @@ public class WxChatBackUrlController extends BaseController {
 			WXPayPath dodo = new WXPayPath("3");
 			boolean signflag=dodo.YanQian(xmlStr);
 			if(!signflag){
-//				ServiceHelper.getAppPcdService().saveLog(xmlStr, "回调的订单验签失败","0099");
+				ServiceHelper.getWxmemberService().saveLog("01", "","回调的订单验签失败"+xmlStr);
 				resXml=notsign;
 			}else{
 				Map<String, String> map =  WXPayUtil.xmlToMap( xmlStr );
@@ -74,13 +75,34 @@ public class WxChatBackUrlController extends BaseController {
 	 			//是否成功
 				Object result_code=map.get("result_code");
 				if("SUCCESS".equals(result_code)){ 
-						 
+						 double ac_money=Double.parseDouble(total_fee)/100.00;
+						 PageData pd=new PageData();
+						 pd.put("order_id", out_trade_no);
+ 						 if(ServiceHelper.getWxOrderService().findById(pd) != null){
+ 							 String user_wx=ServiceHelper.getWxOrderService().findById(pd).getString("user_wx");
+							 String order_type=ServiceHelper.getWxOrderService().findById(pd).getString("order_type");
+							 if(Double.parseDouble(user_wx) != ac_money){
+								 ServiceHelper.getWxmemberService().saveLog("04", "",Double.parseDouble(user_wx)+"回调得金额匹配不上"+ac_money+"==="+xmlStr);
+							 }else{
+ 								 //修改订单状态
+								 if(order_type.equals("1")){
+									 pd.put("order_status", "2");
+								 }else{
+									 pd.put("order_status", "1");
+								 }
+								 pd.put("serial_number", tradnumber);
+								 ServiceHelper.getWxOrderService().changeOrderStatus(pd);
+								 WxMemberController.addPurchaseRecord(ServiceHelper.getWxOrderService().findById(pd));
+							 }
+						 }else{
+							 ServiceHelper.getWxmemberService().saveLog("02", "","回调的订单验签失败"+xmlStr);
+						 }
  			 	}else{
   					resXml=notsuccess;	 
 				}		
 			}
    		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			ServiceHelper.getWxmemberService().saveLog("03", "","Notify错误"+e.toString());
 			e.printStackTrace();
  		}
  		out.write(resXml);

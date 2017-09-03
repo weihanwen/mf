@@ -99,6 +99,7 @@
 			money,
 			isincome,
 			order_id,
+			wealth_type,
 			createtime,
 			updatetime
    		) values (
@@ -106,10 +107,12 @@
 			#{money},	 
 			#{isincome},	
 			#{order_id},	
+			#{wealth_type},	
   			now(),	
 			now() 
 		)
 	</insert>
+	
  	<!-- 获取当前会员的消费历史纪录-->
 	<select id="getWealthHistoryList" parameterType="pd" resultType="pd">
 		select 
@@ -124,6 +127,22 @@
 		where 
 			wxmember_id = #{wxmember_id}
  	</select>
+ 	
+ 	
+ 	<!-- 新增log纪录  -->
+	<insert id="saveLog" parameterType="pd">
+		insert into tb_log(
+ 			type,
+			order_id,
+			message,
+			createtime
+    	) values (
+			#{type},	
+			#{order_id},	 
+			#{message},	
+ 			now() 
+		)
+	</insert>
 	
 	
  

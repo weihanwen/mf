@@ -117,7 +117,7 @@ public class OrderController extends BaseController {
 				//修改红包状态
 				ServiceHelper.getWxmemberService().editTiHuoJuan(orderpd);
   			}
-			ServiceHelper.getWxOrderService().changeStatus(pd);
+			ServiceHelper.getWxOrderService().changeOrderStatus(pd);
  			out.write("success");
 			out.close();
 		} catch(Exception e){

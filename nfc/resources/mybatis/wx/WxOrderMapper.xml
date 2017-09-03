@@ -7,6 +7,7 @@
 	<insert id="saveOrder" parameterType="pd">
 		insert into tb_order(
 			order_id,
+			shop_type,
 			looknumber,
 			allmoney,
 			discount_money,
@@ -31,9 +32,12 @@
 			jiedantime,
 			overtime,
 			wxmember_id,
-			wxmember_address_id 
+			wxmember_address_id ,
+			allshopcart_id ,
+			lunch_idstr 
 		) values (
 			#{order_id},
+			#{shop_type},
 			#{looknumber},
 			#{allmoney},
 			#{discount_money},
@@ -58,7 +62,9 @@
 			#{jiedantime},
 			#{overtime},
 			#{wxmember_id},
-			#{wxmember_address_id} 
+			#{wxmember_address_id},
+			#{allshopcart_id},
+			#{lunch_idstr}
 		)
 	</insert>
  	<!-- 新增订单关联下的商品-->
@@ -97,10 +103,12 @@
  	 <!-- 新增订单定时纪录(用来处理跑腿费用)  -->
 	<insert id="saveOrderTime" parameterType="pd">
 		insert into tb_ordertime(
+			ordertime_id,
  			order_idstr,
  			createtime,
  			endtime
    		) values (	
+			#{ordertime_id},	
 			#{order_idstr},	
 			#{createtime},	
 			#{endtime}	
@@ -123,7 +131,20 @@
 	where
 		ordertime_id=#{ordertime_id}
 	</update>
-    	
+     <!-- 获取详情 -->
+	<select id="getOrderTimeForId" parameterType="pd" resultType="pd">
+		select 
+ 			a.ordertime_id,
+ 			a.order_idstr,
+ 			a.createtime,
+ 			a.endtime,
+ 			a.isover
+  		from 
+			tb_ordertime a  
+ 		where 
+			a.ordertime_id=#{ordertime_id}
+			and a.isover='0'
+    	</select>
  	
  	
  	
@@ -196,6 +217,8 @@
 			a.overtime,
 			a.wxmember_id,
 			a.wxmember_address_id,
+			a.allshopcart_id ,
+			a.lunch_idstr ,
 			c.contacts,
  			c.contacts_number,
  			c.corporate_name,
@@ -251,7 +274,7 @@
    	
    	
    	<!-- 修改提货卷使用状态 -->
-	<update id="changeStatus" parameterType="pd" >
+	<update id="changeOrderStatus" parameterType="pd" >
 			update  tb_order
 			set 
 					<if test="order_status != null and order_status != ''">
@@ -259,6 +282,7 @@
  						<if test="order_satus == '2'.toString()">jiedantime=now()</if>,
  						<if test="order_satus == '4'.toString()">overtime=now()</if>,
 					</if>
+					<if test="serial_number != null and serial_number != ''">serial_number = #{serial_number},</if>
 					<if test="delivery_type != null and delivery_type != ''">delivery_type = #{delivery_type},</if>
 					<if test="delivery_operator_name != null and delivery_operator_name != ''">delivery_operator_name = #{delivery_operator_name},</if>
 					<if test="delivery_status != null and delivery_status != ''">delivery_status = #{delivery_status},</if>
@@ -298,6 +322,7 @@
 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.createtime))/60) &lt;= 0
 			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.endtime))/60) &gt;= 0
 			and b.order_status in ('1','2')
+			and b.order_type = '1'
  		  	and  #{address}= f.address
 		order by b.createtime desc
 		LIMIT 6
@@ -323,9 +348,52 @@
  			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
  		WHERE
 			b.order_status = '3'
+			and b.order_type = '1'
 		  	and  #{address}= f.address
-		order by b.createtime desc 
+		  	and TO_DAYS(now())=TO_DAYS(f.createtime) 
+ 		order by b.createtime desc 
 		LIMIT 12
+    	</select>
+    	
+    <!--  统计订单得总共需要多少配送费用-->
+	<select id="sumDeliveryFeeByOrder" parameterType="pd" resultType="Integer">
+		SELECT 
+			sum(delivery_fee) 
+		from 
+			tb_order
+  		WHERE
+			 #{order_idstr} like CONCAT("%",CONCAT(order_id,"%"))
+    	</select>
+   
+    <!--  获取订单得部分信息-->
+	<select id="getOrderInfor" parameterType="pd" resultType="pd">
+		SELECT 
+			a.wxmember_id,
+			a.order_id,
+			a.order_status,
+			b.wxmember_wealth_id,
+			b.now_integral
+		from 
+			tb_order a
+			left join tb_wxmember_wealth b on a.wxmember_id=b.wxmember_id
+  		WHERE
+			 #{order_idstr} like CONCAT("%",CONCAT(a.order_id,"%"))
+    	</select>
+    	
+    	<!--  获取订单下得商品集合 -->
+	<select id="listLunchByOrder" parameterType="pd" resultType="pd">
+		SELECT 
+			a.order_id,
+ 			b.lunch_id,
+			b.shop_number,
+			c.dc_stocknumber,
+			c.dc_stocknumber+b.shop_number as new_stocknumber
+		from 
+			tb_order a
+			left join tb_order_lunch b on a.order_id=b.order_id
+			left join tb_lunch c on b.lunch_id=c.lunch_id
+  		WHERE
+			 order_id= #{order_id}
     	</select>
    
 	

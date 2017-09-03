@@ -2,6 +2,7 @@ package com.jyw.util;
 
 import com.jyw.service.business.AddressService;
 import com.jyw.service.business.CategoryService;
+import com.jyw.service.business.Delivery_feeService;
 import com.jyw.service.business.LunchService;
 import com.jyw.service.system.menu.MenuService;
 import com.jyw.service.system.role.RoleService;
@@ -53,6 +54,11 @@ public final class ServiceHelper {
 	//订单
 	public static WxOrderService getWxOrderService(){
 		return (WxOrderService) getService("wxOrderService");
+	}
+	
+	//订单
+	public static Delivery_feeService getDelivery_feeService(){
+		return (Delivery_feeService) getService("delivery_feeService");
 	}
 	
 	

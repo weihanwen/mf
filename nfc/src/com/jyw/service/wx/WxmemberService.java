@@ -25,7 +25,20 @@ public class   WxmemberService {
 		dao.save("WxmemberMapper.saveWealth", pd);
 	}
 	
-	
+	/**
+	 * 新增日志记录
+	 * @param type
+	 * @param order_id
+	 * @param message
+	 * @throws Exception
+	 */
+	public void saveLog(String type,String order_id,String message)throws Exception{
+		PageData pd=new PageData();
+		pd.put("type", type);
+		pd.put("message", message);
+		pd.put("order_id", order_id);
+		dao.save("WxmemberMapper.saveLog", pd);
+	}
 	
 	/*
 	* 删除
@@ -131,6 +144,7 @@ public class   WxmemberService {
 	public void saveShopCartById(PageData pd)throws Exception{
 		dao.save("WxShopcartMapper.saveShopCartById", pd);
  	}
+
 	public List<PageData> findShopCartList(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("WxShopcartMapper.findShopCartList", pd);
 	}
