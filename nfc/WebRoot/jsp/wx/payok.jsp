@@ -13,70 +13,16 @@
 	<base href="<%=basePath%>">
 	 <link rel="stylesheet" href="css/wx/labary/predefine.css">
     <link rel="stylesheet" href="css/wx/frozen.css">
-	<script src="js/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="css/wx/use.css">
 	<style type="text/css">
-	/*初始化*/
-		html,body,h1,h2,h3,h4,h5,h6,p,img,ul,li{
-			margin: 0;
-			border: 0;
-			padding: 0;
-			font-weight: normal;
+		body {
+		    background: #FFFFFF;
 		}
-		body,html{
-			height: 100%;
-		}
-		body{
-			font-family: Arial, 微软雅黑, sans-serif;
-			overflow-y:hidden;
-		}
-		ul,li{
-			list-style: none;
-		}
-		a{
-			text-decoration: none;
-			color: #000;
-		}
-
-
-		/*头部*/
-		header{
-			height: 44px;
-			width: 100%;
-			background: #fc111b;
-			line-height: 44px;
-			color: #fff;
-			position: fixed;
-			top: 0;
-			z-index: 2;
-		}
-		.goback{
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 44px;
-			text-align: center;line-height: 44px;
-			font-size: 3.6rem;
-		}
-		.title{
-			width: 100%;
+ 		.tit{
 			text-align: center;
-			color: #fff;
-
-		}
-		.djs {
-		  	height: 44px;
-		  	text-align: center;
-		}
-		.djs h6{
-			font-weight: normal;
-			line-height: 44px;
-			font-size: 2rem;
-		}
-		.tit{
-			text-align: center;
-			padding-top: 8rem;
-			color: #ea4c27;
-			font-size: 3.6rem;
+		    padding-top: 1rem;
+		    color: #ea4c27;
+		    font-size: 0.4rem;
 		}
 		p{
 			padding-left: 9rem;
@@ -96,15 +42,7 @@
 		}
 		.link a:nth-child(1){
 			display: block;
-			width: 50%;
-			float: left;
-			padding-right: 2rem;
-		}
-		.link a:nth-child(2){
-			display: block;
-			width: 50%;
-			float: left;
-			padding-left: 2rem;
+			width: 75%;
 		}
 		.link a img{
 			width: 100%;
@@ -116,16 +54,17 @@
 		}
 	</style>
  </head>
-<header class="ui-header ui-header-positive ui-border-b bg_ff0600">
-    <i class="ui-icon-return" onclick="goback()"></i><h1 class="col_f">支付完成</h1>
-</header>
 <body>
+<header class="ui-header ui-header-positive ui-border-b bg_ff0600">
+    <i class="ui-icon-return" onclick="goback()"></i><h1 class="col_f" style="display: inline-block; width: 75%;">支付完成</h1>
+</header>
 <div class="tit">支付成功</div>
 <img src="img/qqimg.png" alt="" class="img">
  <div class="link">
-	<a onclick="goBaoPing()"><img src="img/jxqg.png" alt=""></a>
-	<a href="wxmember/myorderDetail.do?order_id=${pd.order_id}"><img src="img/ddxq.png" alt=""></a>
+ 	<a href="wxmember/myorderDetail.do?order_id=${pd.order_id}"><img src="img/ddxq.png" alt=""></a>
  </div>
+ <script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript">
 function goback(){
 	window.location.href='<%=basePath%>wxmember/wxindex.do';

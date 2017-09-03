@@ -105,7 +105,8 @@
     <span class='ccyc head_tit add'  onclick="openAdd()">没有地址？新增一个</span>
      <span class='ccyc head_tit backlist'  onclick="openList()">返回列表</span>
 </div>
-<script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript">
 //开启搜索页面
 function openSearch(){

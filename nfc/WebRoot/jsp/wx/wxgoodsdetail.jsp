@@ -136,7 +136,8 @@
 </footer>
 	<a  href="javascript:void(0)" onclick="location.reload()" class="reflash"></a>	 <!-- 刷新链接 -->
 </body>
-<script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript" src="js/lunbo/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="js/lunbo/jssor.slider.mini.js"></script>
 <script type="text/javascript" src="js/lunbo/slider.js"></script>

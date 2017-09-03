@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="css/wx/labary/predefine.css">
     <link rel="stylesheet" href="css/wx/labary/swiper.min.css">
 	<link rel="stylesheet" href="css/wx/style.css">
+	 <script src="js/jquery-1.8.3.min.js"></script>
+ 	<script src="js/wx/tongyong.js"></script>
 </head>
 <body>
 <nav class="top">

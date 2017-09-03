@@ -95,6 +95,7 @@
 	<!-- 新增消费历史纪录  -->
 	<insert id="saveWealthHistory" parameterType="pd">
 		insert into tb_wxmember_wealthhistory(
+			wxmember_wealthhistory_id,
  			wxmember_id,
 			money,
 			isincome,
@@ -103,6 +104,7 @@
 			createtime,
 			updatetime
    		) values (
+			#{wxmember_wealthhistory_id},	
 			#{wxmember_id},	
 			#{money},	 
 			#{isincome},	

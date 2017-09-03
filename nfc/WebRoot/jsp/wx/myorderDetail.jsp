@@ -13,7 +13,9 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
  	 <link rel="stylesheet" href="css/wx/labary/predefine.css">
     <link rel="stylesheet" href="css/wx/frozen.css">
-	<script src="js/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" href="css/wx/use.css">
+	 <script src="js/jquery-1.8.3.min.js"></script>
+ 	<script src="js/wx/tongyong.js"></script>
 <style type="text/css">
 	.ddxq-text p{
 		line-height: 30px;

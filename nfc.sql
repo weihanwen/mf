@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2017-09-03 17:29:31
+Date: 2017-09-03 18:02:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -333,7 +333,7 @@ CREATE TABLE `tb_log` (
   `message` text,
   `createtime` datetime DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_log
@@ -341,6 +341,13 @@ CREATE TABLE `tb_log` (
 INSERT INTO `tb_log` VALUES ('1', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:12:34');
 INSERT INTO `tb_log` VALUES ('2', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:19:27');
 INSERT INTO `tb_log` VALUES ('3', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:21:28');
+INSERT INTO `tb_log` VALUES ('4', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:30:13');
+INSERT INTO `tb_log` VALUES ('5', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:39:23');
+INSERT INTO `tb_log` VALUES ('6', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.jdbc.BadSqlGrammarException: \r\n### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'\n; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column \'wealth_type\' in \'field list\'', '2017-09-03 17:42:22');
+INSERT INTO `tb_log` VALUES ('7', '03', '', 'addPurchaseRecord新增记录出现错误org.springframework.dao.DataIntegrityViolationException: \r\n### Error updating database.  Cause: java.sql.SQLException: Field \'wxmember_wealthhistory_id\' doesn\'t have a default value\r\n### The error may involve WxmemberMapper.saveWealthHistory-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_wxmember_wealthhistory(     wxmember_id,    money,    isincome,    order_id,    wealth_type,    createtime,    updatetime      ) values (    ?,     ?,      ?,     ?,     ?,       now(),     now()    )\r\n### Cause: java.sql.SQLException: Field \'wxmember_wealthhistory_id\' doesn\'t have a default value\n; SQL []; Field \'wxmember_wealthhistory_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'wxmember_wealthhistory_id\' doesn\'t have a default value', '2017-09-03 17:55:10');
+INSERT INTO `tb_log` VALUES ('8', '03', '', 'addPurchaseRecord新增记录出现错误java.lang.NumberFormatException: For input string: \"40.00\"', '2017-09-03 17:57:15');
+INSERT INTO `tb_log` VALUES ('9', '03', '', 'addPurchaseRecord新增记录出现错误java.lang.NumberFormatException: For input string: \"40.00\"', '2017-09-03 17:58:59');
+INSERT INTO `tb_log` VALUES ('10', '03', '', 'DeliveryTime新增记录出现错误org.springframework.dao.DataIntegrityViolationException: \r\n### Error updating database.  Cause: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Out of range value for column \'ordertime_id\' at row 1\r\n### The error may involve WxOrderMapper.saveOrderTime-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into tb_ordertime(    ordertime_id,     order_idstr,     createtime,     endtime      ) values (     ?,     ?,     ?,     ?    )\r\n### Cause: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Out of range value for column \'ordertime_id\' at row 1\n; SQL []; Data truncation: Out of range value for column \'ordertime_id\' at row 1; nested exception is com.mysql.jdbc.MysqlDataTruncation: Data truncation: Out of range value for column \'ordertime_id\' at row 1', '2017-09-03 17:59:50');
 
 -- ----------------------------
 -- Table structure for `tb_lunch`
@@ -407,7 +414,7 @@ CREATE TABLE `tb_order` (
   `jiedantime` datetime DEFAULT NULL,
   `overtime` datetime DEFAULT NULL,
   `wxmember_id` varchar(100) DEFAULT NULL,
-  `wxmember_address_id` varchar(11) DEFAULT NULL,
+  `wxmember_address_id` varchar(100) DEFAULT NULL,
   `allshopcart_id` varchar(100) DEFAULT NULL COMMENT '购物车购买集合',
   `lunch_idstr` varchar(100) DEFAULT NULL COMMENT '直接购买商品集合',
   `shop_type` varchar(4) DEFAULT NULL COMMENT '1-购物车，2-直接购买',
@@ -417,6 +424,13 @@ CREATE TABLE `tb_order` (
 -- ----------------------------
 -- Records of tb_order
 -- ----------------------------
+INSERT INTO `tb_order` VALUES ('342766487147', '41100020', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:08:29', '2017-09-03 18:08:29', '5', null, null, null, '2017-09-03 17:39:02', null, null, '20170820124232907421', '1', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('426291413676', '23500657', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:28:57', '2017-09-03 18:28:57', '5', null, null, null, '2017-09-03 17:58:59', null, null, '20170820124232907421', '064479967428', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('602108883035', '98934285', '35', '0', '', '', '40', '0', '0', '1', '0', '10', '', '1', '2017-09-03 18:12:11', '2017-09-03 18:12:11', '5', null, null, null, '2017-09-03 17:42:16', null, null, '20170820124232907421', '', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('642220701256', '16923103', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:00:10', '2017-09-03 18:00:10', '5', null, null, null, '2017-09-03 17:30:13', null, null, '20170820124232907421', '1', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('666747306351', '13849107', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:29:48', '2017-09-03 18:29:48', '5', null, null, null, '2017-09-03 17:59:50', null, null, '20170820124232907421', '064479967428', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('832055983467', '68998248', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:27:13', '2017-09-03 18:27:13', '5', null, null, null, '2017-09-03 17:57:15', null, null, '20170820124232907421', '', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('923511340766', '35033231', '35', '0', '', '', '40', '40', '0', '1', '0', '10', '', '1', '2017-09-03 18:25:04', '2017-09-03 18:25:04', '5', null, null, null, '2017-09-03 17:55:09', null, null, '20170820124232907421', '', '', '001@1', '2');
 
 -- ----------------------------
 -- Table structure for `tb_ordertime`
@@ -446,11 +460,19 @@ CREATE TABLE `tb_order_lunch` (
   `lunch_id` varchar(100) DEFAULT NULL,
   `shop_number` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_lunch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_order_lunch
 -- ----------------------------
+INSERT INTO `tb_order_lunch` VALUES ('9', '642220701256', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('10', '342766487147', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('11', '602108883035', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('12', '923511340766', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('13', '832055983467', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('14', '694960029213', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('15', '426291413676', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('16', '666747306351', '001', '1');
 
 -- ----------------------------
 -- Table structure for `tb_receive_condition`
@@ -701,8 +723,8 @@ DROP TABLE IF EXISTS `tb_wxmember_wealth`;
 CREATE TABLE `tb_wxmember_wealth` (
   `wxmember_wealth_id` int(11) NOT NULL AUTO_INCREMENT,
   `wxmember_id` varchar(100) DEFAULT NULL,
-  `now_integral` int(11) DEFAULT NULL,
-  `before_integral` int(11) DEFAULT NULL,
+  `now_integral` varchar(11) DEFAULT NULL,
+  `before_integral` varchar(11) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`wxmember_wealth_id`)
@@ -712,7 +734,7 @@ CREATE TABLE `tb_wxmember_wealth` (
 -- Records of tb_wxmember_wealth
 -- ----------------------------
 INSERT INTO `tb_wxmember_wealth` VALUES ('1', '1', '1000', '0', '2017-08-02 11:58:49', '2017-09-03 16:01:45');
-INSERT INTO `tb_wxmember_wealth` VALUES ('2', '20170820124232907421', '1000', '0', '2017-08-20 00:42:44', '2017-09-03 16:01:44');
+INSERT INTO `tb_wxmember_wealth` VALUES ('2', '20170820124232907421', '970.00', '1000.0', '2017-08-20 00:42:44', '2017-09-03 17:59:50');
 
 -- ----------------------------
 -- Table structure for `tb_wxmember_wealthhistory`
@@ -721,9 +743,10 @@ DROP TABLE IF EXISTS `tb_wxmember_wealthhistory`;
 CREATE TABLE `tb_wxmember_wealthhistory` (
   `wxmember_wealthhistory_id` varchar(100) NOT NULL,
   `wxmember_id` varchar(100) DEFAULT NULL,
-  `money` int(11) DEFAULT NULL,
+  `money` varchar(11) DEFAULT NULL,
   `isincome` varchar(4) DEFAULT NULL,
   `order_id` varchar(100) DEFAULT NULL,
+  `wealth_type` varchar(4) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`wxmember_wealthhistory_id`)
@@ -732,3 +755,9 @@ CREATE TABLE `tb_wxmember_wealthhistory` (
 -- ----------------------------
 -- Records of tb_wxmember_wealthhistory
 -- ----------------------------
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('103514790418', '20170820124232907421', '10', '1', '426291413676', '3', '2017-09-03 17:58:59', '2017-09-03 17:58:59');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('107054773882', '20170820124232907421', '40.00', null, '832055983467', '1', '2017-09-03 17:57:15', '2017-09-03 17:57:15');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('140424299816', '20170820124232907421', '10', null, '832055983467', '3', '2017-09-03 17:57:15', '2017-09-03 17:57:15');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('203660493354', '20170820124232907421', '40.00', '2', '666747306351', '1', '2017-09-03 17:59:50', '2017-09-03 17:59:50');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('563342247953', '20170820124232907421', '10', '1', '666747306351', '3', '2017-09-03 17:59:50', '2017-09-03 17:59:50');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('643724860412', '20170820124232907421', '40.00', '2', '426291413676', '1', '2017-09-03 17:58:59', '2017-09-03 17:58:59');

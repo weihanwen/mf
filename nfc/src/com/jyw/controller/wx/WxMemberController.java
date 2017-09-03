@@ -1115,8 +1115,9 @@ public class WxMemberController extends BaseController {
 	 * 处理跑腿费得分配问题
 	 * @param order_id
 	 * @param shopgoodsnumber
+	 * @throws Exception 
 	 */
-	public static void DeliveryTime(PageData orderpd){
+	public static void DeliveryTime(PageData orderpd) throws Exception{
 		DecimalFormat    df   = new DecimalFormat("######0.00"); 
 		int shopgoodsnumber=0;
  		try {
@@ -1187,6 +1188,8 @@ public class WxMemberController extends BaseController {
  			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			ServiceHelper.getWxmemberService().saveLog("03", "","DeliveryTime新增记录出现错误"+e.toString());
 		}
  	}
 	
@@ -1202,22 +1205,24 @@ public class WxMemberController extends BaseController {
 			}
 			//新增积分使用历史记录
 			PageData wealpd=new PageData();
+			wealpd.put("wxmember_wealthhistory_id", BaseController.get12UID());
 			wealpd.put("wxmember_id", pd.getString("wxmember_id"));
 			wealpd.put("order_id", pd.getString("order_id"));
 			wealpd.put("money", pd.getString("use_integral"));
-			wealpd.put("income", "2");
+			wealpd.put("isincome", "2");
 			wealpd.put("wealth_type", "1");
 			ServiceHelper.getWxmemberService().saveWealthHistory(wealpd);	
 			//新增赠送积分记录
 			wealpd=new PageData();
+			wealpd.put("wxmember_wealthhistory_id", BaseController.get12UID());
 			wealpd.put("wxmember_id", pd.getString("wxmember_id"));
 			wealpd.put("order_id", pd.getString("order_id"));
 			wealpd.put("money", pd.getString("send_integral"));
-			wealpd.put("income", "1");
+			wealpd.put("isincome", "1");
 			wealpd.put("wealth_type", "3");
 			ServiceHelper.getWxmemberService().saveWealthHistory(wealpd);	
 			//更新会员积分
-			double _integral=Integer.parseInt(pd.getString("use_integral"))-Integer.parseInt(pd.getString("send_integral"));
+			double _integral=Double.parseDouble(pd.getString("use_integral"))-Double.parseDouble(pd.getString("send_integral"));
 			double now_integral=Double.parseDouble(ServiceHelper.getWxmemberService().getNowIntegral(pd));
  			wealpd.put("now_integral", df.format(now_integral-_integral));
 			wealpd.put("before_integral", now_integral);
@@ -1229,6 +1234,7 @@ public class WxMemberController extends BaseController {
 			}
  		} catch (Exception e) {
 			// TODO: handle exception
+ 			e.printStackTrace();
 			ServiceHelper.getWxmemberService().saveLog("03", "","addPurchaseRecord新增记录出现错误"+e.toString());
 		}
 	}

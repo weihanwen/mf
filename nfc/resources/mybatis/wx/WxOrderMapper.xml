@@ -172,7 +172,7 @@
 			c.contacts,
  			c.contacts_number,
  			c.corporate_name,
- 			c.floor_numbe,
+ 			c.floor_number,
 			d.address_name
   		from 
 			tb_order a  
@@ -218,7 +218,7 @@
 			c.contacts,
  			c.contacts_number,
  			c.corporate_name,
- 			c.floor_numbe,
+ 			c.floor_number,
 			d.address_name
   		from 
 			tb_order a  
@@ -256,7 +256,7 @@
 			c.contacts,
  			c.contacts_number,
  			c.corporate_name,
- 			c.floor_numbe,
+ 			c.floor_number,
 			d.address_name
   		from 
 			tb_order a  
@@ -381,7 +381,7 @@
 			a.order_id,
  			b.lunch_id,
 			b.shop_number,
-			cast(b.shop_number*c.sale_money as as decimal(10,2)) allmoney,
+			cast(b.shop_number*c.sale_money   as decimal(10,2)) allmoney,
 			c.lunch_name,
 			c.dc_stocknumber,
 			c.dc_stocknumber+b.shop_number as new_stocknumber

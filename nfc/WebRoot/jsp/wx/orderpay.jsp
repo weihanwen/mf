@@ -226,6 +226,10 @@
 	var flag=true;
 	//确认支付--直接购买的会判断库存
 	function surepay(){
+		if($("wxmember_address_id").val() == ""){
+		    alert("地址不能为空");
+		    return;
+		}
 		if(!flag){
 			return;
 		}
@@ -269,7 +273,7 @@
 	   				//在支付成功的状态下跳转订单到订单详情界面
 	   				window.location.href="wxmember/payok.do?order_id="+map.out_trade_no; 
 	   			}
- 	   		} 
+ 	   		}
 	    }); 
 	}
 	

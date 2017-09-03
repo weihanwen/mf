@@ -45,7 +45,8 @@
 <div class="header">
     <span class='ccyc head_tit '  onclick="sureThisRed()">确认选择</span>
 </div>
-<script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/jquery-1.8.3.min.js"></script>
+ <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript">
 //确认使用红包
 function sureThisRed(){
