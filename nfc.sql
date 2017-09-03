@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2017-09-02 17:15:56
+Date: 2017-09-03 15:54:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -156,7 +156,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '九鱼', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2017-08-20 00:19:38', '127.0.0.1', '0', '超级管理员', 'default', 'admin@main.com', '123', '15260282340');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '九鱼', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2017-09-03 13:42:01', '127.0.0.1', '0', '超级管理员', 'default', 'admin@main.com', '123', '15260282340');
 
 -- ----------------------------
 -- Table structure for `sys_user_qx`
@@ -249,9 +249,9 @@ CREATE TABLE `tb_carousel_figure` (
 -- ----------------------------
 -- Records of tb_carousel_figure
 -- ----------------------------
-INSERT INTO `tb_carousel_figure` VALUES ('4', ' 第一张', 'http://localhost/FileSave//carousel/f479d58f6fc74aea824cd43e3102a2af.jpg', '2017-08-02', '2017-08-31', '0', '1', '', '2017-08-02 14:14:55', '2017-08-12 13:33:53', null);
-INSERT INTO `tb_carousel_figure` VALUES ('5', ' 第二张', 'http://localhost/FileSave//carousel/4a0eecac645d4ffb8db4abadbbf893b7.jpg', '2017-08-02', '2017-08-28', '0', '2', 'https://www.jiuyuvip.com', '2017-08-02 14:15:23', '2017-08-12 13:33:58', null);
-INSERT INTO `tb_carousel_figure` VALUES ('6', ' 第三张', 'http://localhost/FileSave//carousel/678869bf432b4be681855af9fe94aa50.jpg', '2017-08-02', '2017-08-25', '0', '3', '1', '2017-08-02 14:16:03', '2017-08-12 13:34:03', null);
+INSERT INTO `tb_carousel_figure` VALUES ('4', ' 第一张', 'http://localhost/FileSave//carousel/f479d58f6fc74aea824cd43e3102a2af.jpg', '2017-08-02', '2017-09-30', '0', '1', '', '2017-08-02 14:14:55', '2017-09-03 13:45:35', null);
+INSERT INTO `tb_carousel_figure` VALUES ('5', ' 第二张', 'http://localhost/FileSave//carousel/4a0eecac645d4ffb8db4abadbbf893b7.jpg', '2017-08-02', '2017-09-28', '0', '2', 'https://www.jiuyuvip.com', '2017-08-02 14:15:23', '2017-09-03 13:45:41', null);
+INSERT INTO `tb_carousel_figure` VALUES ('6', ' 第三张', 'http://localhost/FileSave//carousel/678869bf432b4be681855af9fe94aa50.jpg', '2017-08-02', '2017-09-29', '0', '3', '001', '2017-08-02 14:16:03', '2017-09-03 13:45:48', null);
 
 -- ----------------------------
 -- Table structure for `tb_category`
@@ -284,13 +284,14 @@ CREATE TABLE `tb_daily_menu` (
   `address_id` int(11) DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`daily_menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_daily_menu
 -- ----------------------------
-INSERT INTO `tb_daily_menu` VALUES ('3', '2017-09-03', '001,', null, '2017-09-02 13:18:56');
+INSERT INTO `tb_daily_menu` VALUES ('3', '2017-09-03', '001,002', null, '2017-09-03 13:33:44');
 INSERT INTO `tb_daily_menu` VALUES ('4', '2017-09-02', '001,002,', null, '2017-09-02 13:19:01');
+INSERT INTO `tb_daily_menu` VALUES ('5', '2017-09-04', '001,002', null, null);
 
 -- ----------------------------
 -- Table structure for `tb_delivery_fee`
@@ -313,12 +314,12 @@ INSERT INTO `tb_delivery_fee` VALUES ('1', '1', '5', '0', '2017-07-29 14:09:52',
 INSERT INTO `tb_delivery_fee` VALUES ('2', '2', '6', '0', '2017-07-29 14:09:57', '2017-07-29 14:12:55');
 INSERT INTO `tb_delivery_fee` VALUES ('3', '3', '7', '0', '2017-07-29 14:09:52', '2017-07-29 14:12:56');
 INSERT INTO `tb_delivery_fee` VALUES ('4', '4', '8', '0', '2017-07-29 14:09:52', '2017-07-29 14:12:56');
-INSERT INTO `tb_delivery_fee` VALUES ('5', '5', '9', '0', '2017-07-29 14:09:52', '2017-07-29 14:12:59');
-INSERT INTO `tb_delivery_fee` VALUES ('6', '6', '8', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:00');
-INSERT INTO `tb_delivery_fee` VALUES ('7', '7', '7', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:01');
-INSERT INTO `tb_delivery_fee` VALUES ('8', '8', '6', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:02');
-INSERT INTO `tb_delivery_fee` VALUES ('9', '9', '5', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:03');
-INSERT INTO `tb_delivery_fee` VALUES ('10', '10', '4', '0', '2017-07-29 14:09:52', '2017-07-29 14:13:04');
+INSERT INTO `tb_delivery_fee` VALUES ('5', '5', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:42:44');
+INSERT INTO `tb_delivery_fee` VALUES ('6', '6', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:44:58');
+INSERT INTO `tb_delivery_fee` VALUES ('7', '7', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:45:04');
+INSERT INTO `tb_delivery_fee` VALUES ('8', '8', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:45:11');
+INSERT INTO `tb_delivery_fee` VALUES ('9', '9', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:45:17');
+INSERT INTO `tb_delivery_fee` VALUES ('10', '10', '0', '0', '2017-07-29 14:09:52', '2017-09-03 13:44:51');
 INSERT INTO `tb_delivery_fee` VALUES ('11', '0', '0', '0', '2017-07-31 16:30:23', '2017-08-30 14:27:27');
 
 -- ----------------------------
@@ -327,7 +328,7 @@ INSERT INTO `tb_delivery_fee` VALUES ('11', '0', '0', '0', '2017-07-31 16:30:23'
 DROP TABLE IF EXISTS `tb_log`;
 CREATE TABLE `tb_log` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL COMMENT '01：验签失败\r\n02：订单不存在\r\n03：bug\r\n04：金额匹配不上',
   `order_id` varchar(100) DEFAULT NULL,
   `message` text,
   `createtime` datetime DEFAULT NULL,
@@ -405,14 +406,16 @@ CREATE TABLE `tb_order` (
   `overtime` datetime DEFAULT NULL,
   `wxmember_id` varchar(100) DEFAULT NULL,
   `wxmember_address_id` int(11) DEFAULT NULL,
+  `allshopcart_id` varchar(100) DEFAULT NULL COMMENT '购物车购买集合',
+  `lunch_idstr` varchar(100) DEFAULT NULL COMMENT '直接购买商品集合',
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_order
 -- ----------------------------
-INSERT INTO `tb_order` VALUES ('1', '1', '1', '1', '1', '1', '22', '1', '1', null, '99', '1', '1', '1', '00:00:00', '2017-08-01', '10:07:33', '1', '2', '0', null, '2017-08-01 10:07:30', null, '2017-08-19 18:06:31', '1', '1');
-INSERT INTO `tb_order` VALUES ('22', '2', '2', '2', '2', '2', '2', '2', '2', null, '4', '2', '2', '2', '10:09:02', '2017-08-01', '10:09:08', '2', '1', '0', null, '2017-08-01 10:09:13', null, '2017-08-19 18:06:29', '1', '1');
+INSERT INTO `tb_order` VALUES ('1', '1', '1', '1', '1', '1', '22', '1', '1', null, '99', '1', '1', '1', '00:00:00', '2017-08-01', '10:07:33', '1', '2', '0', null, '2017-08-01 10:07:30', null, '2017-08-19 18:06:31', '1', '1', null, null);
+INSERT INTO `tb_order` VALUES ('22', '2', '2', '2', '2', '2', '2', '2', '2', null, '4', '2', '2', '2', '10:09:02', '2017-08-01', '10:09:08', '2', '1', '0', null, '2017-08-01 10:09:13', null, '2017-08-19 18:06:29', '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `tb_ordertime`
@@ -424,6 +427,7 @@ CREATE TABLE `tb_ordertime` (
   `address` varchar(100) DEFAULT NULL,
   `createtime` datetime DEFAULT NULL,
   `endtime` datetime DEFAULT NULL COMMENT '结束时间',
+  `isover` varchar(4) DEFAULT '0' COMMENT '是否已经处理',
   PRIMARY KEY (`ordertime_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -506,7 +510,7 @@ CREATE TABLE `tb_scheduled_time` (
 -- ----------------------------
 -- Records of tb_scheduled_time
 -- ----------------------------
-INSERT INTO `tb_scheduled_time` VALUES ('3', '2017-09-03', '午餐', '00:00:00', '00:00:00', '2017-09-02 00:00:00', '2017-09-02 16:34:38', '1,', '2017-09-02 13:53:42');
+INSERT INTO `tb_scheduled_time` VALUES ('3', '2017-09-04', '午餐', '12:00:00', '13:00:00', '2017-09-03 00:00:00', '2017-09-03 16:34:38', '1,', '2017-09-03 13:39:18');
 
 -- ----------------------------
 -- Table structure for `tb_shopcart`
