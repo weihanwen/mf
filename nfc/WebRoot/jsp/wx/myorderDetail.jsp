@@ -17,49 +17,43 @@
 	 <script src="js/jquery-1.8.3.min.js"></script>
  	<script src="js/wx/tongyong.js"></script>
 <style type="text/css">
-	.ddxq-text p{
-		line-height: 30px;
-		margin-left: 10px;
+	.clearfix{
+	 	display: block;
+	    width: 100%;
+	     background-color: #ffffff;
+	    font-size: 20px;
+	     margin-bottom: 5px;
 	}
-	.ddxq-thj{
-
+	.clearfix .fl{
+	 	width: 90%; text-align: left;padding-left:10px;
 	}
-	.my-thj-list p{
-		text-align: right;
-		line-height: 20px;
+	.clearfix .fr{
+	 	width: 90%; text-align: right;padding-right:10px;
 	}
-	.ddxq-red{
-		padding:10px;
-		text-align: center;
-		font-size: 14px;
-	}
-	.blod{
-		font-weight: bold;
-		font-size: 16px;
-	}
-	.ddxq-list p{
-		text-align: left;
-	}
-	.tit_bg_box {
-	    position: absolute; right: 0.4rem; top: 0.4rem; display: inline; height: 1.5rem; width: 3.3rem; font-size: 10px; background-size: 100%;
-	}
-	.inline_box{
-		height: 2.1rem;padding: 0.4rem 0.4rem;width: 100%;position: relative;line-height: 1.6rem;font-size: 2.1rem;
-	}
+	 
 </style>
 </head>
 <body style="background:#ededed;">
 <header class="ui-header ui-header-positive ui-border-b bg_ff0600">
     <i class="ui-icon-return" onclick="history.back()"></i><h1 class="col_f">订单详情</h1>
 </header>
-<div class="wallet-content clearfix">
+<section style="top:40px;">
+<div class="wallet-content">
 	<ul>
 		<li class="clearfix">
-			<div class="fl">
-				<p class="fourteen-px">总金额</p>
+			<div class="fl"  >
+				<p class="fourteen-px">订单总金额</p>
  			</div>
 			<div class="fr">
 				<p>${pd.allmoney}</p>
+			</div>
+		</li>
+		<li class="clearfix">
+			<div class="fl"  >
+				<p class="fourteen-px">跑腿费+餐盒费</p>
+ 			</div>
+			<div class="fr">
+				<p>${pd.delivery_fee}</p>
 			</div>
 		</li>
 		<li class="clearfix">
@@ -71,10 +65,6 @@
 				<p>${pd.discount_money} </p>
 			</div>
 		</li>
-	</ul>
-</div> 
-<div class="wallet-content clearfix">
-	<ul>
 		<li class="clearfix">
 			<div class="fl">
 				<p class="fourteen-px">积分支付</p>
@@ -92,30 +82,12 @@
 				<p>${pd.use_wx} </p>
 			</div>
 		</li>
-	</ul>
-</div> 
-<div class="wallet-content clearfix">
-	<p class="wallet-content-title" style="font-size: 17px;">商品信息</p>
-	<ul >
-		<c:forEach items="${lunchList}" var="var">
-		 	<li class='clearfix'> 
-		 		<div class='fl'>
-		 			 <p class='fourteen-px' style='font-size: 14px;'>${var.lunch_name} X ${var.shopnumber}</p> 
-		 		</div> 
-		 		<div class='fr'> <p style='color:red;'>${var.allmoney}</p> 
-		 		</div> 
-		 	</li>
-		</c:forEach>
- 	</ul>
-</div>
-<div class="wallet-content clearfix">
-	<ul>
 		<li class="clearfix">
 			<div class="fl">
 				<p class="fourteen-px">订单号</p>
  			</div>
 			<div class="fr">
-				<p id="look_number">${pd.lookorder_id }</p>
+				<p id="look_number">${pd.looknumber}</p>
 			</div>
 		</li>
 		<li class="clearfix">
@@ -127,7 +99,37 @@
 				<p id="createtime">${pd.createtime } </p>
 			</div>
 		</li>
+		<li class="clearfix">
+			<div class="fl">
+				<p class="fourteen-px">商品列表</p>
+ 			</div>
+ 		</li>
+		<c:forEach items="${lunchList}" var="var">
+		 	<li class='clearfix'> 
+		 		<div class='fl'>
+		 			 <p style='font-size: 21px;'>${var.lunch_name} X ${var.shop_number}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='color:red;'> ￥：${var.allmoney}</span></p> 
+		 		</div> 
+ 		 	</li>
+		</c:forEach>
+		<li class="clearfix">
+			<div class="fl">
+				<p class="fourteen-px">联系方式</p>
+ 			</div>
+			<div class="fr">
+				<p id="createtime">${pd.contacts } -- ${pd.contacts_number }</p>
+			</div>
+		</li>
+		<li class="clearfix">
+			<div class="fl">
+				<p class="fourteen-px">配送地址</p>
+				
+			</div>
+			<div class="fr">
+				<p id="createtime">${pd.address_name }${pd.corporate_name } ${pd.floor_number }  </p>
+			</div>
+		</li>
 	</ul>
 </div> 
+</section> 
  </body>
 </html>

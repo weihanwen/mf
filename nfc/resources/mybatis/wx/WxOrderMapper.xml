@@ -46,7 +46,7 @@
 			#{use_integral},
 			#{use_wx},
 			#{pay_type},
-			'0',<!-- #{order_status} -->
+			#{order_status}, 
 			#{send_integral},
 			#{serial_number},
 			#{order_type},
@@ -165,7 +165,7 @@
 			a.reserve_arrival_time,
  			a.delivery_time,
 			a.delivery_fee,
-			a.createtime,
+			date_format(a.createtime ,'%Y-%m-%d %H:%i:%s') as createtime,
 			a.overtime,
 			a.wxmember_id,
 			a.wxmember_address_id,
@@ -176,13 +176,12 @@
 			d.address_name
   		from 
 			tb_order a  
-			left join tb_wxmember b on a.wxmember_id=b.wxmember_id
-			left join tb_wxmember_address c on a.wxmember_id=c.wxmember_id
-			left join tb_address d on c.address_id=d.address_id
+			left join tb_wxmember_address c on a.wxmember_address_id=c.wxmember_address_id 
+			left join tb_address d on c.address_id=d.address_id 
 		where 
 			a.wxmember_id=#{wxmember_id}
-			and order_status != '0'
-		order by createtime desc
+			and a.order_status != '0'
+		order by a.createtime desc
 		limit 30
    	</select>
  	
@@ -221,12 +220,12 @@
  			c.floor_number,
 			d.address_name
   		from 
-			tb_order a  
-			left join tb_wxmember b on a.wxmember_id=b.wxmember_id
+			tb_order a  join tb_wxmember b on a.wxmember_id=b.wxmember_id
 			left join tb_wxmember_address c on a.wxmember_id=c.wxmember_id
 			left join tb_address d on c.address_id=d.address_id
 		where 
 			a.order_id=#{order_id}
+		limit 1
    	</select>
    	
    	
@@ -390,7 +389,7 @@
 			left join tb_order_lunch b on a.order_id=b.order_id
 			left join tb_lunch c on b.lunch_id=c.lunch_id
   		WHERE
-			 order_id= #{order_id}
+			 a.order_id= #{order_id}
     	</select>
    
 	

@@ -240,15 +240,7 @@ public class BaseController {
 			String str =DateUtil.getDayshms()+ String.valueOf( (int)((Math.random()*9+1)*100000));
 		return str;
 	}
-	
-	
-	/**
-	 * 得到反馈类型id
-	 */
-	public static String getFanKuiID(){
-			String str ="FK"+ DateUtil.getDayshms()+  (int)((Math.random()*9+1)*1000);
-		return str;
-	}
+ 
 	
 	/**
 	 * 得到6位的id

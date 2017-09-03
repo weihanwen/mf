@@ -33,8 +33,11 @@
 		from 
 			tb_shopcart
 		where 
-			wxmember_id = #{wxmember_id}
- 			and lunch_id=#{lunch_id}
+			<choose>
+				<when test="shopcart_id != null and shopcart_id != '' ">shopcart_id =#{shopcart_id}</when>
+				<otherwise>wxmember_id = #{wxmember_id} and lunch_id=#{lunch_id}</otherwise>
+			</choose>
+			
  	</select>
 	<delete id="deleteShopCartById" parameterType="pd">
 		delete from tb_shopcart  
@@ -43,8 +46,10 @@
 				<when test="shopcart_id != null and shopcart_id != ''">shopcart_id = #{shopcart_id}</when>
 				<otherwise>wxmember_id = #{wxmember_id} and lunch_id=#{lunch_id}</otherwise>
 			</choose>
-	
-	</delete>
+ 	</delete>
+ 	<delete id="deleteShopCart" >
+		delete from tb_shopcart  
+ 	</delete>
  	<update id="updateShopCartById" parameterType="pd">
 			update  tb_shopcart
 			set 

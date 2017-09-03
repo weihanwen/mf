@@ -122,12 +122,15 @@
 			money,
 			isincome,
 			order_id,
+			wealth_type,
 			createtime,
 			updatetime
 		from 
 			tb_wxmember_wealthhistory
 		where 
 			wxmember_id = #{wxmember_id}
+		order by createtime desc
+		limit 30
  	</select>
  	
  	

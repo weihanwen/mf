@@ -25,8 +25,17 @@
 <div class="rp_item">
 	<c:forEach items="${integralList}" var="var">
 		<div class="rp_box clf">
-	        <div class="cash col_c9">
-	        	<span style="font-size: 0.25rem;;">${var.money}</span>
+	        <div class="cash col_c9" style="width:100%;">
+	        	
+	        	<span style="font-size: 0.25rem;;">
+	        		<c:choose>
+	        			<c:when test="${var.wealth_type eq '1'}">订单支付积分</c:when>
+	        			<c:when test="${var.wealth_type eq '2'}">返跑腿费+送餐费</c:when>
+	        			<c:otherwise>赠送积分</c:otherwise>
+	        		</c:choose>
+	        	</span>
+	        	：
+	        	<span style="font-size: 0.25rem;;">${var.isincome eq '2'?'-':'+'} ${var.money}</span>
  	        </div>
 	    </div>
 	</c:forEach>

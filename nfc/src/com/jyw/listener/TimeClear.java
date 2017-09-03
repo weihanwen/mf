@@ -36,6 +36,7 @@ public class TimeClear {
  				    try{
  				    	deleteOrder();
  				    	deleteOrderTime();
+ 				    	deleteShopcart();
     				}catch(Exception e){
 				    	System.out.println("每天凌晨清空"+e.toString());
 				    }
@@ -63,6 +64,15 @@ public class TimeClear {
  			public void deleteOrderTime(){
  				try {
  					ServiceHelper.getWxOrderService().deleteOrderTime(null);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+ 			}
+ 			
+ 			public void deleteShopcart(){
+ 				try {
+ 					ServiceHelper.getWxmemberService().deleteShopCart(null);
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();

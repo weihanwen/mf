@@ -138,6 +138,9 @@ public class   WxmemberService {
 	public void deleteShopCartById(PageData pd)throws Exception{
 		dao.delete("WxShopcartMapper.deleteShopCartById", pd);
 	}
+	public void deleteShopCart(PageData pd)throws Exception{
+		dao.delete("WxShopcartMapper.deleteShopCart", pd);
+	}
 	public void updateShopCartById(PageData pd)throws Exception{
 		dao.update("WxShopcartMapper.updateShopCartById", pd);
 	}

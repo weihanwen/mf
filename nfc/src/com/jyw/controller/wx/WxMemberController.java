@@ -1020,7 +1020,7 @@ public class WxMemberController extends BaseController {
 				return map;
  			}
  			//设置订单号
-			String order_id=BaseController.get12UID();
+			String order_id=BaseController.getTimeID();
 			pd.put("order_id", order_id);
 			pd.put("looknumber", BaseController.get8UID());
 			//如果是直接购买需要判断库存
@@ -1063,7 +1063,7 @@ public class WxMemberController extends BaseController {
   			}
  			//获取微信支付嘚信息
   			String use_wx=pd.getString("use_wx");
- 			if(Integer.parseInt(use_wx) > 0){
+ 			if(Double.parseDouble(use_wx) > 0){
 				//新增微支付完成订单
  				wxOrderService.saveOrder(pd);
  				data=WxPayOrder(use_wx, "1", order_id, wxmemberService.findById(pd).getString("open_id"));
@@ -1075,8 +1075,7 @@ public class WxMemberController extends BaseController {
 					pd.put("order_status", "2");
 				}
 				wxOrderService.saveOrder(pd);
-				
-				addPurchaseRecord(pd);
+ 				addPurchaseRecord(pd);
  				data.put("out_trade_no", order_id);
   			}
  		}catch(Exception e){
@@ -1131,9 +1130,10 @@ public class WxMemberController extends BaseController {
 					String string = allshopcart_id[i];
 					shoppd=new PageData();
 					shoppd.put("shopcart_id", string);
-					shoppd=ServiceHelper.getWxmemberService().findShopCartById(shoppd);
-					if(shoppd != null){
- 						 shopgoodsnumber+=Integer.parseInt(shoppd.getString("shop_number"));
+ 					if(ServiceHelper.getWxmemberService().findShopCartById(shoppd) != null){
+ 						 shopgoodsnumber+=Integer.parseInt(ServiceHelper.getWxmemberService().findShopCartById(shoppd).getString("shop_number"));
+ 						 //删除购物车
+ 						 ServiceHelper.getWxmemberService().deleteShopCartById(shoppd);
 					}
 					shoppd=null;
  				}
@@ -1147,7 +1147,7 @@ public class WxMemberController extends BaseController {
  			}
  			if(timepd == null){
  				timepd=new PageData();
- 				String ordertime_id=BaseController.get10UID();
+ 				String ordertime_id=BaseController.getTimeID();
  				timepd.put("ordertime_id", ordertime_id);
  				timepd.put("order_idstr", order_idnumber);
  				timepd.put("createtime", DateUtil.getTime());
@@ -1157,8 +1157,7 @@ public class WxMemberController extends BaseController {
 			 	 DeliveryFeeTime op=new DeliveryFeeTime(ordertime_id);
 				 Timer tt=new Timer();
 				 tt.schedule(op, 1000*60*10);
- 				
- 			}else{
+  			}else{
  				String order_idstr=timepd.getString("order_idstr")+order_idnumber;
  				if(order_idstr.split(",").length >= 5){
  					timepd.put("ok", "1");
@@ -1205,7 +1204,7 @@ public class WxMemberController extends BaseController {
 			}
 			//新增积分使用历史记录
 			PageData wealpd=new PageData();
-			wealpd.put("wxmember_wealthhistory_id", BaseController.get12UID());
+			wealpd.put("wxmember_wealthhistory_id", BaseController.getTimeID());
 			wealpd.put("wxmember_id", pd.getString("wxmember_id"));
 			wealpd.put("order_id", pd.getString("order_id"));
 			wealpd.put("money", pd.getString("use_integral"));
@@ -1214,7 +1213,7 @@ public class WxMemberController extends BaseController {
 			ServiceHelper.getWxmemberService().saveWealthHistory(wealpd);	
 			//新增赠送积分记录
 			wealpd=new PageData();
-			wealpd.put("wxmember_wealthhistory_id", BaseController.get12UID());
+			wealpd.put("wxmember_wealthhistory_id", BaseController.getTimeID());
 			wealpd.put("wxmember_id", pd.getString("wxmember_id"));
 			wealpd.put("order_id", pd.getString("order_id"));
 			wealpd.put("money", pd.getString("send_integral"));

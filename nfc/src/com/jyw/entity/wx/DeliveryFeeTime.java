@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.TimerTask;
 
+import com.jyw.controller.base.BaseController;
 import com.jyw.util.PageData;
 import com.jyw.util.ServiceHelper;
  
@@ -55,6 +56,7 @@ public class DeliveryFeeTime extends TimerTask{
 							e.put("before_integral", e.getString("now_integral"));
 							ServiceHelper.getWxmemberService().changeMoneyByMember(e);
 							//新增财富记录
+							e.put("wxmember_wealthhistory_id", BaseController.getTimeID());
 	 						e.put("money", df.format(discount_money_every));
 							e.put("income", "1");
 							e.put("wealth_type", "2");
