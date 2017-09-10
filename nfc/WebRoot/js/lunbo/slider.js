@@ -37,7 +37,7 @@ jQuery(document).ready(function ($) {
               },
               $ThumbnailNavigatorOptions: {
                 $Class: $JssorThumbnailNavigator$,
-                $Cols: 5,
+                $Cols: 4,
                 $SpacingX: 8,
                 $SpacingY: 8,
                 $Align: 200
@@ -59,8 +59,8 @@ jQuery(document).ready(function ($) {
                 }
             }
             ScaleSlider();
-            <!-- $(window).bind("load", ScaleSlider); -->
+ 
             $(window).bind("resize", ScaleSlider);
-            <!-- $(window).bind("orientationchange", ScaleSlider); -->
+ 
             //responsive code end
         });

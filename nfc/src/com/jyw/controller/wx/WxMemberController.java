@@ -556,7 +556,7 @@ public class WxMemberController extends BaseController {
 					}
 				}else{
 					result="0";
-					message="请刷新页面，再购买";
+					message="库存不足，正在补足中";
 				}
 				
 				map.put("data", wxmemberService.countShopcartNumber(pd));

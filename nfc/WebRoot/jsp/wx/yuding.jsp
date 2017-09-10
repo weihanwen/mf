@@ -19,7 +19,7 @@
 <nav class="top">
 	<div>预定</div>
 </nav>
-<section class="onesection">
+<section class="onesection" style="height:85%;">
 			<!--大类类别-->
 		     <div class="bigsort"  style="display:none;">
 		      	<c:forEach items="${leibieList}" var="var" varStatus="vs">

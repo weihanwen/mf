@@ -64,51 +64,6 @@
 	                <img data-u="thumb" src="${var.dc_images_small}" lunch_id="${var.lunch_id}"/>
 	            </div>
             </c:forEach>
-                 
-           <!--<div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/02.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-02.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/03.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-03.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/04.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-04.jpg" />
-            </div>
-             <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/05.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-05.jpg" />
-            </div>
-             <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/06.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-06.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/07.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-07.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/08.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-08.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/09.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-09.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/10.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-10.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/11.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-11.jpg" />
-            </div>
-            <div data-p="144.50" style="display: none;">
-                <img data-u="image" src="images/lunbo/12.jpg" />
-                <img data-u="thumb" src="images/lunbo/thumb-12.jpg" />
-            </div> -->
         </div>
         <!-- Thumbnail Navigator -->
         <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:1600px;height:172px;"  data-autocenter="1">
@@ -128,7 +83,7 @@
     <!-- #endregion Jssor Slider End -->
 </div>
 
-<footer class="twofooter">
+<footer class="twofooter" style="height:3.5rem">
  	<a href="wxmember/goshopcatList.do"  class="foot_guc">
  	 	<span class="iconfont icon-gouwuche1 icon2"></span><span class="shopcarnumber"  >${pd.shopnumber}</span>
  	</a>
@@ -138,7 +93,6 @@
 </body>
  <script src="js/jquery-1.8.3.min.js"></script>
  <script src="js/wx/tongyong.js"></script>
-<script type="text/javascript" src="js/lunbo/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="js/lunbo/jssor.slider.mini.js"></script>
 <script type="text/javascript" src="js/lunbo/slider.js"></script>
 <script type="text/javascript">
@@ -160,7 +114,6 @@ function backreturn(){
 //添加进购物车   onclick="clikthisLunch()"
 function clikthisLunch(){
 	var lunch_id=$(".pav").find("img").attr("lunch_id");
-	//alert(lunch_id);
 	$.ajax({
 		type:"post",
 			url:"wxmember/addshopcart.do",

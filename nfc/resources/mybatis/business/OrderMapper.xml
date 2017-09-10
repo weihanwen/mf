@@ -44,7 +44,6 @@
 			a.serial_number,
 			a.order_type,
 			a.reserve_arrival_time,
-			a.reserve_day,
 			a.delivery_time,
 			a.delivery_fee,
 			a.createtime,

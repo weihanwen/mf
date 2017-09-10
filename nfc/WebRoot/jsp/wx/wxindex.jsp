@@ -26,13 +26,13 @@
 			<div class="swiper-wrapper" >
 				 <c:forEach items="${lunboList}" var="var">
 				 	<c:choose>
-				 		<c:when test="${var.link_type eq '2'}"><div class='swiper-slide'><a href="${var.link_content}"><img src="${var.image_url}"></a></div></c:when>
-				 		<c:when test="${var.link_type eq '3'}"><div class='swiper-slide'><a href="wxmember/godetailBygoods.do?lunch_id=${var.link_content}"><img src="${var.image_url}"></a></div></c:when>
-				 		<c:otherwise><div class='swiper-slide'><a><img src="${var.image_url}"></a></div></c:otherwise>
+				 		<c:when test="${var.link_type eq '2'}"><div class='swiper-slide'><a href="${var.link_content}"><img src="${var.image_url}" style="height:100px;"></a></div></c:when>
+				 		<c:when test="${var.link_type eq '3'}"><div class='swiper-slide'><a href="wxmember/godetailBygoods.do?lunch_id=${var.link_content}"><img src="${var.image_url}" style="height:100px;"></a></div></c:when>
+				 		<c:otherwise><div class='swiper-slide'><a><img src="${var.image_url}" style="height:100px;"> </a></div></c:otherwise>
 				 	</c:choose>
  				 </c:forEach>
  			  </div>
-			<div class="swiper-pagination swiper-pagination_2"  style=" width: 100%;"></div>
+			<div class="swiper-pagination swiper-pagination_2" style="height:100px;"></div>
 		</div>
 	</div>
     
@@ -112,7 +112,7 @@ function changeShoyLb(category_id,obj){
 				 for (var i = 0; i < lunchList.length; i++) {
 					 var s="<div class='goodsshow' onclick='goDetail(this,1)' lunch_id='"+lunchList[i].lunch_id+"' category_id='"+lunchList[i].category_id+"' >"+
 								"<div class='one'>"+
-									"<img src='"+lunchList[i].index_images+"' />"+
+									"<img src='"+lunchList[i].index_images+"' style=height:187px;' />"+
 									"<div class='two'>"+
 									"<span style='text-decoration: line-through;'>"+lunchList[i].sale_money+"元</span><span style='font-size:24px;'>"+lunchList[i].sale_money+"</span>元/份 赠送积分"+lunchList[i].send_integral+"分 <span>到手价："+lunchList[i].daoshoumoney+"元</span> 仅剩"+lunchList[i].dc_stocknumber+"份"+
 									"</div>"+
