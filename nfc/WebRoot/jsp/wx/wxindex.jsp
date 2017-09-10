@@ -114,7 +114,7 @@ function changeShoyLb(category_id,obj){
 								"<div class='one'>"+
 									"<img src='"+lunchList[i].index_images+"' style=height:187px;' />"+
 									"<div class='two'>"+
-									"<span style='text-decoration: line-through;'>"+lunchList[i].sale_money+"元</span><span style='font-size:24px;'>"+lunchList[i].sale_money+"</span>元/份 赠送积分"+lunchList[i].send_integral+"分 <span>到手价："+lunchList[i].daoshoumoney+"元</span> 仅剩"+lunchList[i].dc_stocknumber+"份"+
+									"<span style='text-decoration: line-through;'>"+lunchList[i].show_sale_money+"元</span><span style='font-size:24px;'>"+lunchList[i].sale_money+"</span>元/份 赠送积分"+lunchList[i].send_integral+"分 <span>到手价："+lunchList[i].daoshoumoney+"元</span> 仅剩"+lunchList[i].dc_stocknumber+"份"+
 									"</div>"+
 								"</div>"+
 							"</div>";

@@ -45,7 +45,7 @@ public class DeliveryFeeTime extends TimerTask{
  		 				String order_idstr=pd.getString("order_idstr");
  		 				//处理跑腿费用分配问题
 	   					int goods_number=order_idstr.split(",").length;
-	 					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getMoneyByNumber(String.valueOf(goods_number)));
+	 					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getPeiSongDetail(String.valueOf(goods_number)).getString("ptmoney"));
 	 					//根据份数获取总共多少钱
 	 					int order_deliver_fee=ServiceHelper.getWxOrderService().sumDeliveryFeeByOrder(order_idstr);
 	  					List<PageData> orderList=ServiceHelper.getWxOrderService().getOrderInfor(order_idstr);
