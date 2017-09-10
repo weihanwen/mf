@@ -50,10 +50,18 @@
 		</li>
 		<li class="clearfix">
 			<div class="fl"  >
-				<p class="fourteen-px">跑腿费+餐盒费</p>
+				<p class="fourteen-px">餐盒费</p>
  			</div>
 			<div class="fr">
-				<p>${pd.delivery_fee}</p>
+				<p>${pd.chmoney}</p>
+			</div>
+		</li>
+		<li class="clearfix">
+			<div class="fl"  >
+				<p class="fourteen-px">跑腿费</p>
+ 			</div>
+			<div class="fr">
+				<p>${pd.ptmoney}</p>
 			</div>
 		</li>
 		<li class="clearfix">

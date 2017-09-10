@@ -96,6 +96,22 @@
 		order by money desc
 		limit 1
 	</select>
+	
+	<!-- 根据份数获取配送详情 -->
+	<select id="getPeiSongDetail" parameterType="pd" resultType="pd">
+		select 
+			number,	
+			ptmoney,	
+			chmoney,
+ 			createtime,
+			updatetime,	
+			delivery_fee_id  
+		from 
+			tb_delivery_fee
+		where 
+			number = #{number}
+		limit 1
+	</select>
  
 	
 	

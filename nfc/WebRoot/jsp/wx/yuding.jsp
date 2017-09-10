@@ -14,6 +14,26 @@
     <link rel="stylesheet" href="css/wx/labary/predefine.css">
     <link rel="stylesheet" href="css/wx/labary/swiper.min.css">
 	<link rel="stylesheet" href="css/wx/style.css">
+	<style type="text/css">
+	.ydinfor {
+	    width: 100%;
+	    height: 65px;
+	    background-color: #fff;
+	}
+	.ydinfor .three{
+		    width: 30%;
+		    background-color: green;
+		    height: 64px;
+		    text-align: center;
+		    line-height: 26px;
+		    font-size: 8px;
+		    color: #fff;
+		    float: left;
+		    margin-left: 9px;
+	}
+	
+	
+	</style>
 </head>
 <body>
 <nav class="top">
@@ -21,7 +41,7 @@
 </nav>
 <section class="onesection" style="height:85%;">
 			<!--大类类别-->
-		     <div class="bigsort"  style="display:none;">
+		     <div class="bigsort" >
 		      	<c:forEach items="${leibieList}" var="var" varStatus="vs">
 		      		<c:choose>
 		      			<c:when test="${vs.index == 0}">
@@ -37,24 +57,57 @@
 		      		</c:choose>
 		       	</c:forEach>
 		 	</div>
-		 	<c:choose>
+		 	
+		 	
+		 	
+		 			<div class="ydinfor">
+		 				<c:forEach items="${ydList}" var="daypd">
+		 				   <div class="three"  onclick="changeYdLunch('${daypd.scheduled_time_id}')">
+				      	 		<span>  今日 ${daypd.time_name} </span><br>
+				      	 		<span>${daypd.day} ${daypd.week} </span>
+ 				      	 	</div>
+		 				</c:forEach>	 
+				 	</div> 
+				 	<div style="width:100%;height:65px;text-align: center;display: none;" class="nolunch">
+		 				<img src="images/fl_d.png" >
+		 			</div>
+		 	<%-- <c:choose>
 		 		<c:when test="${!empty daypd}">
 		 			<!--预定说明-->
 				 	 <div class="ydinfor">
-				      	 	<!-- <div class="one">预定说明</div> -->
 				      	 	<div class="two">
 				      	 		<span>当前可预定${daypd.day}（${daypd.week}）中午美味便当</span><br>
 				      	 		<span>可预定时间${daypd.yd_starttime}至${daypd.yd_endtime}</span><br>
 				      	 		<span>销售时段：${daypd.sale_starttime } - ${daypd.sale_endtime } </span>
 				      	 	</div>
 				 	</div>
+				 	
+				 	<div class="ydinfor" onclick="changeYdLunch('')">
+				      	 	<div class="three">
+				      	 		<span>  今日 中午 </span><br>
+				      	 		<span>${daypd.day} ${daypd.week} </span>
+ 				      	 	</div>
+ 				      	 	
+ 				      	 	<div class="three">
+				      	 		<span>  今日 中午 </span><br>
+				      	 		<span>${daypd.day} ${daypd.week} </span>
+ 				      	 	</div>
+ 				      	 	
+ 				      	 	<div class="three">
+				      	 		<span>  今日 中午 </span><br>
+				      	 		<span>${daypd.day} ${daypd.week} </span>
+ 				      	 	</div>
+				 	</div> 
+				 	
+				 	 
+				 	
 		  		</c:when>
 		 		<c:otherwise>
 		 			<div style="width:100%;height:65px;text-align: center;">
 		 				<img src="images/fl_d.png" >
 		 			</div>
 		  		</c:otherwise>
-		 	</c:choose>
+		 	</c:choose> --%>
  			<!--商品循环-->
 			<div class="allgoods">
 		 		 <!-- <div class="ydgoods" >
@@ -92,24 +145,24 @@
 <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript">
 
-
 //页面加载后执行
 $(function(){
- 	 $(".bigsort").find("span").eq(0).click();
+ 	 $(".bigsort").children("span").eq(0).click();
 });
 
-//获取商品
-function changeShoyLb(category_id,obj){
-  	$.ajax({
+//更换预定类别
+function changeYdLunch(scheduled_time_id){
+	$(".nolunch").hide();
+	$.ajax({
 		type:"post",
 			url:"wxmember/getLunchList.do",
-			data:{ "category_id":category_id ,"order_type":"2"},
+			data:{ "category_id":window_category_id ,"order_type":"2","scheduled_time_id":scheduled_time_id},
 			dataType:"json",
 			success:function(data){
 				 var lunchList=data.data;
 				 $(".allgoods").empty();
 				 for (var i = 0; i < lunchList.length; i++) {
-					 var s="<div class='ydgoods' onclick='goPay(this)' lunch_id='"+lunchList[i].lunch_id+"' category_id='"+lunchList[i].category_id+"' >"+
+					 var s="<div class='ydgoods' onclick='goPay(this)' lunch_id='"+lunchList[i].lunch_id+"' category_id='"+lunchList[i].category_id+"' scheduled_time_id='"+scheduled_time_id+"' >"+
 								 		"<img alt='' src='"+lunchList[i].yd_images+"'   />"+
 							 		"<span>"+lunchList[i].lunch_name+"</span>"+
 					 		 		"<span >"+lunchList[i].sale_money+"元/份</span>"+//<span>"+lunchList[i].yd_stocknumber+"份可预订</span>
@@ -119,10 +172,23 @@ function changeShoyLb(category_id,obj){
 			}
 	});  
 }
+
+var window_category_id="";
+//获取商品
+function changeShoyLb(category_id,obj){
+	 window_category_id=category_id;
+	 if($(".ydinfor").children(".three").length > 0){
+		 $(".ydinfor").children(".three").eq(0).click();
+		 $(".nolunch").hide();
+	 }else{
+		 $(".nolunch").show();
+	 }
+}
 //前往支付界面
 function goPay(obj){
 	var lunch_id=$(obj).attr("lunch_id");
-	 window.location.href="wxmember/goPayJSP.do?shop_type=2&lunch_idstr="+lunch_id+"@1&order_type=2";
+	var scheduled_time_id=$(obj).attr("scheduled_time_id");
+	 window.location.href="wxmember/goPayJSP.do?shop_type=2&lunch_idstr="+lunch_id+"@1&order_type=2&scheduled_time_id="+scheduled_time_id;
 }
 
 

@@ -34,9 +34,9 @@
 	</div>
 	<article class="rm-list ">
 		<ul>
-			<li><a  href="wxmember/myuseredList.do " ><i class="my-list-one"></i>优惠券<b class="z-arrow"></b></a></li>
-			<li><a  href="wxmember/myusetihuojuanList.do" ><i class="my-list-two"></i>提货券<b class="z-arrow"></b></a></li>
- 			<li><a  href="wxmember/myintegralList.do" ><i class="my-list-three"></i>我的积分<b class="z-arrow"></b></a></li>
+			<li><a  href="wxmember/myuseredList.do " ><i class="my-list-one"></i>优惠券<span style="display:inline-block;width:62%;text-align: right;">${pd.countYh}</span><b class="z-arrow"></b></a></li>
+			<li><a  href="wxmember/myusetihuojuanList.do" ><i class="my-list-two"></i>提货券<span style="display:inline-block;width:62%;text-align: right;">${pd.countTh}</span><b class="z-arrow"></b></a></li>
+ 			<li><a  href="wxmember/myintegralList.do" ><i class="my-list-three"></i>我的积分<span style="display:inline-block;width:62%;text-align: right;">${pd.now_integral}</span><b class="z-arrow"></b></a></li>
  			<li><a  href="wxmember/myaddressList.do" ><i class="my-list-four"></i>收货地址<b class="z-arrow"></b></a></li>
  			<li><a  href="wxmember/myorderList.do" ><i class="my-list-five"></i>我的订单<b class="z-arrow"></b></a></li>
  		</ul>

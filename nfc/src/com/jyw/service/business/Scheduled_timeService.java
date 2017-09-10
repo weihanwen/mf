@@ -69,6 +69,13 @@ public class  Scheduled_timeService {
 	/*
 	*获取今天的便当菜谱列表
 	*/
+	public List<PageData> listThreeTime(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("Scheduled_timeMapper.listThreeTime", pd);
+	}
+	
+	/*
+	*获取今天的便当菜谱列表
+	*/
 	public List<PageData> listAllNowDay(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("Scheduled_timeMapper.listAllNowDay", pd);
 	}

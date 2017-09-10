@@ -74,5 +74,12 @@ public class Delivery_feeService {
 		return (String)dao.findForObject("Delivery_feeMapper.getMoneyByNumber", number);
 	}
 	
+	/*
+	* 通过份数获取配送金额
+	*/
+	public PageData getPeiSongDetail(String number)throws Exception{
+		return (PageData)dao.findForObject("Delivery_feeMapper.getPeiSongDetail", number);
+	}
+	
 }
 

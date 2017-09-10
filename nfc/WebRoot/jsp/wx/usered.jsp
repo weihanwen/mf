@@ -43,7 +43,7 @@
 <script type="text/javascript">
 //确认使用红包
 function sureThisRed(redpackage_id){
-	window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id="+redpackage_id+"&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+	window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id="+redpackage_id+"&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}&scheduled_time_id=${pd.scheduled_time_id}&ydtime=${pd.ydtime}";
 }
 
 </script>

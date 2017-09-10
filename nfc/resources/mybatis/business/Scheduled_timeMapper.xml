@@ -115,10 +115,33 @@
 		limit 1
 	</select>
 	
+	<!-- 可预定便当得日子 -->
+	<select id="listThreeTime" parameterType="pd" resultType="pd">
+		select 
+			scheduled_time_id,
+			day,
+			time_name,
+			sale_starttime,
+			sale_endtime,
+			date_format(yd_starttime ,'%Y-%m-%d %H:%i:%s') as yd_starttime,
+			date_format(yd_endtime ,'%Y-%m-%d %H:%i:%s') as yd_endtime,
+			unix_timestamp(now())-unix_timestamp(yd_starttime) as b1,
+			unix_timestamp(yd_endtime)-unix_timestamp(now()) as b2,
+			category_idstr,
+ 			updatetime  
+		from 
+			tb_scheduled_time
+		where
+ 			  unix_timestamp( now() ) between unix_timestamp( yd_starttime) and unix_timestamp( yd_endtime )  
+ 		order by day 
+ 		limit 3
+  	  </select>
+	
 	
 	<!-- 今天的预定便当列表 -->
 	<select id="listAllNowDay" parameterType="pd" resultType="pd">
 		select 
+			a.scheduled_time_id,
 			b.category_id,
  			b.lunch_id,
 			b.lunch_name,
@@ -131,8 +154,13 @@
    		from 
 			tb_scheduled_time a  left join tb_lunch b on a.category_idstr like concat(concat('%',b.category_id),'%')
  		where
- 			a.day=#{day}
- 			and b.category_id=#{category_id}
+ 			 b.category_id=#{category_id}
+ 			<if test="scheduled_time_id != null and scheduled_time_id != ''">
+ 			and scheduled_time_id=#{scheduled_time_id}
+ 			</if>
+ 			<if test="day != null and day != ''">
+ 			and a.day=#{day}
+ 			</if>
   	  </select>
  
 	

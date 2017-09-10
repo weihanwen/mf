@@ -24,7 +24,9 @@
 			reserve_arrival_time,
  			delivery_time,
 			delivery_fee,
-			delivery_type,
+			chmoney,
+			ptmoney,
+ 			delivery_type,
 			delivery_status,
 			delivery_operator_name,
 			createtime,
@@ -53,6 +55,8 @@
 			#{reserve_arrival_time},
  			#{delivery_time},
 			#{delivery_fee},
+			#{chmoney},
+			#{ptmoney},
 			#{delivery_type},
 			#{delivery_status},
 			#{delivery_operator_name},
@@ -208,6 +212,8 @@
 			a.reserve_arrival_time,
  			a.delivery_time,
 			a.delivery_fee,
+			a.chmoney,
+			a.ptmoney,
 			a.createtime,
 			a.overtime,
 			a.wxmember_id,
@@ -221,7 +227,7 @@
 			d.address_name
   		from 
 			tb_order a  join tb_wxmember b on a.wxmember_id=b.wxmember_id
-			left join tb_wxmember_address c on a.wxmember_id=c.wxmember_id
+			left join tb_wxmember_address c on a.wxmember_address_id=c.wxmember_address_id
 			left join tb_address d on c.address_id=d.address_id
 		where 
 			a.order_id=#{order_id}
@@ -260,7 +266,7 @@
   		from 
 			tb_order a  
 			left join tb_wxmember b on a.wxmember_id=b.wxmember_id
-			left join tb_wxmember_address c on a.wxmember_id=c.wxmember_id
+			left join tb_wxmember_address c on a.wxmember_address_id=c.wxmember_address_id
 			left join tb_address d on c.address_id=d.address_id
 		where 
 			a.order_id=#{order_id}

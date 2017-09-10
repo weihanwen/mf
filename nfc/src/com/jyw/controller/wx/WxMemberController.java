@@ -90,23 +90,26 @@ public class WxMemberController extends BaseController {
  			pd.put("category_id", category_id);
  			pd.put("order_type", order_type);
 			if(order_type.equals("2")){
-    			//判断今天是否设有预定时间
-    			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-      			PageData daypd=scheduled_timeService.findByNowDay(pd); 
-      			if(daypd != null){
-      				long b1=(long) daypd.get("b1");
-      				long b2=(long) daypd.get("b2");
-      				if(b1>0 && b2>0){
-      					List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
-      					map.put("data", ydList);
-      					map.put("flag", "true");
-      				}else{
-      					map.put("data", new ArrayList<PageData>());
-      					map.put("flag", "false");
-      				}
-       			}else{
-      				map.put("data", new ArrayList<PageData>());
-      			}
+				pd.put("scheduled_time_id", pd.getString("scheduled_time_id"));
+				List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
+				map.put("data", ydList);
+//    			//判断今天是否设有预定时间
+//    			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
+//      			PageData daypd=scheduled_timeService.findByNowDay(pd); 
+//      			if(daypd != null){
+//      				long b1=(long) daypd.get("b1");
+//      				long b2=(long) daypd.get("b2");
+//      				if(b1>0 && b2>0){
+//      					List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
+//      					map.put("data", ydList);
+//      					map.put("flag", "true");
+//      				}else{
+//      					map.put("data", new ArrayList<PageData>());
+//      					map.put("flag", "false");
+//      				}
+//       			}else{
+//      				map.put("data", new ArrayList<PageData>());
+//      			}
     		}else{
      			//3默认获取当日便当类别的所有
      			pd.put("day", DateUtil.getDay());
@@ -368,10 +371,10 @@ public class WxMemberController extends BaseController {
     	try { 
     		pd=this.getPageData();
     		pd=wxOrderService.findById(pd);
+    		mv.addObject("pd", pd);
     		//获取相关购买商品列表
     		List<PageData> lunchList=wxOrderService.listLunchByOrder(pd);
-    		mv.addObject("pd", pd);
-    		mv.addObject("lunchList", lunchList);
+     		mv.addObject("lunchList", lunchList);
     		mv.setViewName("wx/myorderDetail");
         } catch (Exception e) {
    			e.printStackTrace();
@@ -434,12 +437,16 @@ public class WxMemberController extends BaseController {
  			List<PageData> leibieList=categoryService.listAll(pd);
  			mv.addObject("leibieList", leibieList);
  			//3默认获取明天可预定的便当类别的所有
- 			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-  			PageData daypd=scheduled_timeService.findByNowDay(pd);//获取今天预定的详情
-  			if(daypd != null){
-  				daypd.put("week", DateUtil.getAfterDayWeek("1"));
-  	 			mv.addObject("daypd", daypd);
-  			}
+// 			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
+//  			PageData daypd=scheduled_timeService.findByNowDay(pd);//获取今天预定的详情
+//  			if(daypd != null){
+//  				daypd.put("week", DateUtil.getAfterDayWeek("1"));
+//  	 			mv.addObject("daypd", daypd);
+//  			}
+  			//获取最近三次得预定时间
+  			List<PageData> ydList=scheduled_timeService.listThreeTime(pd);
+ 			mv.addObject("ydList", ydList);
+  			
    			mv.setViewName("wx/yuding");
         } catch (Exception e) {
    			e.printStackTrace();
@@ -635,12 +642,13 @@ public class WxMemberController extends BaseController {
  	 * allshopcart_id  	购物车结算嘚所有购物车ID
 	 * lunch_idstr   	ID@数量
 	 * order_type  		1-点餐，2-预定
+	 * scheduled_time_id 预定ID
 	 * 
 	 * 二次加载可能嘚参数
 	 * wxmember_address_id  		地址id
 	 * wxmember_redpackage_id  		使用红包id
 	 * wxmember_tihuojuan_idstr		使用嘚提货卷ID
-	 * 
+	 * ydtime 预定时间
       */
 	@RequestMapping(value="/goPayJSP")
 	public ModelAndView goPayJSP()throws Exception{
@@ -666,8 +674,15 @@ public class WxMemberController extends BaseController {
         			//获取总金额
         			String allpaymoney=wxmemberService.sumShopcartById(pd);
         			allmoney=Double.parseDouble(allpaymoney);
+        			String shop_number=wxmemberService.countShopcartNumber(pd);
+        			//获取配送详情
+    				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number);
+    				int chmoney=Integer.parseInt(pspd.getString("chmoney"));
+    				mv.addObject("chmoney", String.valueOf(chmoney));
+    				int ptmoney=Integer.parseInt(pspd.getString("ptmoney"));
+    				mv.addObject("ptmoney", String.valueOf(ptmoney));
         			//配送费
-        			delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(wxmemberService.countShopcartNumber(pd)) );
+        			delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(shop_number) );
     				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
     			}else{
     				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
@@ -679,6 +694,12 @@ public class WxMemberController extends BaseController {
     				allmoney=Double.parseDouble(lunchpd.get("sale_money").toString())*Integer.parseInt(shop_number);
     				lunchpd.put("allsale_money", String.valueOf(allmoney));
     				mv.addObject("lunchpd", lunchpd);
+    				//获取配送详情
+    				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number);
+    				int chmoney=Integer.parseInt(pspd.getString("chmoney"));
+    				mv.addObject("chmoney", String.valueOf(chmoney));
+    				int ptmoney=Integer.parseInt(pspd.getString("ptmoney"));
+    				mv.addObject("ptmoney", String.valueOf(ptmoney));
      				//配送费
     				delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(shop_number));
     				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
@@ -715,10 +736,28 @@ public class WxMemberController extends BaseController {
     				mv.addObject("reserve_arrival_time", DateUtil.getAfterMinTime(DateUtil.getTime(), Const.arrivetime));
     				mv.addObject("showtime", DateUtil.getAfterMinTime(DateUtil.getTime(), Const.arrivetime));
     			}else{
-     				mv.addObject("day",DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-    				pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-           			PageData daypd=scheduled_timeService.findByNowDay(pd); 
-           			mv.addObject("daypd",daypd);
+    				PageData daypd=scheduled_timeService.findById(pd);
+             		mv.addObject("daypd",daypd);
+             		String day=daypd.get("day").toString();
+             		String sale_starttime=daypd.get("sale_starttime").toString();
+             		String sale_endtime=daypd.get("sale_endtime").toString();
+             		//将预定时间分为几个option
+             		List<String> ydtimeList=new ArrayList<String>();
+             		String zhuan_time=day+" "+sale_starttime;
+             		boolean flag=true;
+              		while(flag){
+              			long n1=DateUtil.fomatDate1(day+" "+sale_starttime).getTime();
+              			long n2=DateUtil.fomatDate1(day+" "+sale_endtime).getTime();
+               			String after_time=DateUtil.getAfterMinTime(zhuan_time, "30");
+               			long n3=DateUtil.fomatDate1(after_time).getTime();
+                		if(n1< n3 && n3 < n2){
+                			zhuan_time=after_time;
+                			ydtimeList.add(DateUtil.getAfterMinTime2(after_time, "0"));
+               			}else{
+               				flag=false;
+               			}
+              		}
+              		mv.addObject("ydtimeList",ydtimeList);
     			}
      			mv.setViewName("wx/orderpay");
      		}else{
@@ -1004,6 +1043,7 @@ public class WxMemberController extends BaseController {
 		PageData pd=new PageData();
 		try{
 			pd = this.getPageData();
+			System.out.println(pd.toString());
  			if(login == null){
  				map.put("result", "0");
 				map.put("message", "请先前往登录。。。");
@@ -1026,17 +1066,19 @@ public class WxMemberController extends BaseController {
 			//如果是直接购买需要判断库存
 			String shop_type=pd.getString("shop_type");
 			String order_type=pd.getString("order_type");
- 			if(shop_type.equals("2") && order_type.equals("1")){
+ 			if(shop_type.equals("2") ){
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
- 				boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
-				if(!flag){
-					map.put("result", "0");
-					map.put("message", "商品正在补给，请稍等。。。");
-					map.put("data", "");
-					return map;
+				if(order_type.equals("1")){
+					boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					if(!flag){
+						map.put("result", "0");
+						map.put("message", "商品正在补给，请稍等。。。");
+						map.put("data", "");
+						return map;
+					}
 				}
-				//存入tb_order_lunch
+ 				//存入tb_order_lunch
 				 PageData olpd=new PageData();
 				 olpd.put("order_id", order_id);
 				 olpd.put("lunch_id", lunch_id);

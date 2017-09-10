@@ -54,9 +54,13 @@
         		</c:when>
          		<c:otherwise>
          			<div class="ui-list-info ">
-		                <h4>预定日期${day}</h4>
+		                <h4>预定日期：${daypd.day}-${daypd.time_name}</h4>
 		                <span>选择配送时间：
-		                <input type="time" class="delivery_time" value="00:00"  style=" width: 20%; " >
+		                <select class="delivery_time" 	style=" width: 34%; ">
+		                	<c:forEach items="${ydtimeList}" var="ydvar" varStatus="vs">
+		                		<option value="${ydvar}" ${pd.ydtime eq ydvar?'selected':''} >${ydvar}</option>
+		                	</c:forEach>
+		                </select>
  		                </span>
 		                <div>可配送时间段：<span class="sale_starttime">${daypd.sale_starttime}</span>-<span class="sale_endtime">${daypd.sale_endtime}</span></div>
 		            </div>
@@ -91,10 +95,16 @@
         	</c:choose>
            </li>
     </ul>
-     <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
+     <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
         <li class="ui-border-t" onclick="peisong()">
-            <h4 class="ui-nowrap">配送费+餐盒费</h4>
-            <div class="ui-txt-info peisong" >${delivery_fee}</div>
+            <h4 class="ui-nowrap">餐盒费用：<span>${chmoney}</span></h4>
+            
+        </li>
+    </ul>
+    <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
+        <li class="ui-border-t" onclick="peisong()">
+            <h4 class="ui-nowrap">配送费</h4>
+            <div class="ui-txt-info" >${ptmoney}</div>
         </li>
     </ul>
     <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
@@ -124,7 +134,7 @@
             </label>
         </li>
     </ul>
-    <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
+    <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
         <li class="ui-border-t">
             <h6>本单支付成功后可获取10个积分，1积分=1元</h6>
          </li>
@@ -154,6 +164,8 @@
 				<input type="hidden" id="reserve_arrival_time" value="${reserve_arrival_time}" name="reserve_arrival_time"/> 
  				<input type="hidden" id="delivery_time" value="${delivery_time}" name="delivery_time"/> 
 				<input type="hidden" id="delivery_fee" value="${delivery_fee}" name="delivery_fee"/> 
+				<input type="hidden" id="chmoney" value="${chmoney}" name="chmoney"/> 
+				<input type="hidden" id="ptmoney" value="${ptmoney}" name="ptmoney"/> 
 				<input type="hidden" id="wxmember_address_id" value="${pd.wxmember_address_id}" name="wxmember_address_id"/> 
 				<input type="hidden" id="order_status" value="0" name="order_status"/> 
 				
@@ -202,7 +214,7 @@
 	
 	//前往选择地址页面
 	function changeAddress(){
-		window.location.href="wxmember/changeAddress.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+		window.location.href="wxmember/changeAddress.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}&scheduled_time_id=${pd.scheduled_time_id}&ydtime="+$(".delivery_time").val();
 	}
 	
 	//前往配送费+餐盒费说明页面
@@ -213,15 +225,15 @@
  
 	//前往使用红包页面
 	function redMessage(){
-		window.location.href="wxmember/gouserRed.do?allmoney=${allmoney}&shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+		window.location.href="wxmember/gouserRed.do?allmoney=${allmoney}&shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}&scheduled_time_id=${pd.scheduled_time_id}&ydtime="+$(".delivery_time").val();
 	}
 	
 	//前往使用提货卷页面
 	function payway(){
-		window.location.href="wxmember/gouserTiHuoJuan.do?allmoney=${allmoney}&shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+		window.location.href="wxmember/gouserTiHuoJuan.do?allmoney=${allmoney}&shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr=${pd.lunch_idstr}&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}&scheduled_time_id=${pd.scheduled_time_id}&ydtime="+$(".delivery_time").val();
 	}
 	 
-	
+
 	
 	var flag=true;
 	//确认支付--直接购买的会判断库存
@@ -243,8 +255,8 @@
  				alert("配送时间不能为空");
  				return;
  			}else{
- 				$("#delivery_time").val("${day}"+delivery_time);
- 				$("#reserve_arrival_time").val("${day}"+delivery_time);
+ 				$("#delivery_time").val("${daypd.day}"+" "+delivery_time+":00");
+ 				$("#reserve_arrival_time").val("${daypd.day}"+" "+delivery_time+":00");
  			}
  		}
 	    $("#Form").ajaxSubmit({  
@@ -289,7 +301,7 @@
 		}else{
 			 lunch_idstr=lunch_id+"@"+(parseInt($(obj).prev().html())+parseInt(number));
 		}
- 		window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr="+lunch_idstr+"&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}";
+ 		window.location.href="wxmember/goPayJSP.do?shop_type=${pd.shop_type}&allshopcart_id=${pd.allshopcart_id}&order_type=${pd.order_type}&lunch_idstr="+lunch_idstr+"&wxmember_address_id=${pd.wxmember_address_id}&wxmember_redpackage_id=${pd.wxmember_redpackage_id}&wxmember_tihuojuan_idstr=${pd.wxmember_tihuojuan_idstr}&scheduled_time_id=${pd.scheduled_time_id}&ydtime="+$(".delivery_time").val();
   	}
 	
 	

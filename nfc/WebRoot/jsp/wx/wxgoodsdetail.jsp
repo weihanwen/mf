@@ -87,7 +87,7 @@
  	<a href="wxmember/goshopcatList.do"  class="foot_guc">
  	 	<span class="iconfont icon-gouwuche1 icon2"></span><span class="shopcarnumber"  >${pd.shopnumber}</span>
  	</a>
-	<a class="foot_gm" onclick="goPay()"><span>去结算</span></a>
+	<a class="foot_gm" onclick="goPay()"><span>立即购买</span></a>
 </footer>
 	<a  href="javascript:void(0)" onclick="location.reload()" class="reflash"></a>	 <!-- 刷新链接 -->
 </body>
