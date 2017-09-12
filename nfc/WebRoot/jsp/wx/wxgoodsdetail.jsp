@@ -16,26 +16,24 @@
 	<link rel="stylesheet" type="text/css" href="css/lunbo/slider.css" />
 	<style type="text/css">
 	.addshopcar {
-	        display: block;
-		    width: 3.4rem;
-		    height: 3.4rem;
-		    position: absolute;
-		    right: 1rem;
-		    bottom: 10.4rem;
-		    /* padding: 0.7rem; */
-		    border-radius: 50%;
-		    color: #fff;
-		    opacity: 0.6;
-		    z-index: 1;
+	            display: block;
+	    width: 3.4rem;
+	    height: 3.4rem;
+	    position: absolute;
+	    right: 1rem;
+	    bottom: 7.9rem;
+	    color: #fff;
+	    opacity: 0.8;
+	    z-index: 1;
 	}
 	.shopcarnumber {
-	        display: block;
-		    width: 1.4rem;
-		    height: 1.4rem;
+	            display: block;
+		    width: 0.8rem;
+		    height: 1rem;
 		    position: absolute;
-		    left: 5rem;
-		    bottom: 2.4rem;
-		     border-radius: 50%;
+		    left: 3.8rem;
+		    bottom: 2.8rem;
+		    border-radius: 50%;
 		    background-color: red;
 		    color: #fff;
 		    opacity: 0.6;
@@ -45,28 +43,23 @@
 </head>
 <body>
 <!-- 顶部条 -->
-<header>
-		<div class="goback" onclick="backreturn()"><img src="img/fanhui.png" alt=""></div>
-		<div class="title">
-			 <div class="djs">
-		       	 商品详情
-	    	</div>
-		</div>
-</header>
+<nav class="top">
+	<div><span class="goback" onclick="backreturn()"><img src="img/fanhui.png" alt=""></span> 商品详情</div>
+</nav>
 <span class="addshopcar" onclick="clikthisLunch()"  ><img src="images/addshop.png" alt="" style="width: 100%;"></span>
-<div class="center">
 
-	<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 800px; height: 1135px; overflow: hidden; visibility: hidden; background-color: #fff;">
-        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height:1135px; overflow: hidden;">
+<section class="twosection">
+	<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 800px; height: 1041px; overflow: hidden; visibility: hidden; background-color: #fff;">
+        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height:1041px; overflow: hidden;">
             <c:forEach items="${varList}" var="var">
-            	<div data-p="144.50" style="display: none;">
+            	<div data-p="160.50" style="display: none;">
 	                <img data-u="image" src="${var.dc_images}" />
 	                <img data-u="thumb" src="${var.dc_images_small}" lunch_id="${var.lunch_id}"/>
 	            </div>
             </c:forEach>
         </div>
         <!-- Thumbnail Navigator -->
-        <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:1600px;height:172px;"  data-autocenter="1">
+        <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:800px;height:172px;"  data-autocenter="1">
             <!-- Thumbnail Item Skin Begin -->
             <div data-u="slides" style="cursor: default;">
                 <div data-u="prototype" class="p">
@@ -81,9 +74,9 @@
        
     </div>
     <!-- #endregion Jssor Slider End -->
-</div>
+</section>
 
-<footer class="twofooter" style="height:3.5rem">
+<footer class="twofooter"  >
  	<a href="wxmember/goshopcatList.do"  class="foot_guc">
  	 	<span class="iconfont icon-gouwuche1 icon2"></span><span class="shopcarnumber"  >${pd.shopnumber}</span>
  	</a>

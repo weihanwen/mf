@@ -32,26 +32,18 @@
 				 	</c:choose>
  				 </c:forEach>
  			  </div>
-			<div class="swiper-pagination swiper-pagination_2" style="height:100px;"></div>
+			<div class="swiper-pagination swiper-pagination_2"></div>
 		</div>
 	</div>
     
 	<!--大类类别-->
      <div class="bigsort" >
-      	<c:forEach items="${leibieList}" var="var" varStatus="vs">
-      		<c:choose>
-      			<c:when test="${vs.index == 0}">
-	      			<span onclick="changeShoyLb('${var.category_id}',this)" >
-						<img src="${var.image_url}">${var.title}
-					</span>
-				</c:when>
-      			<c:otherwise>
-	      			<span onclick="changeShoyLb('${var.category_id}',this)"  style="color:#909090"  >
-						<img src="${var.image_url}">${var.title}
-					</span>
-				</c:otherwise>
-      		</c:choose>
-       	</c:forEach>
+	      	<c:forEach items="${leibieList}" var="var" varStatus="vs">
+	      		<div onclick="changeShoyLb('${var.category_id}',this)"  class="notchangediv">
+							<img src="${var.image_url}"/>
+							<span>${var.title}</span>
+				</div>
+        	</c:forEach>
  	</div>
 	
 	<!--商品循环-->
@@ -96,11 +88,13 @@ $(function(){
 	    autoplay : 5000,
 	    loop:true
 	 });
-	 $(".bigsort").find("span").eq(0).click();
+	 $(".bigsort").find("div").eq(0).click();
 	 
 });
 //获取商品
 function changeShoyLb(category_id,obj){
+	$(".notchangediv").removeClass("changediv");
+	$(obj).addClass("changediv");
   	$.ajax({
 		type:"post",
 			url:"wxmember/getLunchList.do",

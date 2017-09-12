@@ -16,15 +16,11 @@
 	<link rel="stylesheet" href="css/wx/normalize.min.css">
 </head>
 <body>
-	<header>
-		<div class="goback" onclick="backreturn()">‹</div>
-		<div class="title">
-			 <div class="djs">
-		        <h6>购物车</h6>
- 	    	</div>
-		</div>
-	</header>
-	<div class="shopping">
+<!-- 顶部条 -->
+<nav class="top">
+	<div><span class="goback" onclick="backreturn()"><img src="img/fanhui.png" alt=""></span> 购物车</div>
+</nav>
+<section class="onesection">
 		 <ul class="shop">
 		 	<c:forEach items="${shopList }" var="var">
 		 		<li class=" del shop_item ${var.lunch_id}">
@@ -48,12 +44,12 @@
  			 	</li>
 		 	</c:forEach>
  		 </ul>
-	</div>
-	<div class="shopfooter">
-		<span class="iconfont icon-dui foot_xz" onclick="chose()" name="quanxuan"></span><span>全选</span>
+</section>
+<footer class="shopfooter"  >
+ 		<span class="iconfont icon-dui foot_xz" onclick="chose()" name="quanxuan"></span><span>全选</span>
 		<span>合计：</span><span class="zongjia">0元</span>
 		<a class="foot_tj"  style="background:#aaa;" onclick="goReadyPayOrder()">提交订单</a>
-	</div>
+</footer>	
 </body>
  <script src="js/jquery-1.8.3.min.js"></script>
  <script src="js/wx/tongyong.js"></script>

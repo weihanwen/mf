@@ -37,18 +37,29 @@
 	    z-index: 99;
 	    font-size: 16px;
 	    opacity: 0.8;
+	        height: 8%;
 	}
 	.top div{
+		width:100%;
 		text-align: center;
 	    line-height: 40px;
 	    color: #fff;
 	}
+	.top div .goback{
+		display:block;
+		float:left;
+		margin-left: 3%;
+	}
 	
 	.onesection{
-		height:91%;
- 		margin-top:40px;
+		height:84%;
+ 		margin-top:12.8%;
  		overflow-y: scroll;
 	}
+	.twosection {
+	    height: 84%;
+	    margin-top: 12.8%;
+ 	}
  
 	 /* 首页轮播图 */
 	.lunboclass{
@@ -65,28 +76,29 @@
 	}
 	 /* 大类banneer */
 	.bigsort{
-		width:100%;
-		    height: 103px;
-     
+		width:100%;     
 	}
-	.bigsort span{
-		display:block;
-		width: 20%;
+	.bigsort div{
+		width: 33%;
 		float:left;
-		text-align:center;
-		margin-top: 10px;
+		text-align:center; 
+		    line-height: 24px;
 	}
-	.bigsort span img{
-		width: 60%;
-		display: inline;
+	.bigsort div img{
+		width: 55%;
+		display: block;
 		padding: 8% 20% 0% 20%;
-		margin-bottom: 10%;
+	}
+	.changediv{
+	    background-color: #f6e1e1;
+    	border-radius: 50px;
 	}
 	
 	 /* 商品 */
 	 .allgoods{
-		 margin-bottom:20%;
+		 margin-bottom:3%;
 		 width: 100%;
+		 clear: both;
 	 }
 	.goodsshow{
 		width:100%;
@@ -99,25 +111,24 @@
 		width:100%;
 	}
 	.goodsshow  .two{
-		    position: absolute;
-			width: 100%;
-			height: 18%;
-			background-color: #161616;
-			bottom: 0;
-			right: 0;
-			opacity: 0.3;
-			color:#fff;
-			text-align: center;
+		      position: absolute;
+	     width: 100%;
+	     background-color: #161616;
+	    bottom: 0;
+	    right: 0;
+	    opacity: 0.3;
+	    color: #fff;
+	    text-align: center;
 	}
 	.goodsshow  .two  span{
-		    font-size: 18px;
+		font-size: 10px;
 	}
 	/* 预定 */
 	.ydinfor{
-		width:100%;
-		height:65px;
-		background-color:green;
-		
+		width: 100%;
+	    height: 65px;
+	    background-color: #fff;
+		clear: both;
 	}
  	.ydinfor .one{
  		width: 12%;
@@ -131,36 +142,30 @@
  		    width: 88%;
 		    color: #fff;
 		    font-size: 13px;
-		    /* padding-top: 3%; */
-		    /* float: left; */
 		    line-height: 22px;
     		margin: auto;
 	}
 	.ydgoods{
- 	    width: 40%;
- 	    height: 203px;
-     	float: left;
-    	margin: 1% 5%;
+ 	           width: 40%;
+	    float: left;
+	    margin: 0 0 0 9%;
+	     height: 150px;
 	}
 	.ydgoods img{
-		width:100%;
-		height: 150px;
+		    width: 100px;
+    	height: 100px;
 	}
 	.ydgoods span:nth-child(2){
 		 display: block;
 	     width: 100%;
-	     float: left;
-	     font-size: 17px;
+ 	     font-size: 17px;
 	     text-align: left;
-	     line-height: 24px;
  	}
  	.ydgoods span:nth-child(3){
-		     display: block;
-		    width: 55%;
-		    float: left;
-		    font-size: 12px;
-		    text-align: left;
-		    line-height: 26px;
+		display: block;
+ 		width:100%;
+    	text-align: left;
+ 
  	}
  	.ydgoods span:nth-child(4){
 		  display:block; width: 45%; float: left;font-size: 16px;text-align: right;color:blue;
@@ -177,16 +182,16 @@
 		display:block;
 		float:left;
 		width:27%;
-		height:100px;
 	}
  	.my-top-tx img{
-		width:100%;
+ 		width:65px;
+		height:65px;
+		    border-radius: 17px;
 	}
 	.my-top-text{
 		display:block;
 		float:left;
 		width:50%;
-		height:100px;
 		margin-left: 5%;
 	}
 	.my-top-text p{
@@ -286,14 +291,14 @@
 	
 	.footerdi{
 		position: fixed;
-		bottom: 0;
-		z-index: 100;
-		width: 100%;
-		height: 7.1%;
-		border-top: 1px solid #b3b3b3;
-		padding:5px 0;
-		background: #fff;
-		font-size: 18px;
+	    bottom: 0;
+	    z-index: 100;
+	    width: 100%;
+	     border-top: 1px solid #b3b3b3;
+	    padding: 2px 0;
+	    background: #fff;
+	    font-size: 12px;
+	        height: 8%;
 	}
 	.footerdi ul li{
 		float: left;
@@ -386,14 +391,10 @@
 	
 	
 	/*商品详情页*/
-	.center{
-		width:100%;
-		margin-top: 40px;
-	}
 	.twofooter {
 	    position: fixed;
 	    width: 100%;
-	    height: 4.1rem;
+	    height: 3rem;
 	    background: #fff;
 	    bottom: 0;
 	    z-index: 2;
@@ -404,13 +405,13 @@
 	    float: left;
 	    text-align: center;
 	    height: 4rem;
- 	    font-size: 1.4rem;
+ 	    font-size: 0.9rem;
 	}
 	.twofooter .icon2 {
-	    font-size: 3.4rem;
+	    font-size: 2.2rem;
 	}
 	.twofooter .foot_gm {
-	    line-height: 4rem;
+	    line-height: 3rem;
 	}
 	.twofooter .foot_guc{
 	    width: 29%;
@@ -426,13 +427,6 @@
 	
 	
 	/* 购物车  */
-		.shopping{
-			padding-top: 50px;
-			height: 91%;
-			overflow-y:scroll;
-			overflow-x:hidden;
-			background: #fff;
-		}
 		.shop{
 			padding: 0 0.71rem;
 			background: #fff;
@@ -445,7 +439,7 @@
 		    margin-bottom: 2px;
 		}
 		.shop_sign{
-			margin-top: 3rem;
+			margin-top: 10%;
 		}
 
 		.shop_sign span{
@@ -470,9 +464,10 @@
 		}
 		.shop_sign,.sp,.sp_chose,.sp_cont{
 			float: left;
+			    width: 10%;
 		}
 		.sp{
-			width: 93%;
+			width: 89%;
 		}
 		.sp_tit{
 			width: 100%;
@@ -484,27 +479,22 @@
 		     float:left;
 		}
 		.sp_chose{
-			width: 8.238rem;
-			height: 8.238rem;
+			width: 30%;
 		}
 		.sp_cont{
-			width: 60%;
- 			margin: 0.714rem;
-			font-size: 1.4rem;
-		}
+			width: 70% ;
+ 		}
 		.sp_gg{
 			color: #666;
-			font-size: 1.4rem;
-		}
+ 		}
 		.sp_chose img{
-			width:6.71rem;
-			height:6.71rem;
-			margin: 0.714rem;
+			width: 68px;
+		    height: 68px;
+		    margin: 21% 0 0 4%;
 		}
 		.sp_sl{
-			margin-top: 1.1rem;
+			margin-top: 16px;
 			display: inline-block;
-			border: 1px solid #ccc;
 			    float: right;
 		}
 		.sljj{
@@ -512,7 +502,7 @@
 			width: 2.5rem;
 			height: 2.5rem;
 			font-size: 2.2rem;
-			line-height: 1.4;
+			line-height: 30.7px;
 			text-align: center;
 			border: 1px solid #ccc;
 		}
@@ -529,16 +519,15 @@
 		.number{
 			display: inline-block;
 			text-align: center;
-			width: 2.4rem;
+			width: 28px;
 		}
 		.sp_spr{
-		     width: 32%;
 		    margin-top: 16px;
 		    line-height: 33px;
 		     float:left;
 		}
 		.sp_xj{
-			font-size: 1.6rem;
+			font-size: 16px;
 			text-align: right;
 
 		}

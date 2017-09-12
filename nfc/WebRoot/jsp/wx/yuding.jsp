@@ -15,15 +15,11 @@
     <link rel="stylesheet" href="css/wx/labary/swiper.min.css">
 	<link rel="stylesheet" href="css/wx/style.css">
 	<style type="text/css">
-	.ydinfor {
-	    width: 100%;
-	    height: 65px;
-	    background-color: #fff;
-	}
+ 
 	.ydinfor .three{
 		    width: 30%;
-		    background-color: green;
-		    height: 64px;
+		    background-color: #079607;
+		    height: 55px;
 		    text-align: center;
 		    line-height: 26px;
 		    font-size: 8px;
@@ -39,30 +35,22 @@
 <nav class="top">
 	<div>预定</div>
 </nav>
-<section class="onesection" style="height:85%;">
-			<!--大类类别-->
-		     <div class="bigsort" >
-		      	<c:forEach items="${leibieList}" var="var" varStatus="vs">
-		      		<c:choose>
-		      			<c:when test="${vs.index == 0}">
-			      			<span onclick="changeShoyLb('${var.category_id}')" >
-								<img src="${var.image_url}">${var.title}
-							</span>
-						</c:when>
-		      			<c:otherwise>
-			      			<span onclick="changeShoyLb('${var.category_id}')"  style="color:#909090"  >
-								<img src="${var.image_url}">${var.title}
-							</span>
-						</c:otherwise>
-		      		</c:choose>
-		       	</c:forEach>
-		 	</div>
+<section class="onesection">
+	 <!--大类类别-->
+     <div class="bigsort" >
+      	<c:forEach items="${leibieList}" var="var" varStatus="vs">
+      		    <div onclick="changeShoyLb('${var.category_id}',this)"  class="notchangediv">
+							<img src="${var.image_url}"/>
+							<span>${var.title}</span>
+				</div>
+       	</c:forEach>
+ 	</div>
 		 	
 		 	
 		 	
 		 			<div class="ydinfor">
 		 				<c:forEach items="${ydList}" var="daypd">
-		 				   <div class="three"  onclick="changeYdLunch('${daypd.scheduled_time_id}')">
+		 				   <div class="three"  onclick="changeYdLunch('${daypd.scheduled_time_id}',this)">
 				      	 		<span>  今日 ${daypd.time_name} </span><br>
 				      	 		<span>${daypd.day} ${daypd.week} </span>
  				      	 	</div>
@@ -147,11 +135,13 @@
 
 //页面加载后执行
 $(function(){
- 	 $(".bigsort").children("span").eq(0).click();
+ 	 $(".bigsort").children("div").eq(0).click();
 });
 
 //更换预定类别
-function changeYdLunch(scheduled_time_id){
+function changeYdLunch(scheduled_time_id,obj){
+	$(".three").css("background-color","#079607");
+	$(obj).css("background-color","#af2222");
 	$(".nolunch").hide();
 	$.ajax({
 		type:"post",
@@ -176,6 +166,8 @@ function changeYdLunch(scheduled_time_id){
 var window_category_id="";
 //获取商品
 function changeShoyLb(category_id,obj){
+	$(".notchangediv").removeClass("changediv");
+	$(obj).addClass("changediv");
 	 window_category_id=category_id;
 	 if($(".ydinfor").children(".three").length > 0){
 		 $(".ydinfor").children(".three").eq(0).click();

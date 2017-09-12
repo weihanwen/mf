@@ -95,7 +95,7 @@
 				</tbody>
 			</table>
 			
-		<%-- <div class="page-header position-relative">
+		<div class="page-header position-relative" style="display: none;">
 		<table style="width:100%;">
 			<tr>
 				<td style="vertical-align:top;">
@@ -106,7 +106,7 @@
 				<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 			</tr>
 		</table>
-		</div> --%>
+		</div>  
 		</form>
 	</div>
 
