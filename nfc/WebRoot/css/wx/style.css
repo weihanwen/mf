@@ -7,7 +7,7 @@
 			height: 100%;
 		}
 		body{
-			font-family: Arial, Î¢ÈíÑÅºÚ, sans-serif;
+			font-family: Arial, å¾®è½¯é›…é»‘, sans-serif;
 			overflow:hidden;
 		}
 		ul,li{
@@ -42,7 +42,7 @@
 	.top div{
 		width:100%;
 		text-align: center;
-	    line-height: 40px;
+	        padding-top: 3%;
 	    color: #fff;
 	}
 	.top div .goback{
@@ -59,9 +59,10 @@
 	.twosection {
 	    height: 84%;
 	    margin-top: 12.8%;
+	    clear: both;
  	}
  
-	 /* Ê×Ò³ÂÖ²¥Í¼ */
+	 /* é¦–é¡µè½®æ’­å›¾ */
 	.lunboclass{
 		width:100%;
 	}
@@ -74,7 +75,7 @@
 	.swiper-pagination_2 .swiper-pagination-bullet-active {
 		background: #fff;
 	}
-	 /* ´óÀàbanneer */
+	 /* å¤§ç±»banneer */
 	.bigsort{
 		width:100%;     
 	}
@@ -94,7 +95,7 @@
     	border-radius: 50px;
 	}
 	
-	 /* ÉÌÆ· */
+	 /* å•†å“ */
 	 .allgoods{
 		 margin-bottom:3%;
 		 width: 100%;
@@ -105,25 +106,21 @@
 		    margin-bottom: 2%;
 	}
 	.goodsshow .one{
-		position:relative;
+		border-bottom: 1px solid #bababa;
 	}
 	.goodsshow img{
 		width:100%;
 	}
 	.goodsshow  .two{
-		      position: absolute;
+   
 	     width: 100%;
-	     background-color: #161616;
-	    bottom: 0;
-	    right: 0;
-	    opacity: 0.3;
-	    color: #fff;
+ 
 	    text-align: center;
 	}
 	.goodsshow  .two  span{
 		font-size: 10px;
 	}
-	/* Ô¤¶¨ */
+	/* é¢„å®š */
 	.ydinfor{
 		width: 100%;
 	    height: 65px;
@@ -171,7 +168,7 @@
 		  display:block; width: 45%; float: left;font-size: 16px;text-align: right;color:blue;
  	}
 	
-	/* ¸öÈËÖĞĞÄ */
+	/* ä¸ªäººä¸­å¿ƒ */
 	.my-top {
 	    background: #fdb801;
 	    color: #fff;
@@ -360,7 +357,7 @@
 		
 		
 		
-	/* ¶ş¼¶Ò³Ãæ *****************************************************************************************************************8 */
+	/* äºŒçº§é¡µé¢ *****************************************************************************************************************8 */
 	header {
 	    height: 44px;
 	    width: 100%;
@@ -390,11 +387,11 @@
 	
 	
 	
-	/*ÉÌÆ·ÏêÇéÒ³*/
+	/*å•†å“è¯¦æƒ…é¡µ*/
 	.twofooter {
 	    position: fixed;
 	    width: 100%;
-	    height: 3rem;
+	    height: 9%;
 	    background: #fff;
 	    bottom: 0;
 	    z-index: 2;
@@ -426,7 +423,7 @@
 	}
 	
 	
-	/* ¹ºÎï³µ  */
+	/* è´­ç‰©è½¦  */
 		.shop{
 			padding: 0 0.71rem;
 			background: #fff;
