@@ -67,10 +67,16 @@ public class   WxOrderService {
 		dao.save("WxOrderMapper.saveOrderLunch", pd);
 	}
 	/*
-	 *获取所有订单状态为0的订单
+	 *获取所有订单状态为2的订单
 	 */
-	public List<PageData> listByStatusOrder(PageData pd)throws Exception{
-		return (List<PageData>)dao.findForList("WxOrderMapper.listByStatusOrder", pd);
+	public List<PageData> listByStatusOrderOne(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("WxOrderMapper.listByStatusOrderOne", pd);
+	}
+	/*
+	 *获取所有订单状态为3的订单
+	 */
+	public List<PageData> listByStatusOrderTwo(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("WxOrderMapper.listByStatusOrderTwo", pd);
 	}
  	/*
 	 * 情况订单历史记录order_status=0

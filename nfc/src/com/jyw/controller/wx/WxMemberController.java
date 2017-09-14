@@ -93,23 +93,6 @@ public class WxMemberController extends BaseController {
 				pd.put("scheduled_time_id", pd.getString("scheduled_time_id"));
 				List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
 				map.put("data", ydList);
-//    			//判断今天是否设有预定时间
-//    			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-//      			PageData daypd=scheduled_timeService.findByNowDay(pd); 
-//      			if(daypd != null){
-//      				long b1=(long) daypd.get("b1");
-//      				long b2=(long) daypd.get("b2");
-//      				if(b1>0 && b2>0){
-//      					List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
-//      					map.put("data", ydList);
-//      					map.put("flag", "true");
-//      				}else{
-//      					map.put("data", new ArrayList<PageData>());
-//      					map.put("flag", "false");
-//      				}
-//       			}else{
-//      				map.put("data", new ArrayList<PageData>());
-//      			}
     		}else{
      			//3默认获取当日便当类别的所有
      			pd.put("day", DateUtil.getDay());
@@ -436,13 +419,6 @@ public class WxMemberController extends BaseController {
     		//2.获取分类类别
  			List<PageData> leibieList=categoryService.listAll(pd);
  			mv.addObject("leibieList", leibieList);
- 			//3默认获取明天可预定的便当类别的所有
-// 			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-//  			PageData daypd=scheduled_timeService.findByNowDay(pd);//获取今天预定的详情
-//  			if(daypd != null){
-//  				daypd.put("week", DateUtil.getAfterDayWeek("1"));
-//  	 			mv.addObject("daypd", daypd);
-//  			}
   			//获取最近三次得预定时间
   			List<PageData> ydList=scheduled_timeService.listThreeTime(pd);
  			mv.addObject("ydList", ydList);
@@ -477,22 +453,7 @@ public class WxMemberController extends BaseController {
         		pd.put("category_id", category_id);
         		pd.put("order_type", order_type);
         		if(order_type.equals("2")){
-//        			//判断今天是否设有预定时间（进不了直接购买）
-//        			pd.put("day", DateUtil.getAfterDayDate(DateUtil.getDay(), "1"));
-//          			PageData daypd=scheduled_timeService.findByNowDay(pd); 
-//          			if(daypd != null){
-//          				long b1=(long) daypd.get("b1");
-//          				long b2=(long) daypd.get("b2");
-//          				if(b1>0 && b2>0){
-//          					List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
-//          					mv.addObject("varList", ydList);
-//           				}else{
-//          					mv.addObject("varList", new ArrayList<PageData>());
-//           				}
-//            	 		mv.setViewName("wx/wxgoodsdetail");
-//          			}else{
-//          				mv.setViewName("redirect:yuding.do");
-//          			}
+        			//直接购买
         		}else{
          			//3默认获取当日便当类别的所有
          			pd.put("day", DateUtil.getDay());
@@ -666,6 +627,7 @@ public class WxMemberController extends BaseController {
     			mv.addObject("nowintegral", wxmemberService.getNowIntegral(pd));
     			String shop_type=pd.getString("shop_type");
     			double allmoney=0;
+    			double allsendjf=0;
     			int delivery_fee=0;
     			if(shop_type.equals("1")){
     				//获取购买商品列表
@@ -674,6 +636,8 @@ public class WxMemberController extends BaseController {
         			//获取总金额
         			String allpaymoney=wxmemberService.sumShopcartById(pd);
         			allmoney=Double.parseDouble(allpaymoney);
+        			String sumsendjf=wxmemberService.sumShopcartSendJfById(pd);
+        			allsendjf=Integer.parseInt(sumsendjf);
         			String shop_number=wxmemberService.countShopcartNumber(pd);
         			//获取配送详情
     				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number);
@@ -691,6 +655,7 @@ public class WxMemberController extends BaseController {
     				//获取商品详情
     				PageData lunchpd=lunchService.findByIdForWx(pd);
     				lunchpd.put("shop_number", shop_number);
+    				allsendjf=Integer.parseInt(lunchpd.get("send_integral").toString())*Integer.parseInt(shop_number);
     				allmoney=Double.parseDouble(lunchpd.get("sale_money").toString())*Integer.parseInt(shop_number);
     				lunchpd.put("allsale_money", String.valueOf(allmoney));
     				mv.addObject("lunchpd", lunchpd);
@@ -705,6 +670,7 @@ public class WxMemberController extends BaseController {
     				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
     			}
     			mv.addObject("allmoney", df.format(allmoney));
+    			mv.addObject("allsendjf", allsendjf);
     			double lesspaymoney=allmoney+delivery_fee;
     			int  discount_money=0;
      			//判断是否使用提货卷
@@ -900,16 +866,16 @@ public class WxMemberController extends BaseController {
     		if(addresspd !=null){
     			addresspd.put("order_status", "2");
     			//获取同个地址得正在订餐得同事：根据地址检索，今天正在配送订单得同事
-        		List<PageData>  timeList=wxOrderService.listByStatusOrder(addresspd);
+        		List<PageData>  timeList=wxOrderService.listByStatusOrderOne(addresspd);
         		mv.addObject("timeList", timeList);
-        		String time="0";
+        		String endtime="0";
         		if(timeList.size() >0 ){
-        			time=timeList.get(timeList.size()-1).get("time").toString();
+        			endtime=timeList.get(timeList.size()-1).get("endtime").toString();
         		}
-        		mv.addObject("less_time", 600-Integer.parseInt(time));
+        		mv.addObject("less_time", endtime);
         		//获取所有成功订餐得同事：按时间排序，最近得10份订单得，已完成得
         		addresspd.put("order_status", "3");
-        		List<PageData> overList=wxOrderService.listByStatusOrder(addresspd);
+        		List<PageData> overList=wxOrderService.listByStatusOrderTwo(addresspd);
         		mv.addObject("overList", overList);
         		mv.addObject("overnumber", overList.size());
      		}
@@ -1182,7 +1148,9 @@ public class WxMemberController extends BaseController {
   			}
  			//判断当前是不是第一笔订单---需要数量以及订单ID
  			String order_id=orderpd.getString("order_id");
- 			PageData timepd=ServiceHelper.getWxOrderService().isHavingOrderByNow(null);
+ 			String address=ServiceHelper.getWxmemberService().findAddressDetail(orderpd).getString("address");
+ 			orderpd.put("address", address);
+ 			PageData timepd=ServiceHelper.getWxOrderService().isHavingOrderByNow(orderpd);
  			String order_idnumber="";
  			for (int i = 0; i < shopgoodsnumber; i++) {
  				order_idnumber+=order_id+",";
@@ -1192,6 +1160,7 @@ public class WxMemberController extends BaseController {
  				String ordertime_id=BaseController.getTimeID();
  				timepd.put("ordertime_id", ordertime_id);
  				timepd.put("order_idstr", order_idnumber);
+ 				timepd.put("address", address);
  				timepd.put("createtime", DateUtil.getTime());
  				timepd.put("endtime", DateUtil.getAfterMinTime(DateUtil.getTime(), "10"));
  				ServiceHelper.getWxOrderService().saveOrderTime(timepd);
@@ -1203,6 +1172,7 @@ public class WxMemberController extends BaseController {
  				String order_idstr=timepd.getString("order_idstr")+order_idnumber;
  				if(order_idstr.split(",").length >= 5){
  					timepd.put("ok", "1");
+ 					timepd.put("order_idstr", order_idstr);
  					ServiceHelper.getWxOrderService().updateOrderTime(timepd);
  					//处理跑腿费用分配问题
    					int goods_number=order_idstr.split(",").length;
@@ -1355,7 +1325,7 @@ public class WxMemberController extends BaseController {
    		try {
     		BigDecimal total_fee = new BigDecimal(Double.parseDouble(_total_fee)*100);
   	    	//开始调用微信支付接口
-  			WXPayPath dodo = new WXPayPath("3");
+  			WXPayPath dodo = new WXPayPath();
  	    	Map<String, String> reqData=new HashMap<String, String>();
  	    	if(attach.equals("1")){
  	    		reqData.put("body", "支付订单");

@@ -44,7 +44,7 @@ public class OrderShop extends TimerTask{
  	 	 		 		List<PageData> lunchList=ServiceHelper.getWxOrderService().listLunchByOrder(pd);
  	 	 		 		//未支付成功更新购买商品的库存
  	 	 		 		for (PageData e : lunchList) {
-							e.put("dc_stocknumber", e.getString("new_stocknumber"));
+							e.put("dc_stocknumber", e.get("new_stocknumber").toString());
 							ServiceHelper.getLunchService().editStock(e);
 						}
  	 		 		}

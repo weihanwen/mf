@@ -23,8 +23,8 @@ public class WXPayPath {
     private WXPay wxpay;
     private WXPayConfigImpl config;
  
-    public WXPayPath(String type) throws Exception {
-        config = WXPayConfigImpl.getInstance(type);
+    public WXPayPath() throws Exception {
+        config = WXPayConfigImpl.getInstance();
         wxpay = new WXPay(config);
     }
     
@@ -42,7 +42,7 @@ public class WXPayPath {
         return config.getKey();
     }
     public  String getSpbill_create_ip() {
-    	return "139.196.81.14";
+    	return "47.94.110.4";
     }
 
     /**
@@ -203,7 +203,7 @@ public class WXPayPath {
 
     public static void main(String[] args) throws Exception {
          System.out.println("--------------->");
-         WXPayPath dodo = new WXPayPath("3");
+         WXPayPath dodo = new WXPayPath();
          dodo.test001();
           System.out.println("<---------------"); // wx2016112510573077
     }

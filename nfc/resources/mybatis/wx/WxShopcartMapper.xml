@@ -12,6 +12,16 @@
 		where 
 			 #{allshopcart_id} like concat(concat('%',a.shopcart_id),'%')
   	</select>
+  	<!-- 获取购物车的总赠送积分 -->
+	<select id="sumShopcartSendJfById" parameterType="pd" resultType="String">
+		select 
+			ifnull(sum(a.shop_number*b.send_integral),0) as allmoney
+ 		from 
+			tb_shopcart a 
+			left join tb_lunch b on a.lunch_id=b.lunch_id
+		where 
+			 #{allshopcart_id} like concat(concat('%',a.shopcart_id),'%')
+  	</select>
   	<!-- 统计购物车商品数量 -->
 	<select id="countShopcartNumber" parameterType="pd" resultType="String">
 		select 

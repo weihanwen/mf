@@ -34,7 +34,8 @@
                 font-size: 12px;
             }
                 li img {
-                    height: 54px;
+                    height: 60px;
+                    width:60px;
                 }
             li span {
                     height: 30px;
@@ -42,8 +43,7 @@
              }
             section {
                 padding:2px;
-                overflow-y:scroll;
-            }
+             }
             .one {
                 width: 99%;
             }
@@ -98,7 +98,7 @@
             <div class="two">
                  <div class="titlediv">
                     <span class="span1"> 正在订餐得同事</span>
-                     <span class="span2" id="less_time"> ${less_time}</span>
+                     <span class="span2" id="less_time"></span>
                  </div>
                  <ul>
                    <c:forEach items="${timeList}" var="var" varStatus="vs">
@@ -132,28 +132,28 @@
  <script src="js/jquery-1.8.3.min.js"></script>
  <script src="js/wx/tongyong.js"></script>
 <script type="text/javascript">
-//倒计时函数
-function newTime (){
-    //算出中间差并且已毫秒数返回; 除以1000将毫秒数转化成秒数方便运算；
-    var countDown =  "${less_time}";
-    
-    //获取分钟数
-    //同理剔除掉分钟数
-    var oMinutes = parseInt(countDown/60%60);
-    
-    //获取秒数
-    //因为就是秒数  所以取得余数即可
-    var oSeconds = parseInt(countDown%60);
-    
-    //下面就是插入到页面事先准备容器即可;
-    var html =  "<span>" + p(oMinutes) + "分</span>" +"<span>" + p(oSeconds) + "秒</span>";
-    document.getElementById('less_time').innerHTML = html;
-    
-    //别忘记当时间为0的，要让其知道结束了;
-    if(countDown < 0){
-        document.getElementById('less_time').innerHTML = '--';
-    }
+
+
+window.onload = function() {
+if("${less_time}" != '' && "${less_time}" != '0'){
+	interval = setInterval(function() {
+		var endDate = new Date("${less_time}");
+		var leftTime=endDate.getTime()-(new Date()).getTime(); 
+		var leftsecond = parseInt(leftTime/1000); 
+		var day1=Math.floor(leftsecond/(60*60*24)); 
+		var hour=Math.floor((leftsecond-day1*24*60*60)/3600); 
+		var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60); 
+		var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60); 
+	    $("#less_time").html( minute + ":" + second);
+	    if (minute == 0 && second == 0) {
+	        clearInterval(interval);
+	        return;
+	    }
+	}, 1000);
+	}
 }
+
+ 
 </script>
  
 </html>

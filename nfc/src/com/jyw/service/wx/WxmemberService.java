@@ -129,6 +129,9 @@ public class   WxmemberService {
 	public String sumShopcartById(PageData pd)throws Exception{
 		return (String)dao.findForObject("WxShopcartMapper.sumShopcartById", pd);
 	}
+	public String sumShopcartSendJfById(PageData pd)throws Exception{
+		return (String)dao.findForObject("WxShopcartMapper.sumShopcartSendJfById", pd);
+	}
 	public String countShopcartNumber(PageData pd)throws Exception{
 		return (String)dao.findForObject("WxShopcartMapper.countShopcartNumber", pd);
 	}

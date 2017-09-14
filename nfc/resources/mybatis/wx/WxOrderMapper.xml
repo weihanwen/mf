@@ -107,11 +107,13 @@
 		insert into tb_ordertime(
 			ordertime_id,
  			order_idstr,
+ 			address,
  			createtime,
  			endtime
    		) values (	
 			#{ordertime_id},	
 			#{order_idstr},	
+			#{address},	
 			#{createtime},	
 			#{endtime}	
 		)
@@ -127,7 +129,7 @@
 		order_idstr=#{order_idstr},
 		</if>
 		<if test="ok != null and ok =='1'.toString()">
-		endtime=now(),
+		endtime=now(),isover='1',
 		</if>
 		ordertime_id=ordertime_id
 	where
@@ -294,12 +296,12 @@
 	<!-- 判断在十分钟之内相同的地址是所有订单 -->
  	<select id="isHavingOrderByNow" parameterType="pd" resultType="pd">
 		SELECT 
-			ordertime_id
+			ordertime_id,order_idstr
  		FROM 
 			tb_ordertime  
  		WHERE
- 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(createtime))/60) &lt;= 0
-			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP( endtime))/60) &gt;= 0
+ 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(createtime))/60) &gt;= 0
+			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP( endtime))/60) &lt;= 0
   		  	and  #{address}=  address
   		limit 1
    </select>
@@ -311,18 +313,18 @@
 			la.lunch_name,
  			c.`name`, 
 			c.image_url,
+			f.endtime,
  			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) as time
  		FROM 
  			tb_ordertime f 
  			LEFT JOIN tb_order b on f.order_idstr like  CONCAT(CONCAT("%",b.order_id),"%")
- 			left join tb_order_lunch a  on  b.order_id=a.order_id
+ 			JOIN tb_wxmember c on b.wxmember_id=c.wxmember_id
+ 			LEFT JOIN tb_order_lunch a  on  b.order_id=a.order_id
 			LEFT JOIN tb_lunch la on a.lunch_id=la.lunch_id
- 			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
-  		WHERE
-			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.createtime))/60) &lt;= 0
-			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.endtime))/60) &gt;= 0
-			and b.order_status in ('1','2')
-			and b.order_type = '1'
+   		WHERE
+			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.createtime))/60) &gt;= 0
+			and round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(f.endtime))/60) &lt;= 0
+			and  f.isover='0'
  		  	and  #{address}= f.address
 		order by b.createtime desc
 		LIMIT 6
@@ -335,20 +337,17 @@
 		SELECT 
 			a.lunch_id,
 			la.lunch_name,
-			b.order_id,
 			c.`name`, 
 			c.image_url,
-			e.address_name, d.corporate_name , d.contacts_number,
 			round((UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(b.createtime))/60) as time
  		FROM 
  			tb_ordertime f 
  			LEFT JOIN tb_order b on f.order_idstr like  CONCAT(CONCAT("%",b.order_id),"%")
+ 			JOIN tb_wxmember c on b.wxmember_id=c.wxmember_id
 			LEFT JOIN  tb_order_lunch a  on a.order_id=b.order_id
 			LEFT JOIN tb_lunch la on a.lunch_id=la.lunch_id
- 			left join tb_wxmember c on b.wxmember_id=c.wxmember_id
- 		WHERE
-			b.order_status = '3'
-			and b.order_type = '1'
+  		WHERE
+			 f.isover='1'
 		  	and  #{address}= f.address
 		  	and TO_DAYS(now())=TO_DAYS(f.createtime) 
  		order by b.createtime desc 

@@ -75,13 +75,13 @@
          </div>
         
  
-        <!-- Arrow Left -->
+       <!--  
         <span u="arrowleft" class="jssora05l" style="width: 40px; height: 40px; top: 158px; left: 8px;">
         </span>
-        <!-- Arrow Right -->
+        Arrow Right
         <span u="arrowright" class="jssora05r" style="width: 40px; height: 40px; top: 158px; right: 8px">
         </span>
-        <!-- Arrow Navigator Skin End -->
+        -->
         
         <!-- Thumbnail Navigator Skin Begin -->
         <div u="thumbnavigator" class="jssort01" style="position: absolute; width: 800px; height: 210px; left:0px; bottom: 0px;">

@@ -157,7 +157,7 @@
 				<input type="hidden" id="actual_money" value="${actual_money}" name="actual_money"/> 
 				<input type="hidden" id="use_integral" value="0" name="use_integral"/> 
 				<input type="hidden" id="use_wx" value="${actual_money}" name="use_wx"/> 
-				<input type="hidden" id="send_integral" value="10" name="send_integral"/> 
+				<input type="hidden" id="send_integral" value="${allsendjf}" name="send_integral"/> 
 				<input type="hidden" id="serial_number" value="" name="serial_number"/> 
 				<input type="hidden" id="pay_type" value="${empty pd.wxmember_tihuojuan_idstr or pd.wxmember_tihuojuan_idstr eq ''?'1':'2'}" name="pay_type"/> 
 				<input type="hidden" id="order_type" value="${pd.order_type}" name="order_type"/> 
