@@ -122,18 +122,20 @@
 	<delete id="deleteOrderTime">
 	delete from tb_ordertime
  	</delete>
-	<update id="updateOrderTime" parameterType="pd">
-	update tb_ordertime
-	set
-		<if test="order_idstr != null and order_idstr != ''">
-		order_idstr=#{order_idstr},
-		</if>
-		<if test="ok != null and ok =='1'.toString()">
-		endtime=now(),isover='1',
-		</if>
-		ordertime_id=ordertime_id
-	where
-		ordertime_id=#{ordertime_id}
+	<update id="updateOrderTime" parameterType="pd"   >
+		update tb_ordertime
+		set
+			<if test="order_idstr != null and order_idstr != ''">
+			order_idstr=#{order_idstr},
+			</if>
+			<if test="ok != null and ok =='1'.toString()">
+			endtime=now(),isover='1',
+			</if>
+			version=#{version}+1,
+			ordertime_id=ordertime_id
+		where
+			ordertime_id=#{ordertime_id}
+		and version=#{version}
 	</update>
      <!-- 获取详情 -->
 	<select id="getOrderTimeForId" parameterType="pd" resultType="pd">
@@ -142,7 +144,8 @@
  			a.order_idstr,
  			a.createtime,
  			a.endtime,
- 			a.isover
+ 			a.isover,
+ 			a.version
   		from 
 			tb_ordertime a  
  		where 

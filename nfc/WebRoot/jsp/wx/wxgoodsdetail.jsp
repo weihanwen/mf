@@ -47,7 +47,7 @@
 	<div><span class="goback" onclick="backreturn()"><img src="img/fanhui.png" alt=""></span> 商品详情</div>
 </nav>
 <span class="addshopcar" onclick="clikthisLunch()"  ><img src="images/addshop.png" alt="" style="width: 100%;"></span>
-<section class="twosection">
+<section class="twosection" style="overflow: hidden;">
     <!-- #endregion Jssor Slider End -->
     <!-- Jssor Slider Begin -->
     <!-- You can move inline styles to css file or css block. -->

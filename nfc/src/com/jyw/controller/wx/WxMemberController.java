@@ -1124,7 +1124,7 @@ public class WxMemberController extends BaseController {
 	 * @param shopgoodsnumber
 	 * @throws Exception 
 	 */
-	public static void DeliveryTime(PageData orderpd) throws Exception{
+	public synchronized static void DeliveryTime(PageData orderpd) throws Exception{
 		DecimalFormat    df   = new DecimalFormat("######0.00"); 
 		int shopgoodsnumber=0;
  		try {
@@ -1140,9 +1140,7 @@ public class WxMemberController extends BaseController {
 					shoppd.put("shopcart_id", string);
  					if(ServiceHelper.getWxmemberService().findShopCartById(shoppd) != null){
  						 shopgoodsnumber+=Integer.parseInt(ServiceHelper.getWxmemberService().findShopCartById(shoppd).getString("shop_number"));
- 						 //删除购物车
- 						 ServiceHelper.getWxmemberService().deleteShopCartById(shoppd);
-					}
+ 					}
 					shoppd=null;
  				}
   			}
@@ -1170,10 +1168,14 @@ public class WxMemberController extends BaseController {
 				 tt.schedule(op, 1000*60*10);
   			}else{
  				String order_idstr=timepd.getString("order_idstr")+order_idnumber;
+ 				timepd.put("version", timepd.getString("version"));
+ 				timepd.put("order_idstr", order_idstr);
  				if(order_idstr.split(",").length >= 5){
  					timepd.put("ok", "1");
- 					timepd.put("order_idstr", order_idstr);
- 					ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 					int n=ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 					if(n == 0){
+ 						DeliveryTime(orderpd);
+ 					}
  					//处理跑腿费用分配问题
    					int goods_number=order_idstr.split(",").length;
  					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getMoneyByNumber(String.valueOf(goods_number)));
@@ -1194,9 +1196,14 @@ public class WxMemberController extends BaseController {
 					}
   				}else{
  					timepd.put("order_idstr", order_idstr+","+order_idnumber);
- 					ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 					int n=ServiceHelper.getWxOrderService().updateOrderTime(timepd);
+ 					if(n == 0){
+ 						DeliveryTime(orderpd);
+ 					}
  				}
  			}
+ 			 //删除购物车
+			 ServiceHelper.getWxmemberService().deleteShopCartById(orderpd);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -1337,7 +1344,7 @@ public class WxMemberController extends BaseController {
 	    	reqData.put("fee_type", "CNY");
 	    	reqData.put("total_fee", String.valueOf(total_fee.intValue()));
 	    	reqData.put("spbill_create_ip", dodo.getSpbill_create_ip());
-	    	reqData.put("notify_url", "https://www.jiuyuvip.com/back_chat/notify.do");
+	    	reqData.put("notify_url", "http://www.jybd666.cn/back_chat/notify.do");
 	     	//JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
 	    	//MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
 	    	reqData.put("trade_type", "JSAPI");

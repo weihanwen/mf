@@ -55,7 +55,7 @@ public class Const {
 	public static final String AVATARFILEPATH = "uploadify/uploads/avatar/";	//头像文件上传路径
 	public static final String AREAFILEPATH = "uploadify/uploads/area/";	//头像文件上传路径
 	
-	public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)|(app)|(websocket)|(img)|(wx)).*";	//不对匹配该值的访问路径拦截（正则）
+	public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)|(app)|(websocket)|(img)|(wx)|(back)).*";	//不对匹配该值的访问路径拦截（正则）
 	public static ApplicationContext WEB_APP_CONTEXT = null; //该值会在web容器启动时由WebAppContextListener初始化
 	
 	/**
@@ -89,7 +89,7 @@ public class Const {
 	
 	//微信登录人的key
 	public static final String WXLOGIN = "wxlogin";
-	public static final String WxLOGIN_URL = "/wxlogin/htmlWxLogin.do";	 //微信登录地址wxlogin/toLoginWx.do
+	public static final String WxLOGIN_URL = "/wxlogin/toLoginWx.do";	 //微信登录地址
 	//存储暂时的一些参数
 	public static String access_token="";
 	public static String jsapi_ticket="";

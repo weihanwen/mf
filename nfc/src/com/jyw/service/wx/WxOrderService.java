@@ -107,14 +107,14 @@ public class   WxOrderService {
 	/*
 	 *订单时间跑腿费处理
 	 */
-	public void updateOrderTime(PageData pd)throws Exception{
-		dao.update("WxOrderMapper.updateOrderTime", pd);
+	public Integer updateOrderTime(PageData pd)throws Exception{
+		return (Integer)dao.update("WxOrderMapper.updateOrderTime", pd);
 	}
 	/*
 	 *获取tb_ordertime详情
 	 */
 	public  PageData getOrderTimeForId(PageData pd)throws Exception{
-		return ( PageData )dao.findForObject("WxOrderMapper.getOrderTimeForId", pd);
+		return (PageData)dao.findForObject("WxOrderMapper.getOrderTimeForId", pd);
 	}
   	/*
 	*判断在十分钟之内相同的地址是所有订单

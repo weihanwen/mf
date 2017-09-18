@@ -95,7 +95,7 @@ public class WxpubOAuth {
         data.put("code", code);
         data.put("grant_type", "authorization_code");
         String queryString = WxpubOAuth.httpBuildQuery(data);
-
+        System.out.println("queryString="+queryString);
         return "https://api.weixin.qq.com/sns/oauth2/access_token?" + queryString;
     }
     

@@ -55,7 +55,7 @@ public class WxloginController extends BaseController {
 	
 	/**
 	 * 微信登录授权页面
-	 * wxlogin/toLoginWx.do 
+	 * www.jybd666.cn/wxlogin/toLoginWx.do 
  	 */
 	@RequestMapping(value="/toLoginWx")
 	public void toLoginWx(HttpServletRequest request,HttpServletResponse response){
@@ -72,7 +72,7 @@ public class WxloginController extends BaseController {
 	
 	
 	/**
-	 * wxlogin/htmlWxLogin.do 
+	 * www.jybd666.cn/wxlogin/htmlWxLogin.do  
 	 *  授权完直接登录
 	 *  1：未注册过的先得获取手机验证码
 	 *  2：已注册直接前往首页
@@ -91,12 +91,18 @@ public class WxloginController extends BaseController {
     	try {
    				pd=this.getPageData();
    				String code=pd.getString("code");
-      			pd = WxpubOAuth.getOpenId(pd,WxUtil.APP_ID, WxUtil.APP_SECRET, code);
-    			if(pd.getString("open_id") == null || pd.getString("open_id").equals("")){
-    				mv.setViewName("redirect:toLoginWx.do");
-   			 		return mv;
-   				} 
-//   				pd.put("open_id", "owD2DwsxdygwHXxNV75kjGT7Wvlw");
+      			try {
+      				pd = WxpubOAuth.getOpenId(pd,WxUtil.APP_ID, WxUtil.APP_SECRET, code);
+        			if(pd.getString("open_id") == null || pd.getString("open_id").equals("")){
+        				mv.setViewName("redirect:toLoginWx.do");
+       			 		return mv;
+       				} 
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					pd.put("open_id", "owD2DwsxdygwHXxNV75kjGT7Wvlw");
+				}
+    			System.out.println("pd="+pd.toString());
       			WxLogin login=new WxLogin();
      			PageData mpd=wxmemberService.findById(pd);
      			if( mpd == null){

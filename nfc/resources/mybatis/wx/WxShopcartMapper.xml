@@ -53,6 +53,7 @@
 		delete from tb_shopcart  
 		where 
 			<choose>
+				<when test="allshopcart_id != null and allshopcart_id != ''">#{allshopcart_id} like concat(concat('%',shopcart_id),'%') </when>
 				<when test="shopcart_id != null and shopcart_id != ''">shopcart_id = #{shopcart_id}</when>
 				<otherwise>wxmember_id = #{wxmember_id} and lunch_id=#{lunch_id}</otherwise>
 			</choose>
