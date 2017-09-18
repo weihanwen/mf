@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2017-09-18 22:08:35
+Date: 2017-09-18 22:57:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -438,6 +438,8 @@ CREATE TABLE `tb_order` (
 INSERT INTO `tb_order` VALUES ('20170911015734178596', '12584561', '164', '0', '', '', '164', '164', '0', '1', '2', '10', '', '1', '2017-09-11 02:27:29', '2017-09-11 02:27:29', '0', '0', '0', null, null, null, '2017-09-11 01:57:35', null, null, '20170820124232907421', '980462730908', '', '006@5', '2');
 INSERT INTO `tb_order` VALUES ('20170918042030960741', '38011876', '33', '0', '', '', '38', '0', '38', '1', '0', '4', '', '1', '2017-09-18 16:50:15', '2017-09-18 16:50:15', '5', '5', '0', null, null, null, '2017-09-18 16:20:31', null, null, '20170918041559783566', '960340102286', '', '003@1', '2');
 INSERT INTO `tb_order` VALUES ('20170918060347746017', '30395389', '33', '0', '', '', '38', '0', '38', '1', '0', '4', '', '1', '2017-09-18 18:32:12', '2017-09-18 18:32:12', '5', '5', '0', null, null, null, '2017-09-18 18:03:47', null, null, '20170917114005270090', '136618419321', '', '002@1', '2');
+INSERT INTO `tb_order` VALUES ('20170918104503721108', '14463070', '33', '0', '', '', '38', '0', '38', '1', '0', '4', '', '1', '2017-09-18 23:15:01', '2017-09-18 23:15:01', '5', '5', '0', null, null, null, '2017-09-18 22:45:03', null, null, '20170820124232907421', '980462730908', '0840350351,', '', '1');
+INSERT INTO `tb_order` VALUES ('20170918104547669869', '37161510', '33', '0', '', '', '38', '0', '38', '1', '0', '4', '', '1', '2017-09-18 23:15:44', '2017-09-18 23:15:44', '5', '5', '0', null, null, null, '2017-09-18 22:45:47', null, null, '20170820124232907421', '980462730908', '0840350351,', '', '1');
 
 -- ----------------------------
 -- Table structure for `tb_ordertime`
@@ -450,6 +452,7 @@ CREATE TABLE `tb_ordertime` (
   `createtime` datetime DEFAULT NULL,
   `endtime` datetime DEFAULT NULL COMMENT '结束时间',
   `isover` varchar(4) DEFAULT '0' COMMENT '是否已经处理',
+  `version` varchar(100) DEFAULT '0',
   PRIMARY KEY (`ordertime_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -467,7 +470,7 @@ CREATE TABLE `tb_order_lunch` (
   `lunch_id` varchar(100) DEFAULT NULL,
   `shop_number` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_lunch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_order_lunch
@@ -475,6 +478,8 @@ CREATE TABLE `tb_order_lunch` (
 INSERT INTO `tb_order_lunch` VALUES ('37', '20170911015734178596', '006', '5');
 INSERT INTO `tb_order_lunch` VALUES ('43', '20170918042030960741', '003', '1');
 INSERT INTO `tb_order_lunch` VALUES ('44', '20170918060347746017', '002', '1');
+INSERT INTO `tb_order_lunch` VALUES ('45', '20170918104503721108', '002', '1');
+INSERT INTO `tb_order_lunch` VALUES ('46', '20170918104547669869', '002', '1');
 
 -- ----------------------------
 -- Table structure for `tb_receive_condition`
@@ -642,8 +647,7 @@ CREATE TABLE `tb_wxmember` (
 -- ----------------------------
 -- Records of tb_wxmember
 -- ----------------------------
-INSERT INTO `tb_wxmember` VALUES ('1', '2222', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183605&di=5b485d99ee1855e1179c0c89cf8cd42b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a46a3a856306163f6246b60af35.jpg', '2222', '1', '2123131', null, null, null, null, null, null, '2017-07-31 12:01:09', '2017-08-30 14:23:23');
-INSERT INTO `tb_wxmember` VALUES ('20170820124232907421', '65862500', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183605&di=5b485d99ee1855e1179c0c89cf8cd42b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a46a3a856306163f6246b60af35.jpg', null, null, 'owD2DwsxdygwHXxNV75kjGT7Wvlw', null, null, null, null, null, null, '2017-08-20 00:42:44', '2017-08-30 14:23:23');
+INSERT INTO `tb_wxmember` VALUES ('20170820124232907421', '65862500', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504084183605&di=5b485d99ee1855e1179c0c89cf8cd42b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0df3d7ca7bcb0a46a3a856306163f6246b60af35.jpg', '测试', '1', 'oJ6nY02FKz8dt_nRBBIqEpqfexZo', null, null, null, null, null, null, '2017-08-20 00:42:44', '2017-09-18 22:45:41');
 INSERT INTO `tb_wxmember` VALUES ('20170917114005270090', '22727480', 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJBvib2ecBeL5kmMwv7rFuALVibMcPliazvn5OEDEImrlXudUH7tG3VSYqtoM49tfEcRibuxj2ptuwMmg/0', '随缘', '1', 'oJ6nY077HOIPv75XMMl25XRVCYtg', null, '浙江', null, '杭州', null, null, '2017-09-17 23:40:05', '2017-09-17 23:40:05');
 INSERT INTO `tb_wxmember` VALUES ('20170917114443614351', '68914547', 'http://wx.qlogo.cn/mmopen/vi_32/qaiagEibYcSWdUy7DhDk9xS8lUZ8FcAIxLHpHhxWXU7NnGLwX7DSNn9kEe2ARGicVTnhwQICqYYAdr41cPqBaOZ3g/0', '刘飞', '2', 'oJ6nY033HkjygQVaiVBomRPn5v7Y', null, '广东', null, '汕头', null, null, '2017-09-17 23:44:43', '2017-09-17 23:44:43');
 INSERT INTO `tb_wxmember` VALUES ('20170918041559783566', '58503311', 'http://wx.qlogo.cn/mmopen/vi_32/IKc07NyYft5jTcYfQDJUX6KnZjMnkkyqLmp8LmDIJ7e1hgErOcXPEMYBiaBvPR3TSzMO1h3zgKdppibmpGXTM6jA/0', '缘', '1', 'oJ6nY0zrh7eBV0hpd9hOm80v35-Y', null, '浙江', null, '杭州', null, null, '2017-09-18 16:15:59', '2017-09-18 16:15:59');

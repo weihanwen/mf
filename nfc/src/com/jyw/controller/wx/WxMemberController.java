@@ -505,7 +505,9 @@ public class WxMemberController extends BaseController {
 				pd.put("lunch_id", lunch_id);
 				boolean flag=true;
 				if(number.equals("1")){
-					flag=isKunCunOK(lunch_id, number, "1" );
+					PageData messagepd=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					flag=(boolean)messagepd.get("flag");
+					message=messagepd.getString("message");
 				}
  				if(flag){
 					//判断购物车是否有当前的商品
@@ -524,8 +526,7 @@ public class WxMemberController extends BaseController {
 					}
 				}else{
 					result="0";
-					message="库存不足，正在补足中";
-				}
+ 				}
 				
 				map.put("data", wxmemberService.countShopcartNumber(pd));
   			}
@@ -1036,10 +1037,11 @@ public class WxMemberController extends BaseController {
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
 				if(order_type.equals("1")){
-					boolean flag=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					PageData messagepd=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					boolean flag=(boolean)messagepd.get("flag");
 					if(!flag){
 						map.put("result", "0");
-						map.put("message", "商品正在补给，请稍等。。。");
+						map.put("message", messagepd.getString("message"));
 						map.put("data", "");
 						return map;
 					}
@@ -1269,20 +1271,24 @@ public class WxMemberController extends BaseController {
 	 * @param number 购买嘚数量
 	 * @return type 1-点餐，2-预定
 	 */
-	public synchronized boolean isKunCunOK(String lunch_id,String number,String type){
-		boolean flag=true;
+	public synchronized static PageData isKunCunOK(String lunch_id,String number,String type){
+		PageData messagepd=new PageData();
 		PageData kcpd=new PageData();
 		try {
 			kcpd.put("lunch_id", lunch_id);
 			//获取当前库存以及版本号比对库存
-			kcpd=lunchService.findByIdForKunCun(kcpd);
+			kcpd=ServiceHelper.getLunchService().findByIdForKunCun(kcpd);
 			if(kcpd == null){
-				return false;
+				messagepd.put("flag", false);
+				messagepd.put("message", "商品不存在");
+				return messagepd;
 			}
 			if(type.equals("1")){
 				String dc_stocknumber=kcpd.getString("dc_stocknumber");
 				if(Integer.parseInt(dc_stocknumber) < Integer.parseInt(number)){
-					return false;
+					messagepd.put("flag", false);
+					messagepd.put("message", "库存不足");
+					return messagepd;
 				}
 				PageData newpd=new PageData();
 				newpd.put("lunch_id", lunch_id);
@@ -1290,9 +1296,9 @@ public class WxMemberController extends BaseController {
  				newpd.put("dc_stocknumber", String.valueOf(Integer.parseInt(dc_stocknumber)-Integer.parseInt(number)));
   				if(number.equals("1")){
    					newpd.put("dc_version", dc_version);
-   					int n=lunchService.editStock(newpd);
+   					int n=ServiceHelper.getLunchService().editStock(newpd);
    					if( n == 0){
-   						return false;
+   						isKunCunOK( lunch_id, number, type);
    					}
  				}
   			}else{
@@ -1314,8 +1320,11 @@ public class WxMemberController extends BaseController {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+			messagepd.put("flag", false);
+			messagepd.put("message", "系统错误");
 		}
-  		return flag;
+  		return messagepd;
   	}
 	
 	/**
