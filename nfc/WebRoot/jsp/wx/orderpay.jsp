@@ -136,7 +136,7 @@
     </ul>
     <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
         <li class="ui-border-t">
-            <h6>本单支付成功后可获取10个积分，1积分=1元</h6>
+            <h6>本单支付成功后可获取${allsendjf}个积分，1积分=1元</h6>
          </li>
     </ul>
     <div class="ui-btn-wrap">
