@@ -112,10 +112,10 @@
 		width:100%;
 	}
 	.goodsshow  .two{
-   
-	     width: 100%;
- 
-	    text-align: center;
+ 	     width: 100%;
+ 	    text-align: center;
+	        background-color: red;
+    color: #ffffff;
 	}
 	.goodsshow  .two  span{
 		font-size: 10px;

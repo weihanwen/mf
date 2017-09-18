@@ -68,6 +68,8 @@
 				<when test="open_id != null and open_id != ''">open_id=#{open_id}</when>
 				<otherwise>wxmember_id = #{wxmember_id}</otherwise>
 			</choose>
+		order by createtime desc
+		limit 1
  	</select>
  	
  	

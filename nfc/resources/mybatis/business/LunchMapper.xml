@@ -102,8 +102,8 @@
  					lunch_id=lunch_id
 			where 
 				lunch_id = #{lunch_id}
-				<if test="dc_version != null"> and dc_version= #{dc_version},</if>
-  				<if test="yd_version != null">and yd_version= #{yd_version},</if>
+				<if test="dc_version != null"> and dc_version= #{dc_version}</if>
+  				<if test="yd_version != null">and yd_version= #{yd_version}</if>
   	</update>
 	
 	

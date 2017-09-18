@@ -100,9 +100,9 @@ public class WxloginController extends BaseController {
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
-					pd.put("open_id", "owD2DwsxdygwHXxNV75kjGT7Wvlw");
+					pd.put("open_id", "oJ6nY02FKz8dt_nRBBIqEpqfexZo");
 				}
-    			System.out.println("pd="+pd.toString());
+//    			System.out.println("pd="+pd.toString());
       			WxLogin login=new WxLogin();
      			PageData mpd=wxmemberService.findById(pd);
      			if( mpd == null){

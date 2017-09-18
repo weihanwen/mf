@@ -1273,6 +1273,8 @@ public class WxMemberController extends BaseController {
 	 */
 	public synchronized static PageData isKunCunOK(String lunch_id,String number,String type){
 		PageData messagepd=new PageData();
+		messagepd.put("flag", true);
+		messagepd.put("message", "");
 		PageData kcpd=new PageData();
 		try {
 			kcpd.put("lunch_id", lunch_id);
@@ -1284,7 +1286,7 @@ public class WxMemberController extends BaseController {
 				return messagepd;
 			}
 			if(type.equals("1")){
-				String dc_stocknumber=kcpd.getString("dc_stocknumber");
+				String dc_stocknumber=kcpd.get("dc_stocknumber").toString();
 				if(Integer.parseInt(dc_stocknumber) < Integer.parseInt(number)){
 					messagepd.put("flag", false);
 					messagepd.put("message", "库存不足");
