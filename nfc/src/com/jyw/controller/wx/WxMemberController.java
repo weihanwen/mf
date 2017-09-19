@@ -504,11 +504,9 @@ public class WxMemberController extends BaseController {
 				pd.put("wxmember_id", login.getWXMEMBER_ID()) ;
 				pd.put("lunch_id", lunch_id);
 				boolean flag=true;
-				if(number.equals("1")){
-					PageData messagepd=isKunCunOK(lunch_id, number, "1" );
-					flag=(boolean)messagepd.get("flag");
-					message=messagepd.getString("message");
-				}
+				PageData messagepd=isKunCunOK(lunch_id, number, "1" );
+				flag=(boolean)messagepd.get("flag");
+				message=messagepd.getString("message");
  				if(flag){
 					//判断购物车是否有当前的商品
 					PageData shoppd=wxmemberService.findShopCartById(pd);
@@ -1296,13 +1294,11 @@ public class WxMemberController extends BaseController {
 				newpd.put("lunch_id", lunch_id);
  				String dc_version=kcpd.getString("dc_version");
  				newpd.put("dc_stocknumber", String.valueOf(Integer.parseInt(dc_stocknumber)-Integer.parseInt(number)));
-  				if(number.equals("1")){
-   					newpd.put("dc_version", dc_version);
-   					int n=ServiceHelper.getLunchService().editStock(newpd);
-   					if( n == 0){
-   						isKunCunOK( lunch_id, number, type);
-   					}
- 				}
+ 				newpd.put("dc_version", dc_version);
+				int n=ServiceHelper.getLunchService().editStock(newpd);
+				if( n == 0){
+					isKunCunOK( lunch_id, number, type);
+				}
   			}else{
 // 				String yd_stocknumber=kcpd.getString("yd_stocknumber");
 //				if(Integer.parseInt(yd_stocknumber) < Integer.parseInt(number)){
