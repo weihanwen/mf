@@ -47,17 +47,17 @@
 	<div><span class="goback" onclick="backreturn()"><img src="img/fanhui.png" alt=""></span> 商品详情</div>
 </nav>
 <span class="addshopcar" onclick="clikthisLunch()"  ><img src="images/addshop.png" alt="" style="width: 100%;"></span>
-<section class="twosection" style="overflow: hidden;">
+<section class="twosection" style="overflow: hidden;background-color: rgb(188, 29, 37);">
     <!-- #endregion Jssor Slider End -->
     <!-- Jssor Slider Begin -->
     <!-- You can move inline styles to css file or css block. -->
     <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 790px;
-        height: 1060px; background: #EC1212; overflow: hidden;">
+        height: 1060px;  overflow: hidden;">
 
         <!-- Loading Screen -->
         <div u="loading" style="position: absolute; top: 0px; left: 0px;">
             <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
-                background-color: #EC1212; top: 0px; left: 0px;width: 100%;height:100%;">
+                 top: 0px; left: 0px;width: 100%;height:100%;">
             </div>
             <div style="position: absolute; display: block; background: url(img/loading.gif) no-repeat center center;
                 top: 0px; left: 0px;width: 100%;height:100%;">
