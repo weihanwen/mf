@@ -52,12 +52,12 @@
     <!-- Jssor Slider Begin -->
     <!-- You can move inline styles to css file or css block. -->
     <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 790px;
-        height: 1060px; background: #191919; overflow: hidden;">
+        height: 1060px; background: #EC1212; overflow: hidden;">
 
         <!-- Loading Screen -->
         <div u="loading" style="position: absolute; top: 0px; left: 0px;">
             <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
-                background-color: #000000; top: 0px; left: 0px;width: 100%;height:100%;">
+                background-color: #EC1212; top: 0px; left: 0px;width: 100%;height:100%;">
             </div>
             <div style="position: absolute; display: block; background: url(img/loading.gif) no-repeat center center;
                 top: 0px; left: 0px;width: 100%;height:100%;">

@@ -483,7 +483,7 @@ public class WxMemberController extends BaseController {
    	* wxmember/addshopcart.do
    	* 
    	* lunch_id  商品ID
-   	* number  加1减1
+   	* number  加1减-1
    	 */
 	@RequestMapping(value="/addshopcart")
 	@ResponseBody
@@ -505,7 +505,7 @@ public class WxMemberController extends BaseController {
 				pd.put("lunch_id", lunch_id);
 				boolean flag=true;
 				if(number.equals("1")){
-					PageData messagepd=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					PageData messagepd=isKunCunOK(lunch_id, number, "1" );
 					flag=(boolean)messagepd.get("flag");
 					message=messagepd.getString("message");
 				}
@@ -1037,7 +1037,7 @@ public class WxMemberController extends BaseController {
 				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
 				String number=pd.getString("lunch_idstr").split("@")[1];
 				if(order_type.equals("1")){
-					PageData messagepd=isKunCunOK(lunch_id, number, pd.getString("order_type") );
+					PageData messagepd=isKunCunOK(lunch_id, number, "1" );
 					boolean flag=(boolean)messagepd.get("flag");
 					if(!flag){
 						map.put("result", "0");
