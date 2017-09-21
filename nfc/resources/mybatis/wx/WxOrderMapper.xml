@@ -373,6 +373,7 @@
 			a.wxmember_id,
 			a.order_id,
 			a.order_status,
+			a.delivery_fee,
 			b.wxmember_wealth_id,
 			b.now_integral
 		from 
@@ -399,6 +400,18 @@
   		WHERE
 			 a.order_id= #{order_id}
     	</select>
+    	
+    	
+    	<!-- 获取所有支付成功得订单 -->
+ 		<select id="countordernumber" parameterType="pd" resultType="Integer">
+		SELECT 
+			count(1)
+		FROM 
+			tb_order  
+		WHERE
+			wxmember_id=#{wxmember_id}
+ 			and order_status in ('1','2')
+     	</select>
    
 	
 </mapper>

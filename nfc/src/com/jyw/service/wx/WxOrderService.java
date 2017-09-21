@@ -136,6 +136,13 @@ public class   WxOrderService {
 	public List<PageData> listLunchByOrder(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("WxOrderMapper.listLunchByOrder", pd);
 	}
+	
+	/*
+	 *获取已完成得订单总数
+	 */
+	public Integer countordernumber(PageData pd)throws Exception{
+		return (Integer)dao.update("WxOrderMapper.countordernumber", pd);
+	}
 	 
 	
 }

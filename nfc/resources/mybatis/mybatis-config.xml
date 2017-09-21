@@ -55,6 +55,7 @@
 		<mapper resource="mybatis/business/Scheduled_timeMapper.xml"/><!-- 预定便当管理 -->
 		<mapper resource="mybatis/business/Weekmeal_cardMapper.xml"/><!-- 周饭卡管理 -->
 		<mapper resource="mybatis/business/OrderMapper.xml"/><!-- 订单管理 -->
+		<mapper resource="mybatis/business/DiscountMapper.xml"/><!-- 优惠管理 -->
 		
 		 
 		 

@@ -96,6 +96,8 @@
 			b.sale_money,
 			cast(b.sale_money*a.shop_number as decimal(10))  allsale_money,
 			b.lunch_name,
+			b.category_id,
+			b.send_integral,
 			b.dc_images_small
  		from 
 			tb_shopcart a left join tb_lunch b on a.lunch_id=b.lunch_id

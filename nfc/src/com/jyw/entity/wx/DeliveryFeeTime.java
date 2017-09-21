@@ -42,26 +42,29 @@ public class DeliveryFeeTime extends TimerTask{
  		 		pd.put("ordertime_id", ordertime_id);
  		 		pd=ServiceHelper.getWxOrderService().getOrderTimeForId(pd);
  		 		if(pd != null){
- 		 				String order_idstr=pd.getString("order_idstr");
- 		 				//处理跑腿费用分配问题
-	   					int goods_number=order_idstr.split(",").length;
-	 					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getPeiSongDetail(String.valueOf(goods_number)).getString("ptmoney"));
-	 					//根据份数获取总共多少钱
-	 					int order_deliver_fee=ServiceHelper.getWxOrderService().sumDeliveryFeeByOrder(order_idstr);
-	  					List<PageData> orderList=ServiceHelper.getWxOrderService().getOrderInfor(order_idstr);
-	  					//每笔订单总共可以优惠多少钱
-	 					double discount_money_every=(double)order_deliver_fee-delivery_fee/(double)orderList.size();
-	 					for (PageData e : orderList) {
-							e.put("now_integral", df.format(Double.parseDouble(e.getString("now_integral"))+discount_money_every));
-							e.put("before_integral", e.getString("now_integral"));
-							ServiceHelper.getWxmemberService().changeMoneyByMember(e);
-							//新增财富记录
-							e.put("wxmember_wealthhistory_id", BaseController.getTimeID());
-	 						e.put("money", df.format(discount_money_every));
-							e.put("income", "1");
-							e.put("wealth_type", "2");
-							ServiceHelper.getWxmemberService().saveWealthHistory(e);
-						}
+ 		 				pd.remove("version");
+ 		 				pd.put("ok", "1");
+	 					int n=ServiceHelper.getWxOrderService().updateOrderTime(pd);
+// 		 				String order_idstr=pd.getString("order_idstr");
+// 		 				//处理跑腿费用分配问题
+//	   					int goods_number=order_idstr.split(",").length;
+//	 					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getPeiSongDetail(String.valueOf(goods_number)).getString("ptmoney"));
+//	 					//根据份数获取总共多少钱
+//	 					int order_deliver_fee=ServiceHelper.getWxOrderService().sumDeliveryFeeByOrder(order_idstr);
+//	  					List<PageData> orderList=ServiceHelper.getWxOrderService().getOrderInfor(order_idstr);
+//	  					//每笔订单总共可以优惠多少钱
+//	 					double discount_money_every=(double)order_deliver_fee-delivery_fee/(double)orderList.size();
+//	 					for (PageData e : orderList) {
+//							e.put("now_integral", df.format(Double.parseDouble(e.getString("now_integral"))+discount_money_every));
+//							e.put("before_integral", e.getString("now_integral"));
+//							ServiceHelper.getWxmemberService().changeMoneyByMember(e);
+//							//新增财富记录
+//							e.put("wxmember_wealthhistory_id", BaseController.getTimeID());
+//	 						e.put("money", df.format(discount_money_every));
+//							e.put("income", "1");
+//							e.put("wealth_type", "2");
+//							ServiceHelper.getWxmemberService().saveWealthHistory(e);
+//						}
  		 		}
   		 	} catch (Exception e) {
 				// TODO Auto-generated catch block

@@ -197,6 +197,7 @@
 	<select id="findByIdForWx" parameterType="pd" resultType="pd">
 		select 
 			lunch_id,
+			category_id,
 			lunch_name,
 			show_sale_money,
 			sale_money,

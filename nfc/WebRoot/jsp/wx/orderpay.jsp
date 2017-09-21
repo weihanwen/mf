@@ -62,7 +62,6 @@
 		                	</c:forEach>
 		                </select>
  		                </span>
-		                <div>可配送时间段：<span class="sale_starttime">${daypd.sale_starttime}</span>-<span class="sale_endtime">${daypd.sale_endtime}</span></div>
 		            </div>
          		</c:otherwise>
         	</c:choose>
@@ -74,37 +73,48 @@
         		<c:when test="${pd.shop_type eq '1' }">
         			<c:forEach items="${shopList }" var="var">
 					    <p  class="oneyouhui" style="overflow:hidden;">
-					    	<span style='float:left;width: 33%;text-align: center;'>${var.lunch_name}</span>
+					    	<span style='float:left ;text-align: center;'>${var.lunch_name}</span>
 					    	<span style='float:left;width: 33%;text-align: center;'>X${var.shop_number} </span>
-					    	<span style='float:right;width: 33%;text-align: center;'>￥:${var.allsale_money}</span>
+					    	<span style='float:right ;text-align: center;'>￥:${var.allsale_money}</span>
  					    </p>
 			 		</c:forEach>
         		</c:when>
         		<c:otherwise>
         			<p  class="oneyouhui" style="overflow:hidden;">
-        					<span style='float:left;width: 33%;text-align: center;'>${lunchpd.lunch_name}</span>
+        					<span style='float:left; text-align: center;'>${lunchpd.lunch_name}</span>
         					
 					    	<span style='float:left;width: 33%;text-align: center;'>
 					    		<a class="down sljj" onclick="isStockOk('-1','${lunchpd.lunch_id}',this)" style="display: inline-block;width: 27px;border: 1px solid #dddddd; ">-</a> 
 			 					<span class="number" >${lunchpd.shop_number}</span> 
 			 					<a class="up sljj" onclick="isStockOk('1','${lunchpd.lunch_id}',this)" style="display: inline-block;width: 27px;border: 1px solid #dddddd; ">+</a> 
  					    	</span>
-					    	<span style='float:right;width: 33%;text-align: center;'>￥:${lunchpd.allsale_money}</span>
+					    	<span style='float:right; text-align: center;'>￥:${lunchpd.allsale_money}</span>
         			</p>
         		</c:otherwise>
         	</c:choose>
            </li>
     </ul>
      <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
+         <li class="ui-border-t" onclick="peisong()">
+            <h4 class="ui-nowrap">推广期间立减： <span>-${tuiguan_discount}</span>元</h4>
+         </li>
+         <c:if test="${pd.order_type eq '2' }">
+	         <li class="ui-border-t" onclick="peisong()">
+	            <h4 class="ui-nowrap">预定优惠立减： <span>-${yddiscount}</span>元</h4>
+	         </li>
+         </c:if>
+         
+    </ul>
+     <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
         <li class="ui-border-t" onclick="peisong()">
-            <h4 class="ui-nowrap">餐盒费用：<span>${chmoney}</span></h4>
+            <h4 class="ui-nowrap">餐盒费用：<span>${chmoney}</span>元</h4>
             
         </li>
     </ul>
     <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
         <li class="ui-border-t" onclick="peisong()">
             <h4 class="ui-nowrap">配送费</h4>
-            <div class="ui-txt-info" >${ptmoney}</div>
+            <div class="ui-txt-info" >${ptmoney}元</div>
         </li>
     </ul>
     <ul class="ui-list ui-list-text ui-list-link ui-border-tb mg_b_10">
@@ -123,6 +133,12 @@
            </div>
         </li>
     </ul>
+    <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
+        <li class="ui-border-t" onclick="peisong()">
+            <h4 class="ui-nowrap">本单赠送积分：<span>${allsendjf}</span>分</h4>
+            <h6>1积分=1元</h6>
+         </li>
+    </ul>
     <ul class="ui-list ui-list-text ui-border-tb mg_b_10">
         <li class="ui-border-t">
             <div class="ui-list-info" style=" width: 184px; display: inline-block; ">
@@ -133,11 +149,6 @@
                 <input type="checkbox"  onclick="isOK(this)" class="user_integral" >
             </label>
         </li>
-    </ul>
-    <ul class="ui-list ui-list-text ui-list-pure ui-border-tb mg_b_10 ">
-        <li class="ui-border-t">
-            <h6>本单支付成功后可获取${allsendjf}个积分，1积分=1元</h6>
-         </li>
     </ul>
     <div class="ui-btn-wrap">
     	<div class="ui-btn-lg actual_money" style='color: block;background: #fff;' >

@@ -29,6 +29,7 @@ import com.jyw.service.business.Carousel_figureService;
 import com.jyw.service.business.CategoryService;
 import com.jyw.service.business.Daily_menuService;
 import com.jyw.service.business.Delivery_feeService;
+import com.jyw.service.business.DiscountService;
 import com.jyw.service.business.LunchService;
 import com.jyw.service.business.Scheduled_timeService;
 import com.jyw.service.wx.WxOrderService;
@@ -71,6 +72,9 @@ public class WxMemberController extends BaseController {
 	private WxOrderService wxOrderService;//订单
 	@Resource(name="delivery_feeService")
 	private Delivery_feeService delivery_feeService;//配送费
+	
+	@Resource(name="discountService")
+	private DiscountService discountService;
 	
 	
 	/**
@@ -626,28 +630,40 @@ public class WxMemberController extends BaseController {
     			mv.addObject("nowintegral", wxmemberService.getNowIntegral(pd));
     			String shop_type=pd.getString("shop_type");
     			double allmoney=0;
+    			double alldiscountmoney=0;
     			double allsendjf=0;
-    			int delivery_fee=0;
+    			double delivery_fee=0;
+    			//当前已购买订单数
+    			int countordernumber=wxOrderService.countordernumber(pd)+1;
     			if(shop_type.equals("1")){
     				//获取购买商品列表
         			List<PageData> shopList=wxmemberService.findShopCartList(pd);
+        			PageData discountpd=null;
+        			double tuiguan_discount=0;
+        			int shop_number=0;
+        			for (PageData e : shopList) {
+						e.put("ordernumber", countordernumber);
+						allsendjf=Double.parseDouble(e.getString("send_integral"));
+						allmoney=Double.parseDouble(e.get("allsale_money").toString());
+						shop_number+=Integer.parseInt(e.get("shop_number").toString());
+						discountpd=discountService.findById(e);
+						if(discountpd != null){
+							alldiscountmoney+=Double.parseDouble(discountpd.get("reduce_money").toString())*Integer.parseInt(e.get("shop_number").toString());
+							tuiguan_discount+=Double.parseDouble(discountpd.get("reduce_money").toString())*Integer.parseInt(e.get("shop_number").toString());
+							allsendjf+=Double.parseDouble(discountpd.get("send_integral").toString());
+  						}
+					}
+        			mv.addObject("tuiguan_discount", df.format(tuiguan_discount));
         			mv.addObject("shopList", shopList);
-        			//获取总金额
-        			String allpaymoney=wxmemberService.sumShopcartById(pd);
-        			allmoney=Double.parseDouble(allpaymoney);
-        			String sumsendjf=wxmemberService.sumShopcartSendJfById(pd);
-        			allsendjf=Integer.parseInt(sumsendjf);
-        			String shop_number=wxmemberService.countShopcartNumber(pd);
         			//获取配送详情
-    				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number);
-    				int chmoney=Integer.parseInt(pspd.getString("chmoney"));
+    				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number+"");
+    				double chmoney=Double.parseDouble(pspd.getString("chmoney"));
     				mv.addObject("chmoney", String.valueOf(chmoney));
-    				int ptmoney=Integer.parseInt(pspd.getString("ptmoney"));
+    				double ptmoney=Double.parseDouble(pspd.getString("ptmoney"));
     				mv.addObject("ptmoney", String.valueOf(ptmoney));
-        			//配送费
-        			delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(shop_number) );
-    				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
-    			}else{
+        			//配送费+餐盒费
+        			delivery_fee=chmoney+ptmoney;
+     			}else{
     				String lunch_id=pd.getString("lunch_idstr").split("@")[0];
     				pd.put("lunch_id", lunch_id);
     				String shop_number=pd.getString("lunch_idstr").split("@")[1];
@@ -655,29 +671,39 @@ public class WxMemberController extends BaseController {
     				PageData lunchpd=lunchService.findByIdForWx(pd);
     				lunchpd.put("shop_number", shop_number);
     				allsendjf=Integer.parseInt(lunchpd.get("send_integral").toString())*Integer.parseInt(shop_number);
+    				lunchpd.put("ordernumber", countordernumber);
+    				PageData discountpd=discountService.findById(lunchpd);
+    				if(discountpd != null){
+						alldiscountmoney+=Double.parseDouble(discountpd.get("reduce_money").toString())*Integer.parseInt(shop_number);
+						allsendjf+=Double.parseDouble(discountpd.get("send_integral").toString())*Integer.parseInt(shop_number);
+						mv.addObject("tuiguan_discount", df.format(alldiscountmoney));
+						if(pd.getString("order_type").equals("2")){
+							double yddicount=Double.parseDouble(discountpd.get("ydreduce_money").toString())*Integer.parseInt(shop_number);
+ 							mv.addObject("yddiscount", df.format(yddicount));
+ 							alldiscountmoney+=yddicount;
+						}
+					}
     				allmoney=Double.parseDouble(lunchpd.get("sale_money").toString())*Integer.parseInt(shop_number);
-    				lunchpd.put("allsale_money", String.valueOf(allmoney));
+    				lunchpd.put("allsale_money", df.format(allmoney));
     				mv.addObject("lunchpd", lunchpd);
     				//获取配送详情
     				PageData pspd=delivery_feeService.getPeiSongDetail(shop_number);
-    				int chmoney=Integer.parseInt(pspd.getString("chmoney"));
+    				double chmoney=Double.parseDouble(pspd.getString("chmoney"));
     				mv.addObject("chmoney", String.valueOf(chmoney));
-    				int ptmoney=Integer.parseInt(pspd.getString("ptmoney"));
+    				double ptmoney=Double.parseDouble(pspd.getString("ptmoney"));
     				mv.addObject("ptmoney", String.valueOf(ptmoney));
-     				//配送费
-    				delivery_fee=Integer.parseInt(delivery_feeService.getMoneyByNumber(shop_number));
-    				mv.addObject("delivery_fee", String.valueOf(delivery_fee));
-    			}
+     				//配送费+餐盒费
+    				delivery_fee=chmoney+ptmoney;
+     			}
+     			mv.addObject("delivery_fee", df.format(delivery_fee));
     			mv.addObject("allmoney", df.format(allmoney));
-    			mv.addObject("allsendjf", allsendjf);
     			double lesspaymoney=allmoney+delivery_fee;
-    			int  discount_money=0;
      			//判断是否使用提货卷
      			if(pd.getString("wxmember_tihuojuan_idstr") != null &&  !pd.getString("wxmember_tihuojuan_idstr").equals("")){
      				String[] thjstr=pd.getString("wxmember_tihuojuan_idstr").split(",");
       				for (int i = 0; i < thjstr.length; i++) {
 						pd.put("wxmember_tihuojuan_id", thjstr[i]);
-						discount_money+=Integer.parseInt(wxmemberService.getTiHuoJuanMoneyById(pd));
+						alldiscountmoney+=Integer.parseInt(wxmemberService.getTiHuoJuanMoneyById(pd));
 					}
      				pd.remove("wxmember_tihuojuan_id");
      				pd.put("wxmember_redpackage_id", "");
@@ -685,11 +711,12 @@ public class WxMemberController extends BaseController {
      				//判断是否使用红包
          			if(pd.getString("wxmember_redpackage_id") != null && !pd.getString("wxmember_redpackage_id").equals("")){
          				mv.addObject("redmoney", wxmemberService.getRedPackageMoneyById(pd)+"元红包");
-         				discount_money+=Integer.parseInt(wxmemberService.getRedPackageMoneyById(pd));
+         				alldiscountmoney+=Integer.parseInt(wxmemberService.getRedPackageMoneyById(pd));
         			}
      			}
-     			lesspaymoney=lesspaymoney-discount_money;
-    			mv.addObject("discount_money", discount_money);
+     			lesspaymoney=lesspaymoney-alldiscountmoney;
+    			mv.addObject("discount_money", df.format(alldiscountmoney));
+    			mv.addObject("allsendjf", df.format(allsendjf));
     			mv.addObject("actual_money", df.format(lesspaymoney));
     			//判断是否有选择地址
     			if(pd.getString("wxmember_address_id") != null && !pd.getString("wxmember_address_id").equals("") ){
@@ -1178,18 +1205,18 @@ public class WxMemberController extends BaseController {
  					}
  					//处理跑腿费用分配问题
    					int goods_number=order_idstr.split(",").length;
- 					int delivery_fee=Integer.parseInt(ServiceHelper.getDelivery_feeService().getMoneyByNumber(String.valueOf(goods_number)));
- 					//根据份数获取总共多少钱
- 					int order_deliver_fee=ServiceHelper.getWxOrderService().sumDeliveryFeeByOrder(order_idstr);
+// 					double delivery_fee=Double.parseDouble(ServiceHelper.getDelivery_feeService().getMoneyByNumber(String.valueOf(goods_number)));
+// 					//根据份数获取总共多少钱
+// 					int order_deliver_fee=ServiceHelper.getWxOrderService().sumDeliveryFeeByOrder(order_idstr);
   					List<PageData> orderList=ServiceHelper.getWxOrderService().getOrderInfor(order_idstr);
   					//每笔订单总共可以优惠多少钱
- 					double discount_money_every=(double)order_deliver_fee-delivery_fee/(double)orderList.size();
+// 					double discount_money_every=(double)order_deliver_fee-delivery_fee/(double)orderList.size();
  					for (PageData e : orderList) {
-						e.put("now_integral", df.format(Double.parseDouble(e.getString("now_integral"))+discount_money_every));
+						e.put("now_integral", df.format(Double.parseDouble(e.getString("now_integral"))+Double.parseDouble(e.getString("delivery_fee"))));
 						e.put("before_integral", e.getString("now_integral"));
 						ServiceHelper.getWxmemberService().changeMoneyByMember(e);
 						//新增财富记录
- 						e.put("money", df.format(discount_money_every));
+ 						e.put("money", e.getString("delivery_fee"));
 						e.put("income", "1");
 						e.put("wealth_type", "2");
 						ServiceHelper.getWxmemberService().saveWealthHistory(e);
