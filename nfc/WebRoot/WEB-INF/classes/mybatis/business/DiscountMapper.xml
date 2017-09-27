@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DiscountMapper">
+
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into tb_discount_way (
+			category_id,
+			min_number,
+			max_number,
+			reduce_money,
+			send_integral,
+			ydreduce_money
+		) values (
+			#{category_id},	
+			#{min_number},	
+  			#{max_number},	
+			#{reduce_money},	
+			#{send_integral},	
+			#{ydreduce_money}
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from tb_discount_way 
+		where 
+			discount_way_id = #{discount_way_id}
+	</delete>
+ 
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+			update  tb_discount_way 
+			set 
+				category_id = #{category_id},
+				min_number = #{min_number},
+				max_number = #{max_number},
+				reduce_money = #{reduce_money},
+				send_integral = #{send_integral},
+				ydreduce_money = #{ydreduce_money},
+   				discount_way_id = discount_way_id
+			where 
+				discount_way_id = #{discount_way_id}
+	</update>
+ 
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			category_id,
+			min_number,
+			max_number,
+			reduce_money,
+			send_integral,
+			ydreduce_money,
+			discount_way_id
+		from 
+			tb_discount_way 
+		where 
+			<choose>
+				<when test=" discount_way_id != null and discount_way_id != '' ">
+					discount_way_id = #{discount_way_id}
+				</when>
+				<otherwise>
+					category_id=#{category_id}
+					and  #{ordernumber} &gt;= min_number
+					and  #{ordernumber} &lt;= max_number 
+				</otherwise>
+			</choose>
+			
+	</select>
+	
+ 
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select 
+			a.category_id,
+			a.min_number,
+			a.max_number,
+			a.reduce_money,
+			a.send_integral,
+			a.ydreduce_money,
+			a.discount_way_id,
+			b.title
+		from 
+			tb_discount_way a left join tb_category b on a.category_id=b.category_id
+		order by a.category_id
+   	</select>
+	
+	<!-- 列表 -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select 
+			category_id,
+			min_number,
+			max_number,
+			reduce_money,
+			send_integral,
+			ydreduce_money,
+			discount_way_id
+		from 
+			tb_discount_way 
+    </select>
+ 
+	
+	
+</mapper>

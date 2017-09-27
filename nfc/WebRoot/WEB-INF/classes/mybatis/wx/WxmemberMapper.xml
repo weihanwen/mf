@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WxmemberMapper">
+
+	<!-- 新增会员  -->
+	<insert id="save" parameterType="pd">
+		insert into tb_wxmember(
+ 			wxmember_id,
+			showlook_id,
+			image_url,
+			name,
+			sex,
+			open_id,
+			phone,
+			province_name,
+			city_name,
+			area_name,
+ 			createtime,
+			updatetime 
+  		) values (
+			#{wxmember_id},	
+			#{showlook_id}, 
+			#{image_url}, 
+			#{name}, 
+			#{sex}, 
+			#{open_id}, 
+			#{phone}, 
+			#{province_name}, 
+			#{city_name}, 
+			#{area_name}, 
+ 			now(),	
+			now() 
+		)
+	</insert>
+	 <!-- 新增会员财富  -->
+	<insert id="saveWealth" parameterType="pd">
+		insert into tb_wxmember_wealth(
+ 			wxmember_id,
+			now_integral,
+			before_integral,
+			createtime,
+			updatetime
+   		) values (
+			#{wxmember_id},	
+			0, 
+			0, 
+  			now(),	
+			now() 
+		)
+	</insert>
+	
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			wxmember_id,
+			showlook_id,
+			image_url,
+			name,
+			sex,
+			open_id,
+			phone 
+		from 
+			tb_wxmember
+		where 
+			<choose>
+				<when test="open_id != null and open_id != ''">open_id=#{open_id}</when>
+				<otherwise>wxmember_id = #{wxmember_id}</otherwise>
+			</choose>
+		order by createtime desc
+		limit 1
+ 	</select>
+ 	
+ 	
+	<!-- 获取当前会员的余额  -->
+	<select id="getNowIntegral" parameterType="pd" resultType="String">
+		select 
+			cast(now_integral as char) as now_integral
+		from 
+			tb_wxmember_wealth
+		where 
+			wxmember_id = #{wxmember_id}
+ 	</select>
+ 	
+ 	<!-- 修改会员余额 -->
+	<update id="changeMoneyByMember" parameterType="pd" >
+			update  tb_wxmember_wealth
+			set 
+					<if test="now_integral != null and now_integral != ''">now_integral = #{now_integral},</if>
+					<if test="before_integral != null and before_integral != ''">before_integral = #{before_integral},</if>
+					wxmember_id=wxmember_id
+ 			where 
+					wxmember_id = #{wxmember_id}
+	</update>
+	
+	<!-- 新增消费历史纪录  -->
+	<insert id="saveWealthHistory" parameterType="pd">
+		insert into tb_wxmember_wealthhistory(
+			wxmember_wealthhistory_id,
+ 			wxmember_id,
+			money,
+			isincome,
+			order_id,
+			wealth_type,
+			createtime,
+			updatetime
+   		) values (
+			#{wxmember_wealthhistory_id},	
+			#{wxmember_id},	
+			#{money},	 
+			#{isincome},	
+			#{order_id},	
+			#{wealth_type},	
+  			now(),	
+			now() 
+		)
+	</insert>
+	
+ 	<!-- 获取当前会员的消费历史纪录-->
+	<select id="getWealthHistoryList" parameterType="pd" resultType="pd">
+		select 
+			wxmember_id,
+			money,
+			isincome,
+			order_id,
+			wealth_type,
+			createtime,
+			updatetime
+		from 
+			tb_wxmember_wealthhistory
+		where 
+			wxmember_id = #{wxmember_id}
+		order by createtime desc
+		limit 30
+ 	</select>
+ 	
+ 	
+ 	<!-- 新增log纪录  -->
+	<insert id="saveLog" parameterType="pd">
+		insert into tb_log(
+ 			type,
+			order_id,
+			message,
+			createtime
+    	) values (
+			#{type},	
+			#{order_id},	 
+			#{message},	
+ 			now() 
+		)
+	</insert>
+	
+	
+ 
+ 	
+</mapper>

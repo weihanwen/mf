@@ -82,19 +82,19 @@ public class WxMemberController extends BaseController {
    	* wxmember/getLunchList.do
    	* 
    	* category_id  类别ID
+   	* order_type
+   	* scheduled_time_id
     */
 	@RequestMapping(value="/getLunchList")
 	@ResponseBody
-	public  Object getLunchList(String category_id,String order_type) throws Exception{
+	public  Object getLunchList() throws Exception{
  		Map<String, Object> map = new HashMap<String, Object>();
  	  	String result="1";
 		String message="获取成功";
 		PageData pd=new PageData();
 		try{
- 			pd.put("category_id", category_id);
- 			pd.put("order_type", order_type);
-			if(order_type.equals("2")){
-				pd.put("scheduled_time_id", pd.getString("scheduled_time_id"));
+			pd=this.getPageData();
+			if(pd.getString("order_type").equals("2")){
 				List<PageData> ydList=scheduled_timeService.listAllNowDay(pd);
 				map.put("data", ydList);
     		}else{
@@ -890,7 +890,6 @@ public class WxMemberController extends BaseController {
     		pd=this.getPageData();
     		PageData addresspd=wxmemberService.findAddressDetail(pd);
     		if(addresspd !=null){
-    			addresspd.put("order_status", "2");
     			//获取同个地址得正在订餐得同事：根据地址检索，今天正在配送订单得同事
         		List<PageData>  timeList=wxOrderService.listByStatusOrderOne(addresspd);
         		mv.addObject("timeList", timeList);
@@ -900,7 +899,6 @@ public class WxMemberController extends BaseController {
         		}
         		mv.addObject("less_time", endtime);
         		//获取所有成功订餐得同事：按时间排序，最近得10份订单得，已完成得
-        		addresspd.put("order_status", "3");
         		List<PageData> overList=wxOrderService.listByStatusOrderTwo(addresspd);
         		mv.addObject("overList", overList);
         		mv.addObject("overnumber", overList.size());

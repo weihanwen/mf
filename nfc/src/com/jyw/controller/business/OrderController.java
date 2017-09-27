@@ -128,6 +128,28 @@ public class OrderController extends BaseController {
 	
 	
 	
+	/**
+	 * 打印小票
+	 * order/dy.do
+	 */
+	@RequestMapping(value="/dy")
+	public void dy(PrintWriter out){
+ 		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			pd=orderService.findById(pd);
+			//开始打印
+			
+ 			out.write("success");
+			out.close();
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		
+	}
+	
+	
+	
 	 
 	/**
 	 * 详情

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LunchMapper">
+
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into tb_lunch(
+			lunch_id,
+			lunch_name,
+			show_sale_money,
+			sale_money,
+			index_images,
+			dc_images_small,
+			dc_images	 ,
+			yd_images,
+			is_shelves,
+			yd_stocknumber,
+			dc_stocknumber,
+			sort,
+			send_integral,
+			zhucai_text,
+			peicai_text,
+			shicai_text,
+			notuse_text,
+			createtime,
+			updatetime,
+			category_id,
+			dc_version,
+			yd_version
+ 		) values (
+ 			#{lunch_id},
+			#{lunch_name},
+			#{show_sale_money},
+			#{sale_money},
+			#{index_images},
+			#{dc_images_small},
+			#{dc_images	},
+			#{yd_images},
+			#{is_shelves},
+			#{yd_stocknumber},
+			#{dc_stocknumber},
+			(select ifnull(max(CAST(a.sort AS signed)),'0')  from tb_lunch a where a.lunch_id=#{lunch_id} ) ,	
+			#{send_integral},
+			#{zhucai_text},
+			#{peicai_text},
+			#{shicai_text},
+			#{notuse_text},
+			now(),
+			now(),
+			#{category_id},
+			'0',
+			'0'
+
+		)
+	</insert>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from tb_lunch
+		where 
+			lunch_id = #{lunch_id}
+	</delete>
+ 
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+			update  tb_lunch
+			set 
+				lunch_name= #{lunch_name},
+				show_sale_money= #{show_sale_money},
+				sale_money= #{sale_money},
+				index_images= #{index_images},
+				dc_images_small= #{dc_images_small},
+				dc_images= #{dc_images},
+				yd_images= #{yd_images},
+ 				is_shelves= #{is_shelves},
+  				send_integral= #{send_integral},
+  				zhucai_text= #{zhucai_text},
+  				peicai_text= #{peicai_text},
+  				shicai_text= #{shicai_text},
+  				notuse_text= #{notuse_text},
+ 				category_id= #{category_id},
+   				lunch_id = lunch_id
+			where 
+				lunch_id = #{lunch_id}
+	</update>
+	
+	<!-- 修改排序 -->
+	<update id="editSort" parameterType="pd">
+			update tb_lunch as g1 join tb_lunch as g2 on (g1.lunch_id=#{lunch_id_one} and g2.lunch_id = #{lunch_id_two})
+			set    g1.sort = g2.sort,g2.sort=g1.sort
+  	</update>
+  	
+  	<!-- 修改库存或预定库存 -->
+	<update id="editStock" parameterType="pd">
+			update tb_lunch 
+  			set     
+  					<if test="yd_stocknumber != null">yd_stocknumber= #{yd_stocknumber},</if>
+  					<if test="dc_stocknumber != null">dc_stocknumber= #{dc_stocknumber},</if>
+  					<if test="dc_version != null">dc_version= #{dc_version}+1,</if>
+  					<if test="yd_version != null">yd_version= #{yd_version}+1,</if>
+ 					lunch_id=lunch_id
+			where 
+				lunch_id = #{lunch_id}
+				<if test="dc_version != null"> and dc_version= #{dc_version}</if>
+  				<if test="yd_version != null">and yd_version= #{yd_version}</if>
+  	</update>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			lunch_id,
+			lunch_name,
+			show_sale_money,
+			sale_money,
+			index_images,
+			dc_images_small,
+			dc_images	 ,
+			yd_images,
+			is_shelves,
+ 			sort,
+			send_integral,
+			zhucai_text,
+			peicai_text,
+			shicai_text,
+			notuse_text,
+  			category_id
+ 		from 
+			tb_lunch
+		where 
+			lunch_id = #{lunch_id}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select 
+			a.lunch_id,
+			a.lunch_name,
+			a.show_sale_money,
+			a.sale_money,
+ 			a.dc_images_small,
+ 			a.is_shelves,
+ 			ifnull(a.send_integral, 0 ) as send_integral,
+ 			b.title
+		from 
+			tb_lunch a 
+			left join tb_category b on a.category_id=b.category_id
+ 
+		order by a.createtime desc
+  	</select>
+  	
+  	<!-- 获取最高得id-->
+	<select id="getMaxIdByLunch"  resultType="Integer">
+		select 
+			ifnull(Max(CAST(lunch_id AS signed)),0)
+		from 
+			tb_lunch
+	</select>
+  	
+  	
+  	<!-- 获取所有上架商品 -->
+	<select id="listAllUpShelves" parameterType="pd" resultType="pd">
+		select 
+			a.category_id,
+			a.lunch_id,
+			a.lunch_name,
+			ifnull(a.yd_stocknumber,0) as  yd_stocknumber,
+			ifnull(a.dc_stocknumber,0) as  dc_stocknumber,
+			a.sort,
+			b.title
+		from 
+			tb_lunch a  left join tb_category b on a.category_id=b.category_id
+  		where 
+ 			a.is_shelves='1'
+  		order by cast(b.category_id as signed),cast(a.sort as signed)
+  	</select>
+  	
+  	<!-- 微信端开始接口 -->
+  	<!-- 通过ID获取库存以及所对应嘚版本号 -->
+	<select id="findByIdForKunCun" parameterType="pd" resultType="pd">
+		select 
+			lunch_id,
+			yd_stocknumber,
+			dc_stocknumber,
+			cast(dc_version as char) dc_version,
+			cast(yd_version as char) yd_version 
+   		from 
+			tb_lunch
+		where 
+			lunch_id = #{lunch_id}
+	</select>
+ 
+	
+  	<!-- 通过ID获取数据 -->
+	<select id="findByIdForWx" parameterType="pd" resultType="pd">
+		select 
+			lunch_id,
+			category_id,
+			lunch_name,
+			show_sale_money,
+			sale_money,
+			index_images,
+ 			yd_images,
+ 			yd_stocknumber,
+			dc_stocknumber,
+			send_integral
+ 		from 
+			tb_lunch
+		where 
+			lunch_id = #{lunch_id}
+	</select>
+  	<!-- 通过分类ID获取上架商品 -->
+	<select id="listAllByCate" parameterType="pd" resultType="pd">
+		select 
+			a.category_id,
+ 			a.lunch_id,
+ 			a.lunch_name,
+			a.show_sale_money,
+			a.sale_money,
+			a.index_images,
+ 			a.yd_images,
+ 			a.yd_stocknumber,
+			a.dc_stocknumber,
+			a.send_integral
+		from 
+			 tb_lunch a  
+ 		where
+ 			a.category_id=#{category_id}
+ 			and a.is_shelves='1'
+  		order by a.sort
+  	</select>
+	
+	
+</mapper>

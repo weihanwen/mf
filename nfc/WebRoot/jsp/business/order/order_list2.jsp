@@ -104,9 +104,9 @@
 											<c:if test="${QX.edit == 1 }">
 												<a     onclick="changeStatus('${var.order_id}','3','自配送','1');"  class="btn btn-mini btn-info"  >自配送</a>
 											</c:if>
-											<c:if test="${QX.del == 1 }">
+											<%-- <c:if test="${QX.edit == 1 }">
 												<a     onclick="changeStatus('${var.order_id}','3','第三方配送','2');"  class="btn btn-mini btn-info"  >第三方配送</a>
-											</c:if> 
+											</c:if>  --%>
 											</div> 
  								</td>
     						</tr>
@@ -181,8 +181,8 @@
 			 diag.Drag=true;
 			 diag.Title ="订单详情";
 			 diag.URL = '<%=basePath%>/order/goDetail.do?order_id='+Id;
-			 diag.Width = 600;
-			 diag.Height = 500;
+			 diag.Width = 500;
+			 diag.Height = 450;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -199,7 +199,7 @@
 		
 		//改变状态
 		function changeStatus(order_id,order_status,content,delivery_type){
-			bootbox.confirm("确定要"+content+"吗?", function(result) {
+  			bootbox.confirm("确定要"+content+"吗? ", function(result) {
 				if(result) {
 					var url = "<%=basePath%>/order/changeStatus.do?order_id="+order_id+"&order_status="+order_status+"&delivery_type="+delivery_type;
 					$.get(url,function(data){

@@ -70,8 +70,9 @@
 						<th>联系电话</th>
 						<th>订单金额</th>
 						<th>下单时间</th>
-						<th>配送员</th>
+						<th>配送方式</th>
  						<th>操作</th>
+ 						<th>打印</th>
   					</tr>
 				</thead>
  				<tbody>
@@ -91,7 +92,7 @@
  								<td>${var.contacts}</td>
  								<td>${var.contacts_number }</td>
  								<td>${var.allmoney}</td>
-								<td>${var.createtime}</td>
+								<td>${var.createtime} </td>
 								<td>
 									<c:if test="${var.delivery_type eq '1' }">自配送</c:if>
 									<c:if test="${var.delivery_type eq '2' }">第三方配送</c:if>
@@ -99,14 +100,15 @@
  								<td style="width: 30px;" class="center">
 										 <div class='hidden-phone visible-desktop btn-group'>
 	 										<c:if test="${QX.edit != 1 && QX.del != 1 }">
-											<span class="label label-large label-grey arrowed-in-right arrowed-in">无权限</span>
+												<span class="label label-large label-grey arrowed-in-right arrowed-in">无权限</span>
 											</c:if>
 											<c:if test="${QX.edit == 1 }">
-												<c:if test="${var.delivery_status eq '0' }"><a    onclick="changeStatus('${var.order_id}','1','取货');"  class="btn btn-mini btn-info"  >取货</a></c:if>
-												<c:if test="${var.delivery_status eq '1' }">已取货</c:if>
+												<c:if test="${var.delivery_status eq '0' }"><a    onclick="changeStatus('3','${var.order_id}','1','取货');"  class="btn btn-mini btn-info"  >点击取货</a></c:if>
+												<c:if test="${var.delivery_status eq '1' }"><a    onclick="changeStatus('4','${var.order_id}','2','已送达');"  class="btn btn-mini btn-info"  >点击确认收货</a></c:if>
  											</c:if>
  										</div> 
  								</td>
+ 								<td> <a onclick="dy('${var.order_id}')"  class="btn btn-mini btn-info"  >打印小票</a></td>
     						</tr>
  						</c:forEach>
 						</c:if>
@@ -195,11 +197,25 @@
 			 diag.show();
 		}
 		
-		//删除
-		function changeStatus(order_id,delivery_status,content){
+		
+		function changeStatus(order_status,order_id,delivery_status,content){
 			bootbox.confirm("确定要"+content+"吗?", function(result) {
 				if(result) {
-					var url = "<%=basePath%>/order/changeStatus.do?order_id="+order_id+"&delivery_status="+delivery_status;
+					var url = "<%=basePath%>/order/changeStatus.do?order_status="+order_status+"&order_id="+order_id+"&delivery_status="+delivery_status;
+					$.get(url,function(data){
+						if(data=="success"){
+							nextPage(${page.currentPage});
+						}
+					});
+				}
+			});
+		}
+		
+		
+		function dy(order_id){
+			bootbox.confirm("确定要打印吗?", function(result) {
+				if(result) {
+					var url = "<%=basePath%>/order/dy.do?order_id="+order_id;
 					$.get(url,function(data){
 						if(data=="success"){
 							nextPage(${page.currentPage});

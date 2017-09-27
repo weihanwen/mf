@@ -21,7 +21,7 @@
 	
 	<ul class="breadcrumb">
 		<li><i class="icon-home"></i> <a href="login_index.do" target="self">首页</a><span class="divider"><i class="icon-angle-right"></i></span></li>
-		<li class="active">待配送订单管理管理</li>
+		<li class="active">订单管理管理</li>
 	</ul><!--.breadcrumb-->
 	
 	<div id="nav-search">
