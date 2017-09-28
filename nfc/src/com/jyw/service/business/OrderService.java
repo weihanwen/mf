@@ -41,6 +41,13 @@ public class   OrderService {
 		return (PageData)dao.findForObject("OrderMapper.findById", pd);
 	}
 	
+	/*
+	 *查看订单详情--------打印发票专用得接口
+	 */
+	public PageData findByIdForDy(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("OrderMapper.findByIdForDy", pd);
+	}
+	
 	
 	
 	

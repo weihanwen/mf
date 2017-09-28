@@ -23,6 +23,7 @@ import com.jyw.entity.system.User;
 import com.jyw.service.business.OrderService;
 import com.jyw.util.Const;
 import com.jyw.util.PageData;
+import com.jyw.util.SalesTicket;
 import com.jyw.util.ServiceHelper;
 import com.jyw.util.file.ObjectExcelView;
 
@@ -137,9 +138,10 @@ public class OrderController extends BaseController {
  		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
-			pd=orderService.findById(pd);
-			//开始打印
-			
+			pd=orderService.findByIdForDy(pd);
+			List<PageData> orderList=orderService.listLunchByOrder(pd);
+			SalesTicket salse=new SalesTicket(orderList, pd.getString("delivery_operator_name"), pd.getString("looknumber"), pd.get("allNumber").toString(), pd.getString("createtime"), pd.get("allmoney").toString(), pd.getString("address"), pd.getString("name"), pd.getString("phone"));
+			salse.PrintSale();
  			out.write("success");
 			out.close();
 		} catch(Exception e){

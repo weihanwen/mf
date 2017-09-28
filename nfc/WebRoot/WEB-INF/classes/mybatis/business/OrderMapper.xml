@@ -38,10 +38,12 @@
 			a.reserve_arrival_time,
 			a.delivery_time,
 			a.delivery_fee,
-			a.createtime,
+			date_format(a.createtime ,'%Y-%m-%d %H:%i:%s') as createtime,
 			a.overtime,
 			a.wxmember_id,
 			a.wxmember_address_id,
+			b.phone,
+			b.name,
 			c.contacts,
  			c.contacts_number,
  			c.corporate_name,
@@ -50,6 +52,32 @@
   		from 
 			tb_order a  
 			left join tb_wxmember b on a.wxmember_id=b.wxmember_id
+			left join tb_wxmember_address c on a.wxmember_address_id=c.wxmember_address_id
+			left join tb_address d on c.address_id=d.address_id
+		where 
+			a.order_id=#{order_id}
+   	</select>
+   	
+   	
+   	<!-- 打印专用得打印接口 -->
+	<select id="findByIdForDy" parameterType="pd" resultType="pd">
+		select 
+			a.order_id,
+			a.looknumber,
+			a.allmoney,
+			a.discount_money,
+			a.actual_money,
+			a.use_integral,
+			a.use_wx,
+			a.send_integral,
+			date_format(a.createtime ,'%Y-%m-%d %H:%i:%s') as createtime,
+			ifnull(a.delivery_operator_name,'自配送') as delivery_operator_name,
+			c.contacts as  name,
+			c.contacts_number as phone,
+			concat(d.address_name,c.corporate_name,c.floor_number) as address,
+			(SELECT sum(shop_number) from tb_order_lunch where a.order_id=order_id ) as allNumber
+  		from 
+			tb_order a  
 			left join tb_wxmember_address c on a.wxmember_address_id=c.wxmember_address_id
 			left join tb_address d on c.address_id=d.address_id
 		where 
@@ -78,7 +106,9 @@
 		select  
 				a.order_id,
 				a.shop_number,
-				b.lunch_name
+				b.lunch_name,
+				b.sale_money,
+				CAST(a.shop_number*b.sale_money as  decimal(10,2))  as allSaleMoney
 		from   	
 				tb_order_lunch a 
  				left join tb_lunch b on a.lunch_id=b.lunch_id

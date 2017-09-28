@@ -644,7 +644,7 @@ public class WxMemberController extends BaseController {
         			for (PageData e : shopList) {
 						e.put("ordernumber", countordernumber);
 						allsendjf=Double.parseDouble(e.getString("send_integral"));
-						allmoney=Double.parseDouble(e.get("allsale_money").toString());
+						allmoney+=Double.parseDouble(e.get("allsale_money").toString());
 						shop_number+=Integer.parseInt(e.get("shop_number").toString());
 						discountpd=discountService.findById(e);
 						if(discountpd != null){
