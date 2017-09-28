@@ -1210,6 +1210,7 @@ public class WxMemberController extends BaseController {
   					//每笔订单总共可以优惠多少钱
 // 					double discount_money_every=(double)order_deliver_fee-delivery_fee/(double)orderList.size();
  					for (PageData e : orderList) {
+ 						e.put("wxmember_wealthhistory_id", BaseController.getTimeID());
 						e.put("now_integral", df.format(Double.parseDouble(e.getString("now_integral"))+Double.parseDouble(e.getString("delivery_fee"))));
 						e.put("before_integral", e.getString("now_integral"));
 						ServiceHelper.getWxmemberService().changeMoneyByMember(e);

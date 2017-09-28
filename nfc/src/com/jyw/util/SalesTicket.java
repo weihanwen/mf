@@ -96,7 +96,7 @@ public class SalesTicket implements Printable {
         g2.drawString("订单号：" + orderId, (float) x , (float) y + line);  
         line += heigth+3;  
         // 显示标题  
-        g2.drawString("便当", (float) x + 10, (float) y + line);  
+        g2.drawString("便当", (float) x, (float) y + line);  
         g2.drawString("单价", (float) x + 60, (float) y + line);  
         g2.drawString("数量", (float) x + 85, (float) y + line);  
         g2.drawString("总额", (float) x + 115, (float) y + line);  
@@ -134,7 +134,7 @@ public class SalesTicket implements Printable {
         	 line += heigth+3; 
         	 g2.drawString("地址：" +address.substring(13, address.length()), (float) x, (float) y + line);  
         }else{
-        	g2.drawString("地址：" +address, (float) x, (float) y + line); 
+        	g2.drawString(address, (float) x + 15, (float) y + line); 
         }
          line += heigth+3;  
          g2.drawString("九鱼便当,健康食品", (float) x + 20, (float) y + line); 

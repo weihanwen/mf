@@ -133,7 +133,7 @@
 			ordertime_id=ordertime_id
 		where
 			ordertime_id=#{ordertime_id}
-		and version=#{version}
+			and version=#{version}
 	</update>
      <!-- 获取详情 -->
 	<select id="getOrderTimeForId" parameterType="pd" resultType="pd">
@@ -298,7 +298,11 @@
 	<!-- 判断在十分钟之内相同的地址是所有订单 -->
  	<select id="isHavingOrderByNow" parameterType="pd" resultType="pd">
 		SELECT 
-			ordertime_id,order_idstr
+			ordertime_id,
+			order_idstr,
+			address,
+			isover,
+			version
  		FROM 
 			tb_ordertime  
  		WHERE
