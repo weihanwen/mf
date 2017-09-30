@@ -181,8 +181,8 @@
 		width:27%;
 	}
  	.my-top-tx img{
- 		width:65px;
-		height:65px;
+ 		    width: 86px;
+    height: 86px;
 		    border-radius: 17px;
 	}
 	.my-top-text{
@@ -198,7 +198,7 @@
 	    margin-top: 7%;
 	    margin-left: 10%;
 	    color:#fff;
-	    font-size: 16px;
+	    font-size: 21px;
  	}
 	.my-top-text img{
 		height:100%;
@@ -217,6 +217,7 @@
 	    color: #333;
 	    padding: 0 15px;
 	    display: block;
+	        font-size: 19px;
 	}
 	.my-list-one, .my-list-two, .my-list-three, .my-list-four, .my-list-five{
 	    width: 30px;
@@ -294,7 +295,7 @@
 	     border-top: 1px solid #b3b3b3;
 	    padding: 2px 0;
 	    background: #fff;
-	    font-size: 12px;
+	    font-size: 16px;
 	        height: 8%;
 	}
 	.footerdi ul li{

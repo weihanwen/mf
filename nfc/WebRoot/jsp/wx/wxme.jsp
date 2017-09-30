@@ -23,12 +23,11 @@
 </nav>
 <section class='onesection'>
 	<div class="my-top white">
-		<a href="wxmember/gomedetail.do">
-			<b class="z-arrow"></b>
+		<a>
 			<span class="my-top-tx"  ><img src="${pd.image_url eq ''?'img/moren.jpg':pd.image_url}" ></span>
 			<div class="my-top-text">
 				<p><i class="people-icon"></i>${pd.name}</p>
-				<p><!-- <i class="showid-icon"></i> --><b>${pd.showlook_id}</b></p>
+				<p><b>${pd.showlook_id}</b></p>
 			</div>
 	 	</a>
 	</div>
