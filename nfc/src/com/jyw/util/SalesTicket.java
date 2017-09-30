@@ -98,8 +98,8 @@ public class SalesTicket implements Printable {
         // 显示标题  
         g2.drawString("便当", (float) x, (float) y + line);  
 //        g2.drawString("单价", (float) x + 60, (float) y + line);  
-        g2.drawString("数量", (float) x + 85, (float) y + line);  
-        g2.drawString("总额", (float) x + 115, (float) y + line);  
+        g2.drawString("数量", (float) x + 80, (float) y + line);  
+        g2.drawString("总额", (float) x + 105, (float) y + line);  
         line += heigth;  
         g2.drawLine((int) x, (int) (y + line), (int) x + 158, (int) (y + line));  
   
@@ -113,8 +113,8 @@ public class SalesTicket implements Printable {
         	PageData orderpd = orderList.get(i);  
             g2.drawString(orderpd.getString("lunch_name")+"", (float) x, (float) y + line);  
 //            g2.drawString(orderpd.get("sale_money").toString()+"", (float) x + 60, (float) y + line);  
-            g2.drawString(orderpd.get("shop_number").toString()+"", (float) x + 90, (float) y + line);  
-            g2.drawString(orderpd.get("allSaleMoney").toString()+"", (float) x + 120, (float) y + line);  
+            g2.drawString(orderpd.get("shop_number").toString()+"", (float) x + 84, (float) y + line);  
+            g2.drawString(orderpd.get("allSaleMoney").toString()+"", (float) x + 100, (float) y + line);  
             line += heigth;  
   
         }  
@@ -128,12 +128,12 @@ public class SalesTicket implements Printable {
         line += heigth+3;  
         g2.drawString("联系电话：" + phone , (float) x, (float) y + line); 
         line += heigth+3;  
-        g2.drawString("下单时间：" + createTime, (float) x, (float) y + line); 
+        g2.drawString("时间：" + createTime, (float) x, (float) y + line); 
         line += heigth+3;  
-        if(address.length() > 13){
-        	g2.drawString("地址：" +address.substring(0, 13), (float) x, (float) y + line);  
+        if(address.length() > 10){
+        	g2.drawString("地址：" +address.substring(0, 10), (float) x, (float) y + line);  
         	 line += heigth+3; 
-        	 g2.drawString(address.substring(13, address.length()), (float) x+ 24, (float) y + line);  
+        	 g2.drawString(address.substring(10, address.length()), (float) x+ 24, (float) y + line);  
         }else{
         	g2.drawString("地址：" +address, (float) x , (float) y + line); 
         }
