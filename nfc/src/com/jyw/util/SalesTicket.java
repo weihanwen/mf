@@ -28,7 +28,7 @@ public class SalesTicket implements Printable {
     private static String name;  
     private static String phone;     
     private static String allMoney;  
-    private static String address="宁和路国泰科技大厦"; 
+    private static String address; 
   
     // 构造函数  
     public SalesTicket(List<PageData> orderList, String cashier, String orderId, String allNumber, String createTime,  
@@ -79,14 +79,14 @@ public class SalesTicket implements Printable {
         g2.setStroke(new BasicStroke(0.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, dash1, 0.0f));  
   
         // 设置打印字体（字体名称、样式和点大小）（字体名称可以是物理或者逻辑名称）  
-        font = new Font("宋体", Font.PLAIN, 11);  
+        font = new Font("宋体", Font.PLAIN, 14);  
         g2.setFont(font);// 设置字体  
         
         float heigth = font.getSize2D();// 字体高度  
         // 标题  
         g2.drawString("九鱼便当", (float) x+40, (float) y+10);    
         float line = 2 * heigth;  
-        font = new Font("宋体", Font.PLAIN, 8);  
+        font = new Font("宋体", Font.PLAIN, 10);  
         g2.setFont(font);// 设置字体  
         heigth = font.getSize2D();// 字体高度  
         // 显示收银员  
@@ -97,7 +97,7 @@ public class SalesTicket implements Printable {
         line += heigth+3;  
         // 显示标题  
         g2.drawString("便当", (float) x, (float) y + line);  
-        g2.drawString("单价", (float) x + 60, (float) y + line);  
+//        g2.drawString("单价", (float) x + 60, (float) y + line);  
         g2.drawString("数量", (float) x + 85, (float) y + line);  
         g2.drawString("总额", (float) x + 115, (float) y + line);  
         line += heigth;  
@@ -112,7 +112,7 @@ public class SalesTicket implements Printable {
   
         	PageData orderpd = orderList.get(i);  
             g2.drawString(orderpd.getString("lunch_name")+"", (float) x, (float) y + line);  
-            g2.drawString(orderpd.get("sale_money").toString()+"", (float) x + 60, (float) y + line);  
+//            g2.drawString(orderpd.get("sale_money").toString()+"", (float) x + 60, (float) y + line);  
             g2.drawString(orderpd.get("shop_number").toString()+"", (float) x + 90, (float) y + line);  
             g2.drawString(orderpd.get("allSaleMoney").toString()+"", (float) x + 120, (float) y + line);  
             line += heigth;  
@@ -120,9 +120,10 @@ public class SalesTicket implements Printable {
         }  
         g2.drawLine((int) x, (int) (y + line), (int) x + 158, (int) (y + line));  
         line += heigth+3;  
-        g2.drawString("总量：" + allNumber + "件", (float) x, (float) y + line); 
+//        g2.drawString("总量：" + allNumber + "件", (float) x, (float) y + line); 
         g2.drawString("合计：" + allMoney + "元", (float) x + 80, (float) y + line);  
         line += heigth+3;  
+        font = new Font("宋体", Font.PLAIN, 12); 
         g2.drawString("联系姓名：" + name , (float) x, (float) y + line); 
         line += heigth+3;  
         g2.drawString("联系电话：" + phone , (float) x, (float) y + line); 
@@ -132,9 +133,9 @@ public class SalesTicket implements Printable {
         if(address.length() > 13){
         	g2.drawString("地址：" +address.substring(0, 13), (float) x, (float) y + line);  
         	 line += heigth+3; 
-        	 g2.drawString("地址：" +address.substring(13, address.length()), (float) x, (float) y + line);  
+        	 g2.drawString(address.substring(13, address.length()), (float) x+ 24, (float) y + line);  
         }else{
-        	g2.drawString(address, (float) x + 15, (float) y + line); 
+        	g2.drawString("地址：" +address, (float) x , (float) y + line); 
         }
          line += heigth+3;  
          g2.drawString("九鱼便当,健康食品", (float) x + 20, (float) y + line); 

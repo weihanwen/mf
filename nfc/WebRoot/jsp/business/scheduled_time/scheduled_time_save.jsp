@@ -107,6 +107,47 @@
 		
 		//保存
 		function save(){
+			if($("#sale_starttime").val() == ""){
+				$("#sale_starttime").tips({
+					side:3,
+		            msg:'销售时间不能为空',
+		            bg:'#AE81FF',
+		            time:1
+		        });
+				$("#sale_starttime").focus();
+				return false;
+			}
+			if($("#sale_endtime").val() == ""){
+				$("#sale_endtime").tips({
+					side:3,
+		            msg:'销售时间不能为空',
+		            bg:'#AE81FF',
+		            time:1
+		        });
+				$("#sale_endtime").focus();
+				return false;
+			}
+			if($("#yd_starttime").val() == ""){
+				$("#yd_starttime").tips({
+					side:3,
+		            msg:'预定时间不能为空',
+		            bg:'#AE81FF',
+		            time:1
+		        });
+				$("#yd_starttime").focus();
+				return false;
+			}
+			if($("#yd_endtime").val() == ""){
+				$("#yd_endtime").tips({
+					side:3,
+		            msg:'预定时间不能为空',
+		            bg:'#AE81FF',
+		            time:1
+		        });
+				$("#yd_endtime").focus();
+				return false;
+			}
+			
 			 if(isokTime()){
 				 
 					var category_idstr="";
