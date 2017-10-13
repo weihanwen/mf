@@ -30,7 +30,7 @@ public class AppUtil  {
 			
 	    //获取展示地址
 		public static String getuploadRootUrl(){
-			String url = "E://apache-tomcat-7.0.63//FileSave";
+			String url = "E://apache-tomcat//FileSave";
 	 		return url;
 	 	}	
 	

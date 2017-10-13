@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2017-09-28 00:42:17
+Date: 2017-10-13 22:52:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -158,7 +158,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '九鱼', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2017-09-28 00:30:46', '127.0.0.1', '0', '超级管理员', 'default', 'admin@main.com', '123', '15260282340');
+INSERT INTO `sys_user` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '九鱼', '1133671055321055258374707980945218933803269864762743594642571294', '1', '2017-09-30 23:32:23', '127.0.0.1', '0', '超级管理员', 'default', 'admin@main.com', '123', '15260282340');
 
 -- ----------------------------
 -- Table structure for `sys_user_qx`
@@ -252,7 +252,7 @@ CREATE TABLE `tb_carousel_figure` (
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `address_id` varchar(100) DEFAULT '0',
   PRIMARY KEY (`carousel_figure_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_carousel_figure
@@ -271,6 +271,7 @@ CREATE TABLE `tb_category` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
   `image_url` varchar(100) DEFAULT NULL,
+  `show_image` varchar(255) DEFAULT NULL COMMENT '展示的图片',
   `sort` varchar(4) DEFAULT '10',
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -281,9 +282,46 @@ CREATE TABLE `tb_category` (
 -- ----------------------------
 -- Records of tb_category
 -- ----------------------------
-INSERT INTO `tb_category` VALUES ('1', '金牌便当', 'http://www.jybd666.cn/FileSave//category/65d27df0795a436db5aa185c6e34592e.png', '0', '2017-07-29 11:01:30', '2017-09-11 22:24:56', null);
-INSERT INTO `tb_category` VALUES ('2', '商务便当', 'http://www.jybd666.cn/FileSave//category/900fdf8f9baa45f1b85a8e59292eddeb.png', '0', null, '2017-09-11 22:25:25', '0');
-INSERT INTO `tb_category` VALUES ('3', '渝派火锅', 'http://www.jybd666.cn/FileSave//category/c88e14254cdd47099c3a589ea7d16c79.png', '0', '2017-09-11 21:14:16', '2017-09-11 22:25:47', '0');
+INSERT INTO `tb_category` VALUES ('1', '金牌便当', 'http://www.jybd666.cn/FileSave//category/65d27df0795a436db5aa185c6e34592e.png', null, '0', '2017-07-29 11:01:30', '2017-09-11 22:24:56', null);
+INSERT INTO `tb_category` VALUES ('2', '商务便当', 'http://www.jybd666.cn/FileSave//category/900fdf8f9baa45f1b85a8e59292eddeb.png', null, '0', null, '2017-09-11 22:25:25', '0');
+INSERT INTO `tb_category` VALUES ('3', '渝派火锅', 'http://www.jybd666.cn/FileSave//category/c88e14254cdd47099c3a589ea7d16c79.png', null, '0', '2017-09-11 21:14:16', '2017-09-11 22:25:47', '0');
+
+-- ----------------------------
+-- Table structure for `tb_company`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_company`;
+CREATE TABLE `tb_company` (
+  `company_id` varchar(255) DEFAULT NULL COMMENT '00001格式',
+  `company_name` varchar(255) DEFAULT NULL,
+  `company_address` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `room_address` varchar(255) DEFAULT NULL,
+  `cretettime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_company
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_company_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_company_user`;
+CREATE TABLE `tb_company_user` (
+  `company_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `op_permissions` varchar(255) DEFAULT NULL,
+  `ms_permissions` varchar(255) DEFAULT NULL,
+  `rq_permissions` varchar(255) DEFAULT NULL,
+  `apply_status` varchar(255) DEFAULT NULL,
+  `cretettime` datetime DEFAULT NULL,
+  PRIMARY KEY (`company_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_company_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tb_daily_menu`
@@ -296,12 +334,12 @@ CREATE TABLE `tb_daily_menu` (
   `address_id` int(11) DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`daily_menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_daily_menu
 -- ----------------------------
-INSERT INTO `tb_daily_menu` VALUES ('21', '2017-09-27', '004,001,006,002,003,009,008,010,007,005,', null, '2017-09-27 21:17:19');
+INSERT INTO `tb_daily_menu` VALUES ('23', '2017-09-30', '001,006,002,004,003,009,008,010,007,005,', null, '2017-09-30 18:27:26');
 
 -- ----------------------------
 -- Table structure for `tb_delivery_fee`
@@ -310,12 +348,12 @@ DROP TABLE IF EXISTS `tb_delivery_fee`;
 CREATE TABLE `tb_delivery_fee` (
   `delivery_fee_id` int(11) NOT NULL AUTO_INCREMENT,
   `number` int(11) DEFAULT NULL,
-  `ptmoney` varchar(100) DEFAULT NULL,
+  `ptmoney` varchar(100) DEFAULT '0',
   `chmoney` varchar(100) DEFAULT '0',
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`delivery_fee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_delivery_fee
@@ -330,7 +368,13 @@ INSERT INTO `tb_delivery_fee` VALUES ('7', '7', '0', '2', '2017-07-29 14:09:52',
 INSERT INTO `tb_delivery_fee` VALUES ('8', '8', '0', '2', '2017-07-29 14:09:52', '2017-09-20 21:58:15');
 INSERT INTO `tb_delivery_fee` VALUES ('9', '9', '0', '2', '2017-07-29 14:09:52', '2017-09-20 21:58:25');
 INSERT INTO `tb_delivery_fee` VALUES ('10', '10', '0', '2', '2017-07-29 14:09:52', '2017-09-20 21:58:32');
-INSERT INTO `tb_delivery_fee` VALUES ('11', '0', '0', '0', '2017-07-31 16:30:23', '2017-08-30 14:27:27');
+INSERT INTO `tb_delivery_fee` VALUES ('11', '11', '0', '0', '2017-07-31 16:30:23', '2017-09-30 22:08:10');
+INSERT INTO `tb_delivery_fee` VALUES ('12', '12', '0', '0', null, null);
+INSERT INTO `tb_delivery_fee` VALUES ('13', '13', '0', '0', null, null);
+INSERT INTO `tb_delivery_fee` VALUES ('14', '14', '0', '0', null, null);
+INSERT INTO `tb_delivery_fee` VALUES ('15', '15', '0', '0', null, null);
+INSERT INTO `tb_delivery_fee` VALUES ('16', '16', '0', '0', null, null);
+INSERT INTO `tb_delivery_fee` VALUES ('17', '17', '0', '0', null, null);
 
 -- ----------------------------
 -- Table structure for `tb_discount_way`
@@ -366,21 +410,11 @@ CREATE TABLE `tb_log` (
   `message` text,
   `createtime` datetime DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_log
 -- ----------------------------
-INSERT INTO `tb_log` VALUES ('1', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 22:41:51');
-INSERT INTO `tb_log` VALUES ('2', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 22:42:04');
-INSERT INTO `tb_log` VALUES ('3', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 22:42:21');
-INSERT INTO `tb_log` VALUES ('4', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 22:42:53');
-INSERT INTO `tb_log` VALUES ('5', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 22:45:56');
-INSERT INTO `tb_log` VALUES ('6', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 23:15:57');
-INSERT INTO `tb_log` VALUES ('7', '03', '', 'Notify错误java.lang.NullPointerException', '2017-09-19 23:45:59');
-INSERT INTO `tb_log` VALUES ('8', '02', '', '回调的订单验签失败<xml><appid><![CDATA[wx53296db0563ea4d6]]></appid><attach><![CDATA[1]]></attach><bank_type><![CDATA[CFT]]></bank_type><cash_fee><![CDATA[200]]></cash_fee><fee_type><![CDATA[CNY]]></fee_type><is_subscribe><![CDATA[Y]]></is_subscribe><mch_id><![CDATA[1488207392]]></mch_id><nonce_str><![CDATA[eeead99df62c4e8d]]></nonce_str><openid><![CDATA[oJ6nY077HOIPv75XMMl25XRVCYtg]]></openid><out_trade_no><![CDATA[20170919104140506426]]></out_trade_no><result_code><![CDATA[SUCCESS]]></result_code><return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[73844B48110D2D1CA282E3335C390D07]]></sign><time_end><![CDATA[20170919224150]]></time_end><total_fee>200</total_fee><trade_type><![CDATA[JSAPI]]></trade_type><transaction_id><![CDATA[4200000005201709193087353853]]></transaction_id></xml>', '2017-09-20 00:16:02');
-INSERT INTO `tb_log` VALUES ('9', '02', '', '回调的订单验签失败<xml><appid><![CDATA[wx53296db0563ea4d6]]></appid><attach><![CDATA[1]]></attach><bank_type><![CDATA[CFT]]></bank_type><cash_fee><![CDATA[200]]></cash_fee><fee_type><![CDATA[CNY]]></fee_type><is_subscribe><![CDATA[Y]]></is_subscribe><mch_id><![CDATA[1488207392]]></mch_id><nonce_str><![CDATA[eeead99df62c4e8d]]></nonce_str><openid><![CDATA[oJ6nY077HOIPv75XMMl25XRVCYtg]]></openid><out_trade_no><![CDATA[20170919104140506426]]></out_trade_no><result_code><![CDATA[SUCCESS]]></result_code><return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[73844B48110D2D1CA282E3335C390D07]]></sign><time_end><![CDATA[20170919224150]]></time_end><total_fee>200</total_fee><trade_type><![CDATA[JSAPI]]></trade_type><transaction_id><![CDATA[4200000005201709193087353853]]></transaction_id></xml>', '2017-09-20 00:46:04');
-INSERT INTO `tb_log` VALUES ('10', '02', '', '回调的订单验签失败<xml><appid><![CDATA[wx53296db0563ea4d6]]></appid><attach><![CDATA[1]]></attach><bank_type><![CDATA[CFT]]></bank_type><cash_fee><![CDATA[200]]></cash_fee><fee_type><![CDATA[CNY]]></fee_type><is_subscribe><![CDATA[Y]]></is_subscribe><mch_id><![CDATA[1488207392]]></mch_id><nonce_str><![CDATA[eeead99df62c4e8d]]></nonce_str><openid><![CDATA[oJ6nY077HOIPv75XMMl25XRVCYtg]]></openid><out_trade_no><![CDATA[20170919104140506426]]></out_trade_no><result_code><![CDATA[SUCCESS]]></result_code><return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[73844B48110D2D1CA282E3335C390D07]]></sign><time_end><![CDATA[20170919224150]]></time_end><total_fee>200</total_fee><trade_type><![CDATA[JSAPI]]></trade_type><transaction_id><![CDATA[4200000005201709193087353853]]></transaction_id></xml>', '2017-09-20 01:46:06');
 
 -- ----------------------------
 -- Table structure for `tb_lunch`
@@ -415,16 +449,16 @@ CREATE TABLE `tb_lunch` (
 -- ----------------------------
 -- Records of tb_lunch
 -- ----------------------------
-INSERT INTO `tb_lunch` VALUES ('001', '古法红烧牛肉饭', '47.8', '35.8', 'http://www.jybd666.cn/FileSave//lunch/a8463549fef040eba31b10d233d4b627.png', 'http://www.jybd666.cn/FileSave//lunch/f91d04aa27134b7eae0e08f281af74f4.png', 'http://www.jybd666.cn/FileSave//lunch/74496d0cd9bb4d80b17a194638bb4531.png', 'http://www.jybd666.cn/FileSave//lunch/c58e7629a19e4026bce2bacfb2c516ba.png', '1', null, '100', '0', '0', '222', '222', '2222', '222', '2017-08-19 14:23:06', '2017-09-27 22:58:57', '1', '38', '0');
-INSERT INTO `tb_lunch` VALUES ('002', '台式香菇卤肉饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/b1b72c199b0c4b199fb7aa851404d45b.png', 'http://www.jybd666.cn/FileSave//lunch/7682b299a0a94ef18044ccc7c60deb4a.png', 'http://www.jybd666.cn/FileSave//lunch/4db8baa20e7344ea8067999fcba0576a.png', 'http://www.jybd666.cn/FileSave//lunch/69f5040a60a745409f6e9e7d67853c7f.png', '1', null, '100', '0', '0', '卤肉', '包心菜/萝卜干/花生', '卤肉/包心菜/萝卜干/花生', '鸡精/味精', '2017-08-19 14:57:10', '2017-09-27 22:59:05', '1', '4', '0');
-INSERT INTO `tb_lunch` VALUES ('003', '粤式梅菜烧肉饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/053e927d5e0b4002ba6629292d2cc7a5.png', 'http://www.jybd666.cn/FileSave//lunch/32ae834b7cf1445bb73c3cc5ca194156.png', 'http://www.jybd666.cn/FileSave//lunch/20a80a7f911d4e4480169f51371814ef.png', 'http://www.jybd666.cn/FileSave//lunch/5dfb91288c754514b3acfe28193e4a99.png', '1', null, '100', '1', '0', '11', '33', '22', '55', '2017-09-10 15:39:46', '2017-09-27 22:59:09', '1', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('004', '虫草花蒸鸡饭', '47.8', '35.8', 'http://www.jybd666.cn/FileSave//lunch/eced6f689c6d4bdeb11f1f8bc5a1b107.png', 'http://www.jybd666.cn/FileSave//lunch/f90383f49e4b4818b4100574b6042cea.png', 'http://www.jybd666.cn/FileSave//lunch/84262b30d8f74ee988278e79058721d9.png', 'http://www.jybd666.cn/FileSave//lunch/3449c9f159c147edb28b08816fd45d75.png', '1', null, '100', '0', '0', '45', '555', '541', '223', '2017-09-10 15:41:07', '2017-09-27 22:58:54', '1', '9', '0');
-INSERT INTO `tb_lunch` VALUES ('005', '金牌咖喱鸡饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/e30ca01cfe464e659fe95c1e6f0ec456.png', 'http://www.jybd666.cn/FileSave//lunch/cfb17122a000433eb698886d86fd3b7e.png', 'http://www.jybd666.cn/FileSave//lunch/f694a835122e4d7d88e4fe692febef35.png', 'http://www.jybd666.cn/FileSave//lunch/f91eb9aaeefa43ba94a46b09bf194d9e.png', '1', null, '100', '2', '0', '54', '132', '16523', '1652', '2017-09-10 15:42:34', '2017-09-27 22:59:28', '2', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('006', '金牌咖喱鸡饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/b2055319781a4d64bd0ff34f64d8684a.png', 'http://www.jybd666.cn/FileSave//lunch/55b15c7773b84f91abd9ec07be4c527a.png', 'http://www.jybd666.cn/FileSave//lunch/f1c5a61c0e3243c0a08f87ffc49f9d10.png', 'http://www.jybd666.cn/FileSave//lunch/a8a695dd6866437d965fcef7a6f1b74c.png', '1', null, '100', '0', '0', '2321', '54', '151', '1210', '2017-09-10 15:43:45', '2017-09-27 22:59:01', '1', '1', '0');
-INSERT INTO `tb_lunch` VALUES ('007', '台式香菇卤肉饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/b6221c5a4568463680aa92f7dc0b35a0.png', 'http://www.jybd666.cn/FileSave//lunch/daa4d44975b94107abc7b970ec5b799c.png', 'http://www.jybd666.cn/FileSave//lunch/9726d7a8c76e4d0bb1ba5241b1b11e0c.png', 'http://www.jybd666.cn/FileSave//lunch/ce499148c4c544569ec5f4b3fc1e45a0.png', '1', null, '100', '0', '0', '1', '1', '1511', '1210', '2017-09-20 01:34:20', '2017-09-27 22:59:24', '2', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('008', '粤式梅菜烧肉饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/b9721af28da744f289eb8614991bacea.png', 'http://www.jybd666.cn/FileSave//lunch/ce4090ff132a4d35b2ddff311a392674.png', 'http://www.jybd666.cn/FileSave//lunch/c3deabf5e44f4bc9b090747e55e86444.png', 'http://www.jybd666.cn/FileSave//lunch/417aa054334b4600b6314bc7c383ce41.png', '1', null, '100', '0', '0', '1', '1', '151', '1210', '2017-09-20 01:35:50', '2017-09-27 22:59:16', '2', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('009', '香汁啤酒鸭饭', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/4a22a50be1d24294946673f6d823982a.png', 'http://www.jybd666.cn/FileSave//lunch/4e27996bca144549a67e9a50614e4a2f.png', 'http://www.jybd666.cn/FileSave//lunch/666efdb95a8b483aade77a7e49b5c4ba.png', 'http://www.jybd666.cn/FileSave//lunch/d4e263f636b144948b8a8942891d5fb4.png', '1', null, '100', '0', '0', '1', '1', '1', '1', '2017-09-20 01:37:09', '2017-09-27 22:59:13', '2', '0', '0');
-INSERT INTO `tb_lunch` VALUES ('010', '川香鱼肉丝饭', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/69a3510ea27947ffbb641c8747b116a7.png', 'http://www.jybd666.cn/FileSave//lunch/73804263fc6f46f6ac8a1d42cabdfbe8.png', 'http://www.jybd666.cn/FileSave//lunch/fc4a3cdf223847cb9e34e7d4212de756.png', 'http://www.jybd666.cn/FileSave//lunch/d558dd030102467891025efa81bbbb46.png', '1', null, '100', '0', '0', '1', '1', '1', '1', '2017-09-20 01:38:28', '2017-09-27 22:59:20', '2', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('001', '古法红烧牛肉饭', '47.8', '35.8', 'http://www.jybd666.cn/FileSave//lunch/a8463549fef040eba31b10d233d4b627.png', 'http://www.jybd666.cn/FileSave//lunch/f91d04aa27134b7eae0e08f281af74f4.png', 'http://www.jybd666.cn/FileSave//lunch/13b8741f9ae5488795dbb84ca326f7e9.png', 'http://www.jybd666.cn/FileSave//lunch/c58e7629a19e4026bce2bacfb2c516ba.png', '1', null, '79', '0', '0', '222', '222', '2222', '222', '2017-08-19 14:23:06', '2017-09-30 23:18:12', '1', '59', '0');
+INSERT INTO `tb_lunch` VALUES ('002', '台式香菇卤肉饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/b1b72c199b0c4b199fb7aa851404d45b.png', 'http://www.jybd666.cn/FileSave//lunch/7682b299a0a94ef18044ccc7c60deb4a.png', 'http://www.jybd666.cn/FileSave//lunch/8efb4657629b4ac8a15d2c1cc9193872.png', 'http://www.jybd666.cn/FileSave//lunch/69f5040a60a745409f6e9e7d67853c7f.png', '1', null, '99', '0', '0', '卤肉', '包心菜/萝卜干/花生', '卤肉/包心菜/萝卜干/花生', '鸡精/味精', '2017-08-19 14:57:10', '2017-09-30 20:55:33', '1', '9', '0');
+INSERT INTO `tb_lunch` VALUES ('003', '粤式梅菜烧肉饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/053e927d5e0b4002ba6629292d2cc7a5.png', 'http://www.jybd666.cn/FileSave//lunch/32ae834b7cf1445bb73c3cc5ca194156.png', 'http://www.jybd666.cn/FileSave//lunch/3225c383476e4d18a3ac6efd1eec4b00.png', 'http://www.jybd666.cn/FileSave//lunch/5dfb91288c754514b3acfe28193e4a99.png', '1', null, '99', '1', '0', '11', '33', '22', '55', '2017-09-10 15:39:46', '2017-09-30 18:40:32', '1', '1', '0');
+INSERT INTO `tb_lunch` VALUES ('004', '虫草花蒸鸡饭', '47.8', '35.8', 'http://www.jybd666.cn/FileSave//lunch/eced6f689c6d4bdeb11f1f8bc5a1b107.png', 'http://www.jybd666.cn/FileSave//lunch/f90383f49e4b4818b4100574b6042cea.png', 'http://www.jybd666.cn/FileSave//lunch/cf330f963ec44903aa28454ca6bf208f.png', 'http://www.jybd666.cn/FileSave//lunch/3449c9f159c147edb28b08816fd45d75.png', '1', null, '100', '0', '0', '45', '555', '541', '223', '2017-09-10 15:41:07', '2017-09-30 18:22:27', '1', '9', '0');
+INSERT INTO `tb_lunch` VALUES ('005', '金牌咖喱鸡饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/e30ca01cfe464e659fe95c1e6f0ec456.png', 'http://www.jybd666.cn/FileSave//lunch/cfb17122a000433eb698886d86fd3b7e.png', 'http://www.jybd666.cn/FileSave//lunch/70684344c9f546db999cb7247356f133.png', 'http://www.jybd666.cn/FileSave//lunch/f91eb9aaeefa43ba94a46b09bf194d9e.png', '1', null, '100', '2', '0', '54', '132', '16523', '1652', '2017-09-10 15:42:34', '2017-09-30 18:21:56', '2', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('006', '金牌咖喱鸡饭A', '45.8', '33.8', 'http://www.jybd666.cn/FileSave//lunch/b2055319781a4d64bd0ff34f64d8684a.png', 'http://www.jybd666.cn/FileSave//lunch/55b15c7773b84f91abd9ec07be4c527a.png', 'http://www.jybd666.cn/FileSave//lunch/572a1d2a2351441bae586a3ea97e7c73.png', 'http://www.jybd666.cn/FileSave//lunch/a8a695dd6866437d965fcef7a6f1b74c.png', '1', null, '100', '0', '0', '2321', '54', '151', '1210', '2017-09-10 15:43:45', '2017-09-30 18:21:35', '1', '1', '0');
+INSERT INTO `tb_lunch` VALUES ('007', '台式香菇卤肉饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/b6221c5a4568463680aa92f7dc0b35a0.png', 'http://www.jybd666.cn/FileSave//lunch/daa4d44975b94107abc7b970ec5b799c.png', 'http://www.jybd666.cn/FileSave//lunch/be72accf2f994031b484eb8c03b27147.png', 'http://www.jybd666.cn/FileSave//lunch/ce499148c4c544569ec5f4b3fc1e45a0.png', '1', null, '100', '0', '0', '1', '1', '1511', '1210', '2017-09-20 01:34:20', '2017-09-30 20:55:31', '2', '2', '0');
+INSERT INTO `tb_lunch` VALUES ('008', '粤式梅菜烧肉饭B', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/b9721af28da744f289eb8614991bacea.png', 'http://www.jybd666.cn/FileSave//lunch/ce4090ff132a4d35b2ddff311a392674.png', 'http://www.jybd666.cn/FileSave//lunch/09821e1cc5ad4e0f9f68d93d20dccea0.png', 'http://www.jybd666.cn/FileSave//lunch/417aa054334b4600b6314bc7c383ce41.png', '1', null, '100', '0', '0', '1', '1', '151', '1210', '2017-09-20 01:35:50', '2017-09-30 18:20:33', '2', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('009', '香汁啤酒鸭饭', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/4a22a50be1d24294946673f6d823982a.png', 'http://www.jybd666.cn/FileSave//lunch/4e27996bca144549a67e9a50614e4a2f.png', 'http://www.jybd666.cn/FileSave//lunch/b2fe7b11a8c94adb8371d11d09fb34b9.png', 'http://www.jybd666.cn/FileSave//lunch/d4e263f636b144948b8a8942891d5fb4.png', '1', null, '100', '0', '0', '1', '1', '1', '1', '2017-09-20 01:37:09', '2017-09-30 18:20:07', '2', '0', '0');
+INSERT INTO `tb_lunch` VALUES ('010', '川香鱼香肉丝饭', '33.8', '23.8', 'http://www.jybd666.cn/FileSave//lunch/69a3510ea27947ffbb641c8747b116a7.png', 'http://www.jybd666.cn/FileSave//lunch/73804263fc6f46f6ac8a1d42cabdfbe8.png', 'http://www.jybd666.cn/FileSave//lunch/16ab2ef8a3954f7db877380dce94e263.png', 'http://www.jybd666.cn/FileSave//lunch/d558dd030102467891025efa81bbbb46.png', '1', null, '100', '0', '0', '1', '1', '1', '1', '2017-09-20 01:38:28', '2017-09-29 22:18:52', '2', '0', '0');
 
 -- ----------------------------
 -- Table structure for `tb_order`
@@ -433,16 +467,16 @@ DROP TABLE IF EXISTS `tb_order`;
 CREATE TABLE `tb_order` (
   `order_id` varchar(100) NOT NULL,
   `looknumber` varchar(100) DEFAULT NULL,
-  `allmoney` int(11) DEFAULT NULL,
-  `discount_money` int(11) DEFAULT NULL,
+  `allmoney` varchar(11) DEFAULT NULL,
+  `discount_money` varchar(11) DEFAULT NULL,
   `wxmember_redpackage_id` varchar(100) DEFAULT NULL,
   `wxmember_tihuojuan_idstr` varchar(100) DEFAULT NULL,
-  `actual_money` int(11) DEFAULT NULL,
-  `use_integral` int(11) DEFAULT NULL,
-  `use_wx` int(11) DEFAULT NULL,
+  `actual_money` varchar(11) DEFAULT NULL,
+  `use_integral` varchar(11) DEFAULT NULL,
+  `use_wx` varchar(11) DEFAULT NULL,
   `pay_type` varchar(4) DEFAULT '1',
   `order_status` varchar(4) DEFAULT NULL,
-  `send_integral` int(11) DEFAULT NULL,
+  `send_integral` varchar(11) DEFAULT NULL,
   `serial_number` varchar(100) DEFAULT NULL,
   `order_type` varchar(4) DEFAULT NULL,
   `reserve_arrival_time` datetime DEFAULT NULL,
@@ -467,7 +501,11 @@ CREATE TABLE `tb_order` (
 -- ----------------------------
 -- Records of tb_order
 -- ----------------------------
-INSERT INTO `tb_order` VALUES ('20170911015734178596', '12584561', '164', '0', '', '', '164', '164', '0', '1', '3', '10', '', '1', '2017-09-11 02:27:29', '2017-09-11 02:27:29', '0', '0', '0', '1', '1', null, '2017-09-11 01:57:35', null, null, '20170820124232907421', '980462730908', '', '006@5', '2');
+INSERT INTO `tb_order` VALUES ('20170929104327595001', '46678668', '34', '10', '', '', '29', '29', '0', '1', '4', '5', '', '1', '2017-09-29 23:13:19', '2017-09-29 23:13:19', '5.50', '3.5', '2.0', '1', '2', null, '2017-09-29 22:43:27', null, null, '20170917114005270090', '136618419321', '', '002@1', '2');
+INSERT INTO `tb_order` VALUES ('20170930085548622082', '01612051', '34', '10', '', '', '29', '29', '0', '1', '3', '5', '', '1', '2017-09-30 21:25:41', '2017-09-30 21:25:41', '5.50', '3.5', '2.0', '1', '0', null, '2017-09-30 20:55:48', null, null, '20170917114005270090', '136618419321', '4876690416,', '', '1');
+INSERT INTO `tb_order` VALUES ('20170930105151834438', '29135573', '36', '10', '', '', '31', '31', '0', '1', '3', '5', '', '1', '2017-09-30 23:21:47', '2017-09-30 23:21:47', '5.50', '3.5', '2.0', '1', '0', null, '2017-09-30 22:51:51', null, null, '20170918075640127538', '982986399043', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('20170930111509318378', '06149810', '36', '10', '', '', '31', '31', '0', '1', '2', '5', '', '1', '2017-09-30 23:45:07', '2017-09-30 23:45:07', '5.50', '3.5', '2.0', null, '0', null, '2017-09-30 23:15:09', null, null, '20170918075640127538', '982986399043', '', '001@1', '2');
+INSERT INTO `tb_order` VALUES ('20170930111812537275', '58462621', '35.80', '10.00', '', '', '31.30', '31.30', '0', '1', '2', '5.00', '', '1', '2017-09-30 23:48:10', '2017-09-30 23:48:10', '5.50', '3.5', '2.0', null, '0', null, '2017-09-30 23:18:12', null, null, '20170918075640127538', '982986399043', '', '001@1', '2');
 
 -- ----------------------------
 -- Table structure for `tb_ordertime`
@@ -487,6 +525,9 @@ CREATE TABLE `tb_ordertime` (
 -- ----------------------------
 -- Records of tb_ordertime
 -- ----------------------------
+INSERT INTO `tb_ordertime` VALUES ('20170930085548913601', '20170930085548622082,', '国泰科技大厦玖鱼科技有限公司6层602', '2017-09-30 20:55:48', '2017-09-30 21:05:48', '0', '0');
+INSERT INTO `tb_ordertime` VALUES ('20170930105151959246', '20170930105151834438,', '国泰科技大厦杭州玖鱼科技6层602', '2017-09-30 22:51:51', '2017-09-30 23:01:51', '0', '0');
+INSERT INTO `tb_ordertime` VALUES ('20170930111509347664', '20170930111509318378,20170930111812537275,,20170930111812537275,', '国泰科技大厦杭州玖鱼科技6层602', '2017-09-30 23:15:09', '2017-09-30 23:25:09', '0', '1');
 
 -- ----------------------------
 -- Table structure for `tb_order_lunch`
@@ -498,12 +539,16 @@ CREATE TABLE `tb_order_lunch` (
   `lunch_id` varchar(100) DEFAULT NULL,
   `shop_number` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_lunch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_order_lunch
 -- ----------------------------
-INSERT INTO `tb_order_lunch` VALUES ('37', '20170911015734178596', '006', '5');
+INSERT INTO `tb_order_lunch` VALUES ('53', '20170929104327595001', '002', '1');
+INSERT INTO `tb_order_lunch` VALUES ('54', '20170930085548622082', '003', '1');
+INSERT INTO `tb_order_lunch` VALUES ('55', '20170930105151834438', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('56', '20170930111509318378', '001', '1');
+INSERT INTO `tb_order_lunch` VALUES ('57', '20170930111812537275', '001', '1');
 
 -- ----------------------------
 -- Table structure for `tb_receive_condition`
@@ -535,12 +580,11 @@ CREATE TABLE `tb_redpackage` (
   `createtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`redpackage_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_redpackage
 -- ----------------------------
-INSERT INTO `tb_redpackage` VALUES ('1', '2', '10', '1,2,3,', '1', '2017-07-31 11:05:19', '2017-07-31 11:05:19');
 
 -- ----------------------------
 -- Table structure for `tb_scheduled_time`
@@ -557,15 +601,17 @@ CREATE TABLE `tb_scheduled_time` (
   `category_idstr` varchar(100) DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`scheduled_time_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_scheduled_time
 -- ----------------------------
 INSERT INTO `tb_scheduled_time` VALUES ('16', '2017-09-28', '午餐', '11:00:00', '14:00:00', '2017-09-27 17:30:00', '2017-09-28 11:00:00', '1,2,', '2017-09-27 21:26:18');
 INSERT INTO `tb_scheduled_time` VALUES ('17', '2017-09-28', '晚餐', '16:00:00', '19:00:00', '2017-09-27 17:30:00', '2017-09-28 16:00:00', '1,2,', '2017-09-27 21:28:31');
-INSERT INTO `tb_scheduled_time` VALUES ('18', '2017-09-29', '午餐', '11:00:00', '14:00:00', '2017-09-28 12:30:00', '2017-09-29 11:00:00', '1,2,', '2017-09-27 21:29:35');
+INSERT INTO `tb_scheduled_time` VALUES ('18', '2017-09-30', '午餐', '11:00:00', '14:00:00', '2017-09-29 12:30:00', '2017-09-30 11:00:00', '1,2,', '2017-09-29 22:41:41');
 INSERT INTO `tb_scheduled_time` VALUES ('19', '2017-09-29', '晚餐', '16:00:00', '19:00:00', '2017-09-28 17:30:00', '2017-09-29 16:00:00', '1,2,', '2017-09-27 21:30:58');
+INSERT INTO `tb_scheduled_time` VALUES ('20', '2017-10-01', '午餐', '11:00:00', '14:00:00', '2017-09-30 12:30:00', '2017-11-01 11:00:00', '1,2,', '2017-09-30 18:31:18');
+INSERT INTO `tb_scheduled_time` VALUES ('21', '2017-10-01', '晚餐', '16:00:00', '19:00:00', '2017-09-30 17:30:00', '2017-10-01 16:00:00', '1,2,', '2017-09-30 18:32:35');
 
 -- ----------------------------
 -- Table structure for `tb_shopcart`
@@ -615,7 +661,7 @@ CREATE TABLE `tb_weekmeal_card` (
   `createtime` datetime DEFAULT NULL,
   `create_oprator_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`weekmeal_card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tb_weekmeal_card
@@ -765,9 +811,9 @@ CREATE TABLE `tb_wxmember_wealth` (
 -- ----------------------------
 INSERT INTO `tb_wxmember_wealth` VALUES ('1', '1', '1000', '0', '2017-08-02 11:58:49', '2017-09-03 16:01:45');
 INSERT INTO `tb_wxmember_wealth` VALUES ('2', '20170820124232907421', '462.00', '462.00', '2017-08-20 00:42:44', '2017-09-11 02:07:35');
-INSERT INTO `tb_wxmember_wealth` VALUES ('3', '20170917114005270090', '0', '0', '2017-09-17 23:40:05', '2017-09-17 23:40:05');
+INSERT INTO `tb_wxmember_wealth` VALUES ('3', '20170917114005270090', '951.40', '975.7', '2017-09-17 23:40:05', '2017-09-30 20:55:48');
 INSERT INTO `tb_wxmember_wealth` VALUES ('4', '20170917114443614351', '0', '0', '2017-09-17 23:44:43', '2017-09-17 23:44:43');
-INSERT INTO `tb_wxmember_wealth` VALUES ('5', '20170918075640127538', '0', '0', '2017-09-18 07:56:40', '2017-09-18 07:56:40');
+INSERT INTO `tb_wxmember_wealth` VALUES ('5', '20170918075640127538', '921.10', '947.4', '2017-09-18 07:56:40', '2017-09-30 23:18:12');
 INSERT INTO `tb_wxmember_wealth` VALUES ('6', '20170918083637909495', '0', '0', '2017-09-18 08:36:37', '2017-09-18 08:36:37');
 INSERT INTO `tb_wxmember_wealth` VALUES ('7', '20170918041559783566', '0', '0', '2017-09-18 16:15:59', '2017-09-18 16:15:59');
 INSERT INTO `tb_wxmember_wealth` VALUES ('8', '20170918111720848741', '0', '0', '2017-09-18 23:17:20', '2017-09-18 23:17:20');
@@ -799,6 +845,13 @@ CREATE TABLE `tb_wxmember_wealthhistory` (
 -- ----------------------------
 -- Records of tb_wxmember_wealthhistory
 -- ----------------------------
-INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170911015735208529', '20170820124232907421', '164.00', '2', '20170911015734178596', '1', '2017-09-11 01:57:35', '2017-09-11 01:57:35');
-INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170911015735248351', '20170820124232907421', '10', '1', '20170911015734178596', '3', '2017-09-11 01:57:35', '2017-09-11 01:57:35');
-INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170911020735710441', '20170820124232907421', '0.00', null, '20170911015734178596', '2', '2017-09-11 02:07:35', '2017-09-11 02:07:35');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170929104327458385', '20170917114005270090', '5.00', '1', '20170929104327595001', '3', '2017-09-29 22:43:27', '2017-09-29 22:43:27');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170929104327765400', '20170917114005270090', '29.30', '2', '20170929104327595001', '1', '2017-09-29 22:43:27', '2017-09-29 22:43:27');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930085548783040', '20170917114005270090', '5.00', '1', '20170930085548622082', '3', '2017-09-30 20:55:48', '2017-09-30 20:55:48');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930085548931853', '20170917114005270090', '29.30', '2', '20170930085548622082', '1', '2017-09-30 20:55:48', '2017-09-30 20:55:48');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930105151496552', '20170918075640127538', '5.00', '1', '20170930105151834438', '3', '2017-09-30 22:51:51', '2017-09-30 22:51:51');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930105151862347', '20170918075640127538', '31.30', '2', '20170930105151834438', '1', '2017-09-30 22:51:51', '2017-09-30 22:51:51');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930111509520617', '20170918075640127538', '5.00', '1', '20170930111509318378', '3', '2017-09-30 23:15:09', '2017-09-30 23:15:09');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930111509918357', '20170918075640127538', '31.30', '2', '20170930111509318378', '1', '2017-09-30 23:15:09', '2017-09-30 23:15:09');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930111812610612', '20170918075640127538', '5.00', '1', '20170930111812537275', '3', '2017-09-30 23:18:12', '2017-09-30 23:18:12');
+INSERT INTO `tb_wxmember_wealthhistory` VALUES ('20170930111812884833', '20170918075640127538', '31.30', '2', '20170930111812537275', '1', '2017-09-30 23:18:12', '2017-09-30 23:18:12');

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompanyMapper">
+
+	<insert id="saveCompamy" parameterType="pd">
+		insert into tb_company(
+			company_id,
+			company_name,
+			company_address,
+			user_id,
+			room_address,
+			createtime
+		) values (
+			#{company_id},
+			#{company_name},
+			#{company_address},
+			#{user_id},
+			#{room_address},
+			now()
+		)
+	</insert>
+	
+	<update id="updateCompany"  parameterType="pd">
+	update tb_company
+	set 	company_name=#{company_name},company_address=#{company_address},room_address=#{room_address},
+	where company_id=#{company}
+	</update>
+	
+	<delete id="deleteCompany"  parameterType="pd">
+	delete from tb_company
+	where company_id=#{company}
+	</delete>	
+ 
+ 	<select id="companyById" parameterType="pd" resultType="pd">
+		select 
+			a.company_id,
+			a.company_name,
+			a.company_address,
+			a.user_id,
+			a.room_address,
+			date_format(a.createtime ,'%Y-%m-%d %H:%i:%s') as createtime,
+			b.name
+ 		from 
+			tb_company a
+			left join tb_user b on a.user_id=b.user_id
+		where 
+			a.company_id=#{company_id}
+  	</select>
+	
+ 	<!-- 公司列表 -->
+ 	<select id="companyList" parameterType="pd" resultType="pd">
+		select 
+			company_id,
+			company_name,
+			company_address,
+			user_id,
+			room_address,
+			date_format(createtime ,'%Y-%m-%d %H:%i:%s') as createtime
+ 		from 
+			tb_company 
+  	</select>
+  	
+ 	<select id="getMaxId" parameterType="pd" resultType="String">
+		select 
+			max(company_id)
+ 		from 
+			tb_company 
+  	</select>
+
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->	
+	
+ 
+	<insert id="saveCompamyUser" parameterType="pd">
+		insert into tb_company_user(
+			company_id,
+			user_id,
+			op_permissions,
+			ms_permissions,
+			rq_permissions,
+			apply_status,
+			createtime
+		) values (
+			#{company_id},
+			#{user_id},
+			#{op_permissions},
+			#{ms_permissions},
+			#{rq_permissions},
+			#{apply_status},
+			now()
+		)
+	</insert>
+	
+	<update id="updateCompanyUser"  parameterType="pd">
+	update tb_company_user
+	set 	
+		<if test="apply_status != null and apply_status !=''">apply_status=#{apply_status},</if>
+	  	<if test="op_permissions != null and op_permissions !=''">op_permissions=#{op_permissions},</if>
+	  	<if test="ms_permissions != null and ms_permissions !=''">ms_permissions=#{ms_permissions},</if>
+	  	<if test="rq_permissions != null and rq_permissions !=''">rq_permissions=#{rq_permissions},</if>
+		company_id=company_id
+	where company_user_id=#{company_user_id}
+	</update>
+	
+	<delete id="deleteCompanyUser"  parameterType="pd">
+	delete from tb_company_user
+	where company_user_id=#{company_user_id}
+	</delete>	
+ 
+ 	<select id="companyUserList" parameterType="pd" resultType="pd">
+		select 
+			a.company_user_id,
+			a.company_id,
+			a.user_id,
+			a.op_permissions,
+			a.ms_permissions,
+			a.rq_permissions,
+			a.apply_status,
+			date_format(a.createtime ,'%Y-%m-%d %H:%i:%s') as createtime,
+			b.name
+ 		from 
+			tb_company_user a
+			left join tb_user b on a.user_id=b.user_id
+		where 
+			company_id=#{company_id}
+  	</select>
+ 	 
+	
+</mapper>

@@ -72,7 +72,7 @@
 						<th>下单时间</th>
 						<th>配送方式</th>
  						<th>操作</th>
- 						<th>打印</th>
+ 						<!-- <th>打印</th> -->
   					</tr>
 				</thead>
  				<tbody>
@@ -107,8 +107,8 @@
 												<c:if test="${var.delivery_status eq '1' }"><a    onclick="changeStatus('4','${var.order_id}','2','已送达');"  class="btn btn-mini btn-info"  >点击确认收货</a></c:if>
  											</c:if>
  										</div> 
- 								</td>
- 								<td> <a onclick="dy('${var.order_id}')"  class="btn btn-mini btn-info"  >打印小票</a></td>
+  								</td>
+ 								<%-- <td> <a onclick="dy('${var.order_id}')"  class="btn btn-mini btn-info"  >打印小票</a></td> --%>
     						</tr>
  						</c:forEach>
 						</c:if>

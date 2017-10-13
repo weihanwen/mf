@@ -93,6 +93,8 @@ public class WxChatBackUrlController extends BaseController {
 								 pd.put("serial_number", tradnumber);
 								 ServiceHelper.getWxOrderService().changeOrderStatus(pd);
 								 WxMemberController.addPurchaseRecord(ServiceHelper.getWxOrderService().findById(pd));
+								 //打印
+								 WxMemberController.dy(pd);
 							 }
 						 }else{
 							 ServiceHelper.getWxmemberService().saveLog("02", "","回调的订单验签失败"+xmlStr);

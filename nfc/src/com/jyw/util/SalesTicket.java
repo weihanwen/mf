@@ -113,7 +113,7 @@ public class SalesTicket implements Printable {
         	PageData orderpd = orderList.get(i);  
             g2.drawString(orderpd.getString("lunch_name")+"", (float) x, (float) y + line);  
 //            g2.drawString(orderpd.get("sale_money").toString()+"", (float) x + 60, (float) y + line);  
-            g2.drawString(orderpd.get("shop_number").toString()+"", (float) x + 84, (float) y + line);  
+            g2.drawString("x"+orderpd.get("shop_number").toString()+"", (float) x + 84, (float) y + line);  
             g2.drawString(orderpd.get("allSaleMoney").toString()+"", (float) x + 100, (float) y + line);  
             line += heigth;  
   
@@ -121,7 +121,7 @@ public class SalesTicket implements Printable {
         g2.drawLine((int) x, (int) (y + line), (int) x + 158, (int) (y + line));  
         line += heigth+3;  
 //        g2.drawString("总量：" + allNumber + "件", (float) x, (float) y + line); 
-        g2.drawString("合计：" + allMoney + "元", (float) x + 80, (float) y + line);  
+        g2.drawString("合计：" + allMoney + "元", (float) x + 60, (float) y + line);  
         line += heigth+3;  
         font = new Font("宋体", Font.PLAIN, 12); 
         g2.drawString("联系姓名：" + name , (float) x, (float) y + line); 
